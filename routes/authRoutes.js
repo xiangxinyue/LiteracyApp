@@ -12,7 +12,7 @@ module.exports = (app) => {
     "/auth/google_student/callback",
     passport.authenticate("google-student"),
     (req, res) => {
-      res.redirect("http://localhost:3000/");
+      res.redirect("/");
     }
   );
 
@@ -27,13 +27,13 @@ module.exports = (app) => {
     "/auth/google_tutor/callback",
     passport.authenticate("google-tutor"),
     (req, res) => {
-      res.redirect("http://localhost:3000/");
+      res.redirect("/");
     }
   );
 
   app.get("/auth/logout", (req, res) => {
     req.logout();
-    res.redirect("http://localhost:3000/");
+    res.redirect("/");
   });
 
   app.get("/auth/current_user", (req, res) => {
