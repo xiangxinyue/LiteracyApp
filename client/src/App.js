@@ -6,10 +6,11 @@ import { setCurrentUser } from "./redux/user/useractions";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import axios from "axios";
 import Header from "./components/header/header";
+import Bottom from "./components/bottom/bottom";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 const FluencyTrain = lazy(() => import("./pages/trainpage/fluencypage"));
 const PhonemeTrain = lazy(() => import("./pages/trainpage/phonemepage"));
-// const FluencyAssign = lazy(() => import("./pages/instructorpage/fluencypage"));
+const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
 // const PhonemeAssign = lazy(() => import("./pages/instructorpage/phonemepage"));
 // const PhonemeEvaluation = lazy(() => import("./pages/evaluation/phoneme"));
 // const FluencyEvaluation = lazy(() => import("./pages/evaluation/fluency"));
@@ -37,8 +38,8 @@ class App extends React.Component {
               <Route exact path="/" component={Main} />
               <Route exact path="/fluencytrain" component={FluencyTrain} />
               <Route exact path="/phonemetrain" component={PhonemeTrain} />
-              {/* <Route exact path="/fluencyassign" component={FluencyAssign} />
-              <Route exact path="/phonemeassign" component={PhonemeAssign} />
+              <Route exact path="/fluencyassign" component={FluencyAssign} />
+              {/*<Route exact path="/phonemeassign" component={PhonemeAssign} />
               <Route
                 exact
                 path="/phonemeevaluation"
@@ -62,6 +63,7 @@ class App extends React.Component {
             </Suspense>
           </ErrorBoundary>
         </Switch>
+        <Bottom />
       </div>
     );
   }
