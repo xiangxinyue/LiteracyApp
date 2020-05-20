@@ -1,6 +1,6 @@
 import React from "react";
-import WordCard from "../../../assets/cards/wordcard";
-import Process from "../../../assets/process";
+import WordCard from "../../assets/cards/wordcard";
+import Process from "../../assets/process";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Phonemesummary from "./trainsum";
 import { connect } from "react-redux";
