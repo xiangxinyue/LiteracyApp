@@ -25,7 +25,7 @@ const fluencyUserSchema = new Schema({
 mongoose.model("fluency_user", fluencyUserSchema);
 
 const fluencyAssignSchema = new Schema({
-  creater: String,
+  tutor: String,
   assignment: Array,
 });
 

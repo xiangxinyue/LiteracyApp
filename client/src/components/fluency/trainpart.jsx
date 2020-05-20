@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import Process from "../../../assets/process";
+import Process from "../../assets/process";
 import $ from "jquery";
 let time;
 
@@ -31,11 +31,11 @@ class FluencyTrainingPart extends Component {
     const doc = await axios("/api/fluency/train/get");
     const data = doc.data;
     await this.setState({
-      paragraphs: data.paragraph,
-      questions: data.question,
+      paragraphs: data.paragraphs,
+      questions: data.questions,
       choices: data.choices,
-      answers: data.answer,
-      maxNumOfQues: data.paragraph.length - 1,
+      answers: data.answers,
+      maxNumOfQues: data.paragraphs.length - 1,
       speed: this.props.currentUser.fluency_curr_score,
     });
     console.log(this.state);
@@ -102,7 +102,7 @@ class FluencyTrainingPart extends Component {
       const newSpeed = Math.floor(this.state.speed * 0.8);
       await axios.post("/api/fluency/score/update", { newSpeed });
     }
-    window.location = "/fluencytrain";
+    window.location = "/student/fluency";
   };
 
   render() {

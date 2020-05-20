@@ -1,8 +1,10 @@
 const requireLogin = require("../middlewares/requireLogin");
+const requireTutor = require("../middlewares/requireTutor");
 const mongoose = require("mongoose");
 const PhonemeTest = mongoose.model("phoneme_tests");
 const PhonemeTrain = mongoose.model("phoneme_trains");
 const PhonemeUser = mongoose.model("phoneme_user");
+const PhonemeAssign = mongoose.model("phoneme_assigns");
 const User = mongoose.model("users");
 
 module.exports = (app) => {
@@ -63,5 +65,43 @@ module.exports = (app) => {
       }).save();
       res.send(infor);
     }
+  });
+
+  app.get("/api/phoneme/train/gettable", requireTutor, async (req, res) => {
+    const traindata = await PhonemeTrain.find();
+    res.send(traindata);
+  });
+
+  app.get("/api/phoneme/test/gettable", requireTutor, async (req, res) => {
+    const testdata = await PhonemeTest.find();
+    res.send(testdata);
+  });
+
+  app.post("/api/phoneme/train/add", requireTutor, async (req, res) => {
+    const traindata = await new PhonemeTrain(req.body.data).save();
+    res.send(traindata);
+  });
+
+  app.post("/api/phoneme/train/delete", requireTutor, async (req, res) => {
+    const data = await PhonemeTrain.findByIdAndDelete(req.body.id);
+    res.send(data);
+  });
+
+  app.post("/api/phoneme/test/add", requireTutor, async (req, res) => {
+    const testdata = await new PhonemeTest(req.body.data).save();
+    res.send(testdata);
+  });
+
+  app.post("/api/phoneme/test/delete", requireTutor, async (req, res) => {
+    const data = await PhonemeTest.findByIdAndDelete(req.body.id);
+    res.send(data);
+  });
+
+  app.post("/api/phoneme/assign/add", requireTutor, async (req, res) => {
+    const data = await new PhonemeAssign({
+      tutor: req.user.displayName,
+      assignment: req.body.data,
+    }).save();
+    res.send(data);
   });
 };

@@ -79,12 +79,10 @@ module.exports = (app) => {
   });
 
   app.post("/api/fluency/assign/add", requireTutor, async (req, res) => {
-    const data = await new FluencyAssign(req.body.data).save();
+    const data = await new FluencyAssign({
+      tutor: req.user.displayName,
+      assignment: req.body.data,
+    }).save();
     res.send(data);
   });
 };
-
-/*
-
-
-*/
