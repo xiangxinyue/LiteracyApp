@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import Button from "@material-ui/core/Button";
+import { Button, Container } from "@material-ui/core";
 import Process from "../../assets/process";
 import $ from "jquery";
 let time;
@@ -115,6 +115,7 @@ class FluencyTrainingPart extends Component {
                 variant="contained"
                 color="primary"
                 onClick={this.changeQuestion}
+                size="large"
               >
                 Next Question
               </Button>
@@ -125,6 +126,7 @@ class FluencyTrainingPart extends Component {
                   variant="contained"
                   color="primary"
                   onClick={this.finishTrain}
+                  size="large"
                 >
                   Good Job!
                 </Button>
@@ -135,15 +137,20 @@ class FluencyTrainingPart extends Component {
               <h3>{this.state.questions[this.state.currentParaNum]}</h3>
               {this.state.choices[this.state.currentParaNum].map(
                 (choice, index) => (
-                  <div>
-                    <input
-                      type="radio"
-                      key={index}
-                      value={choice}
-                      defaultChecked={false}
-                      onClick={this.checkAnswer}
-                    />
-                    {choice}
+                  <div className="row">
+                    <div className="col-3"></div>
+                    <div className="row col-6">
+                      <input
+                        type="radio"
+                        key={index}
+                        value={choice}
+                        defaultChecked={false}
+                        onClick={this.checkAnswer}
+                      />
+                      &nbsp;&nbsp;
+                      <h4>{choice}</h4>
+                    </div>
+                    <div className="col-3"></div>
                   </div>
                 )
               )}
@@ -163,7 +170,7 @@ class FluencyTrainingPart extends Component {
                   } else {
                     return (
                       <div className={index} key={index}>
-                        {letter}
+                        <h4>{letter}</h4>
                       </div>
                     );
                   }
@@ -174,11 +181,12 @@ class FluencyTrainingPart extends Component {
             )}
           </div>
         )}
-        <br />
-        Your score is: {this.state.score}
-        <br />
-        The process: {this.state.currentParaNum + 1} /{" "}
-        {this.state.maxNumOfQues + 1}
+        <hr />
+        <h5>Your score is: {this.state.score}</h5>
+        <h5>
+          The process: {this.state.currentParaNum + 1} /{" "}
+          {this.state.maxNumOfQues + 1}
+        </h5>
       </div>
     );
   }

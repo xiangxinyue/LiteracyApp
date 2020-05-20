@@ -37,7 +37,7 @@ class SpeedTest extends Component {
       this.state.paragraph.length / this.state.time
     );
     await axios.post("/api/fluency/score/update", { newScore });
-    window.location = "/fluencytrain";
+    window.location = "/student/fluency";
   };
 
   render() {

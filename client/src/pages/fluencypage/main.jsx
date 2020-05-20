@@ -19,7 +19,6 @@ class FluencyTrain extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { understand, startTrain } = this.state;
     return (
       <div>
         <FluencyHeader />

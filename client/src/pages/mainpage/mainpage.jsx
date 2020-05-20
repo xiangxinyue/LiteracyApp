@@ -17,7 +17,7 @@ const Main = ({ currentUser }) => {
           <div>
             <h2>Welcome to Literacy Training</h2>
             <hr />
-            <p>Hello, {currentUser.displayName}</p>
+            <h4>Hello, {currentUser.displayName}</h4>
           </div>
         );
     }

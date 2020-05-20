@@ -23,10 +23,15 @@ export default function TrainCard(props) {
     <Card className={classes.root} variant="outlined">
       <CardActionArea href={props.page} style={{ textDecoration: "none" }}>
         <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            className="text-primary"
+          >
             {props.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="h4">
+          <Typography variant="h6" color="textSecondary" component="h3">
             {props.description}
           </Typography>
         </CardContent>
