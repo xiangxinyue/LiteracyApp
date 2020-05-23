@@ -46,7 +46,7 @@ const Main = ({ currentUser }) => {
                 imagePath + images[0]
               }
               description={
-                "You will train or increase your knowledge about the different sounds in English."
+                "Increase your sound skills in English"
               }
             />
             <MainCard
@@ -56,7 +56,7 @@ const Main = ({ currentUser }) => {
                 //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[1]
               }
-              description={"You will train or increase your knowledge about different letter patterns in English."}
+              description={"Increase your spelling skills in English"}
             />
             <MainCard
               title={"Speed Training"}
@@ -66,7 +66,7 @@ const Main = ({ currentUser }) => {
                 imagePath + images[2]
               }
               description={
-                "You will train or increase your reading speed. "
+                "Increase your reading speed in English"
               }
             />
             <MainCard
@@ -76,7 +76,7 @@ const Main = ({ currentUser }) => {
                 //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[3]
               }
-              description={"You will train or increase your knowledge about different meaning units in English."}
+              description={"Increase your meaning skills in English"}
             />
           </div>
         ) : (
@@ -85,37 +85,41 @@ const Main = ({ currentUser }) => {
               title={"Sound Training"}
               page={"/phonemetrain"}
               image={
+                //"https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
                 imagePath + images[0]
               }
               description={
-                "You will train or increase your knowledge about the different sounds in English."
+                "Increase your sound skills in English"
               }
             />
             <MainCard
               title={"Print Training"}
               page={"/"}
               image={
+                //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[1]
               }
-              description={"You will train or increase your knowledge about different letter patterns in English."}
+              description={"Increase your spelling skills in English"}
             />
             <MainCard
               title={"Speed Training"}
               page={"/fluencytrain"}
               image={
+                //"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
                 imagePath + images[2]
               }
               description={
-                "You will train or increase your reading speed. "
+                "Increase your reading speed in English"
               }
             />
             <MainCard
               title={"Meaning Training"}
               page={"/"}
               image={
+                //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[3]
               }
-              description={"You will train or increase your knowledge about different meaning units in English."}
+              description={"Increase your meaning skills in English"}
             />
           </div>
         )
@@ -125,37 +129,41 @@ const Main = ({ currentUser }) => {
               title={"Sound Training"}
               page={"/phonemetrain"}
               image={
+                //"https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
                 imagePath + images[0]
               }
               description={
-                "You will train or increase your knowledge about the different sounds in English."
+                "Increase your sound skills in English"
               }
             />
             <MainCard
               title={"Print Training"}
               page={"/"}
               image={
+                //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[1]
               }
-              description={"You will train or increase your knowledge about different letter patterns in English."}
+              description={"Increase your spelling skills in English"}
             />
             <MainCard
               title={"Speed Training"}
               page={"/fluencytrain"}
               image={
+                //"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
                 imagePath + images[2]
               }
               description={
-                "You will train or increase your reading speed. "
+                "Increase your reading speed in English"
               }
             />
             <MainCard
               title={"Meaning Training"}
               page={"/"}
               image={
+                //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[3]
               }
-              description={"You will train or increase your knowledge about different meaning units in English."}
+              description={"Increase your meaning skills in English"}
             />
         </div>
       )}
