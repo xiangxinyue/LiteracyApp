@@ -9,12 +9,12 @@ export default () => {
       >
         <div className="row">
           <div className="col-lg-10 col-md-auto">
-            @Copyright ualbert research{" "}
+            @Copyright 2020{""}
           </div>
           <div className="col-lg-2 col-md-auto">
             <img
-              style={{ width: 300, height: 70 }}
-              src="https://fullstackproject.s3.ca-central-1.amazonaws.com/literacyapp/ualberta.png"
+              //style={{ width: 300, height: 70 }}
+              //src="https://fullstackproject.s3.ca-central-1.amazonaws.com/literacyapp/ualberta.png"
             />
           </div>
         </div>
