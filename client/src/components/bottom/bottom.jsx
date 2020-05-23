@@ -9,7 +9,7 @@ export default () => {
       >
         <div className="row">
           <div className="col-lg-10 col-md-auto">
-            @Copyright 2020{""}
+            @Copyright{"2020"}
           </div>
           <div className="col-lg-2 col-md-auto">
             <img
