@@ -15,10 +15,9 @@ module.exports = (app) => {
   });
 
   app.post("/api/fluency/score/update", async (req, res) => {
-    const infor = await User.updateOne(
-      { _id: req.user._id },
-      { fluency_curr_score: req.body.newScore }
-    ).catch((err) => console.log(err));
+    const infor = await User.findByIdAndUpdate(req.user._id, {
+      fluency_curr_score: req.body.newSpeed,
+    }).catch((err) => console.log(err));
     res.send(infor);
   });
 
@@ -79,12 +78,10 @@ module.exports = (app) => {
   });
 
   app.post("/api/fluency/assign/add", requireTutor, async (req, res) => {
-    const data = await new FluencyAssign(req.body.data).save();
+    const data = await new FluencyAssign({
+      tutor: req.user.displayName,
+      assignment: req.body.data,
+    }).save();
     res.send(data);
   });
 };
-
-/*
-
-
-*/

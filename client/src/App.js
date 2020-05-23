@@ -8,10 +8,14 @@ import axios from "axios";
 import Header from "./components/header/header";
 import Bottom from "./components/bottom/bottom";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
-const FluencyTrain = lazy(() => import("./pages/trainpage/fluencypage"));
-const PhonemeTrain = lazy(() => import("./pages/trainpage/phonemepage"));
+// Fluency pages
+const FluencyMain = lazy(() => import("./pages/fluencypage/main"));
+const FluencyPractise = lazy(() => import("./pages/fluencypage/practise"));
+// Phoneme pages
+const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
 const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
-// const PhonemeAssign = lazy(() => import("./pages/instructorpage/phonemepage"));
+const PhonemeAssign = lazy(() => import("./pages/assignpage/phonemeassign"));
+
 // const PhonemeEvaluation = lazy(() => import("./pages/evaluation/phoneme"));
 // const FluencyEvaluation = lazy(() => import("./pages/evaluation/fluency"));
 // const StudentDashboard = lazy(() =>
@@ -36,10 +40,18 @@ class App extends React.Component {
           <ErrorBoundary>
             <Suspense fallback={null}>
               <Route exact path="/" component={Main} />
-              <Route exact path="/fluencytrain" component={FluencyTrain} />
-              <Route exact path="/phonemetrain" component={PhonemeTrain} />
-              <Route exact path="/fluencyassign" component={FluencyAssign} />
-              {/*<Route exact path="/phonemeassign" component={PhonemeAssign} />
+
+              <Route exact path="/student/fluency" component={FluencyMain} />
+              <Route
+                exact
+                path="/student/fluency/practise"
+                component={FluencyPractise}
+              />
+
+              <Route exact path="/student/phoneme" component={PhonemeMain} />
+              <Route exact path="/tutor/fluency" component={FluencyAssign} />
+              <Route exact path="/tutor/phoneme" component={PhonemeAssign} />
+              {/*
               <Route
                 exact
                 path="/phonemeevaluation"

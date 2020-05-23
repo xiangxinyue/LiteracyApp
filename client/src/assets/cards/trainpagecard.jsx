@@ -16,17 +16,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MainCard(props) {
+export default function TrainCard(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       <CardActionArea href={props.page} style={{ textDecoration: "none" }}>
-        <CardMedia
-          className={classes.media}
-          image={props.image}
-          title="Contemplative Reptile"
-        />
         <CardContent>
           <Typography
             gutterBottom

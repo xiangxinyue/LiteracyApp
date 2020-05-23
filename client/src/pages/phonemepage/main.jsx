@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PhonemeTrainPart from "../../components/trainpart/phoneme/trainpart";
-import PhonemeTestPart from "../../components/trainpart/phoneme/testpart";
-import Phonemetrainintro from "../../components/trainpart/phoneme/trainintro";
-import Phonemetestintro from "../../components/trainpart/phoneme/testintro";
+import PhonemeTrainPart from "../../components/phoneme/trainpart";
+import PhonemeTestPart from "../../components/phoneme/testpart";
+import Phonemetrainintro from "../../components/phoneme/trainintro";
+import Phonemetestintro from "../../components/phoneme/testintro";
 import { Button } from "@material-ui/core";
 import Process from "../../assets/process";
 import SignInHeader from "../../components/header/signinheader";
-import PhonemeMaterials from "../../components/trainpart/phoneme/materials";
+import PhonemeMaterials from "../../components/phoneme/materials";
 
 class PhonemeTrain extends Component {
   constructor(props) {

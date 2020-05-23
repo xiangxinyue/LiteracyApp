@@ -18,7 +18,6 @@ class FluencyAssignPart extends React.Component {
       traindata: [],
       testdata: "",
       trainshow: false,
-      testshow: false,
       alert: false,
       trainAddParagraph: "",
       trainAddQuestion: "",
@@ -37,7 +36,7 @@ class FluencyAssignPart extends React.Component {
       assignAddChoice4: "",
       assignAddAnswer: "",
       assignNum: 20,
-      assignEntryShow: false, // show assignment
+      assignEntryShow: false,
     };
   }
 
@@ -71,7 +70,7 @@ class FluencyAssignPart extends React.Component {
       ],
       answer: trainAddAnswer,
     };
-    await axios.post("/api/fluency/train/add", data);
+    await axios.post("/api/fluency/train/add", { data });
     await this.setState({
       alert: true,
       trainAddParagraph: "",
@@ -85,19 +84,16 @@ class FluencyAssignPart extends React.Component {
     this.componentDidMount();
   };
 
-  handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
-    this.setState({ alert: false });
-  };
-
   deleteTrainData = async (id) => {
-    await axios("/api/fluency/train/delete", { id });
+    await axios.post("/api/fluency/train/delete", { id });
     this.componentDidMount();
     this.setState({ alert: true });
   };
 
   updateTestData = async () => {
-    await axios("/api/fluency/test/update", { data: this.state.testdata });
+    const doc = await axios.post("/api/fluency/test/update", {
+      data: this.state.testdata,
+    });
     this.componentDidMount();
     this.setState({ alert: true });
   };
@@ -137,25 +133,46 @@ class FluencyAssignPart extends React.Component {
       assignAddChoice3: "",
       assignAddChoice4: "",
       assignAddAnswer: "",
+      alert: true,
     });
+  };
+
+  generateAssign = () => {
+    const { traindata, assignNum } = this.state;
+    const length = traindata.length;
+    const assign = [];
+    for (let i = 0; i < assignNum; i++) {
+      const index = Math.floor(Math.random() * length);
+      console.log("choose", index);
+      assign.push(traindata[index]);
+    }
+    this.setState({ assigndata: assign, alert: true });
   };
 
   deleteAssignEntry = (id) => {
     const newAssign = this.state.assigndata.filter((ele) => {
       if (ele.id !== id) return ele;
     });
-    this.setState({ assigndata: newAssign });
+    this.setState({ assigndata: newAssign, alert: true });
   };
 
-  addNewAssign = () => {
-    axios.post("/api/fluency/assign/add", { data: this.state.assigndata });
+  addNewAssign = async () => {
+    await axios.post("/api/fluency/assign/add", {
+      data: this.state.assigndata,
+    });
+    await this.setState({ alert: true });
+    window.location = "/fluencyassign";
+  };
+
+  handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({ alert: false });
   };
 
   render() {
     const {
       traindata,
       trainshow,
-      testshow,
       testdata,
       alert,
       trainAddParagraph,
@@ -285,8 +302,17 @@ class FluencyAssignPart extends React.Component {
             <div>
               <p>New Assignment</p>
               <br />
-              {assigndata.length !== assignNum ? (
+              {assigndata.length != assignNum ? (
                 <div>
+                  <TextField
+                    id="standard-multiline-flexible"
+                    label="Number of questions"
+                    rowsMax={20}
+                    value={assignNum}
+                    onChange={(e) =>
+                      this.setState({ assignNum: e.target.value })
+                    }
+                  />
                   <TextField
                     id="standard-multiline-flexible"
                     label="Paragraphy"
@@ -356,6 +382,13 @@ class FluencyAssignPart extends React.Component {
                   >
                     Add New Entry
                   </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.generateAssign}
+                  >
+                    Generate assignment
+                  </Button>
                 </div>
               ) : (
                 <Button
@@ -381,7 +414,7 @@ class FluencyAssignPart extends React.Component {
         <Snackbar
           open={alert}
           autoHideDuration={2000}
-          onClose={this.handleClose}
+          onClose={this.handleCloseAlert}
         >
           <Alert onClose={this.handleClose} severity="success">
             Operation Successfully!

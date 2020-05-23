@@ -38,8 +38,8 @@ export default function SimpleTable(props) {
               <TableCell align="right">
                 <Button
                   color="secondary"
-                  key={row.id}
-                  onClick={() => props.handleDelete(row.id)}
+                  key={row._id}
+                  onClick={() => props.handleDelete(row._id)}
                 >
                   Delete
                 </Button>

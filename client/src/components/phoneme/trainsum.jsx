@@ -1,5 +1,5 @@
 import React from "react";
-import Paper from "../../../assets/paper";
+import Paper from "../../assets/paper";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 

@@ -13,3 +13,19 @@
 finish student-side Speed and Sound training parts.
 
 ## 2020.05.17 -V2.1
+
+finish tutpr-side Speed training assignment train, test data operations
+
+## 2020.05.19 -V2.2
+
+1. tutor-side speed training assignment number
+2. tutor-side speed training assignment auto generator
+3. tutor-side sound training assignment page
+
+## TODD - list:
+
+1. student assignment aviability check
+2. Students' Score Chart
+3. Tutor-side score chart
+4. Training Timer
+5. training session 2 30 min a week

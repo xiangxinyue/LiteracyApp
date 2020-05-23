@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Process from "../../../assets/process";
+import Process from "../../assets/process";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 let time;
@@ -37,21 +37,40 @@ class SpeedTest extends Component {
       this.state.paragraph.length / this.state.time
     );
     await axios.post("/api/fluency/score/update", { newScore });
-    window.location = "/fluencytrain";
+    window.location = "/student/fluency";
   };
 
   render() {
     return (
       <div className="container">
-        <h2>First: test your reading speed before we get start!</h2>
-        <p>
-          Instruction: click the start button, time will count, when you finish
-          reading the paragraph, click the finish button, the time will stop.
-        </p>
         {!this.state.testingState ? (
-          <Button variant="contained" color="primary" onClick={this.startTest}>
-            Start To Test
-          </Button>
+          <div>
+            <h2 className="text-primary">
+              Test your reading speed before we start
+            </h2>
+            <h4>
+              Instructions: Watch the introduction video first, then click the
+              start button. Read the words as fast as possible. When you finish
+              click the finish button.
+            </h4>
+            <iframe
+              width="600"
+              height="340"
+              src="https://www.youtube.com/embed/rDg4S6jxLJI"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+            <hr />
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={this.startTest}
+            >
+              Start
+            </Button>
+          </div>
         ) : (
           <div>
             {this.state.paragraph ? (

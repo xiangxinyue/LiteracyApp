@@ -1,12 +1,16 @@
 import React from "react";
-import Paper from "../../../assets/paper";
+import Paper from "../../assets/paper";
 import Button from "@material-ui/core/Button";
 
-const phonemetrainintro = (props) => {
+const phonemetestintro = (props) => {
   const intro = () => {
     return (
       <div>
-        <h3>This is the introduction of phoneme training. </h3>
+        <h3>This is the introduction of phoneme testing. </h3>
+        <p>
+          Attention: this is your first time to use phoneme train, we will
+          evaluate your current level by this testing.
+        </p>
         <p>
           In this lesson, you will see a non-word or made-up word on the screen.
           I want you to break down the word into different sounds that it is
@@ -29,4 +33,4 @@ const phonemetrainintro = (props) => {
   );
 };
 
-export default phonemetrainintro;
+export default phonemetestintro;

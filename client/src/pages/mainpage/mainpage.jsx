@@ -17,7 +17,7 @@ const Main = ({ currentUser }) => {
           <div>
             <h2>Welcome to Literacy Training</h2>
             <hr />
-            <p>Hello, {currentUser.displayName}</p>
+            <h4>Hello, {currentUser.displayName}</h4>
           </div>
         );
     }
@@ -31,7 +31,7 @@ const Main = ({ currentUser }) => {
           <div className="row" style={{ paddingLeft: 60, paddingRight: 60 }}>
             <MainCard
               title={"Speed Training"}
-              page={"/fluencytrain"}
+              page={"/student/fluency"}
               image={
                 "https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
               }
@@ -41,7 +41,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Sound Training"}
-              page={"/phonemetrain"}
+              page={"/student/phoneme"}
               image={
                 "https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
               }
@@ -70,7 +70,7 @@ const Main = ({ currentUser }) => {
           <div className="row" style={{ paddingLeft: 60, paddingRight: 60 }}>
             <MainCard
               title={"Speed Training"}
-              page={"/fluencyassign"}
+              page={"/tutor/fluency"}
               image={
                 "https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
               }
@@ -80,7 +80,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Sound Training"}
-              page={"/phonemeassign"}
+              page={"/tutor/phoneme"}
               image={
                 "https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
               }
