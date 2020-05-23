@@ -40,7 +40,7 @@ const Main = ({ currentUser }) => {
           <div className="row" style={{ paddingLeft: 100, paddingRight: 100 }}>
             <MainCard
               title={"Sound Training"}
-              page={"/phonemetrain"}
+              page={"/student/phoneme"}
               image={
                 //"https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
                 imagePath + images[0]
@@ -60,7 +60,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Speed Training"}
-              page={"/fluencytrain"}
+              page={"/student/fluency"}
               image={
                 //"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
                 imagePath + images[2]
@@ -83,13 +83,13 @@ const Main = ({ currentUser }) => {
           <div className="row" style={{ paddingLeft: 100, paddingRight: 100 }}>
             <MainCard
               title={"Sound Training"}
-              page={"/phonemetrain"}
+              page={"/tutor/phoneme"}
               image={
                 //"https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
                 imagePath + images[0]
               }
               description={
-                "Increase your sound skills in English"
+                "Modify Phoneme testing, training, and assignment questions."
               }
             />
             <MainCard
@@ -99,17 +99,17 @@ const Main = ({ currentUser }) => {
                 //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[1]
               }
-              description={"Increase your spelling skills in English"}
+              description={"Modify print testing, training, and assignment questions."}
             />
             <MainCard
               title={"Speed Training"}
-              page={"/fluencytrain"}
+              page={"/tutor/fluency"}
               image={
                 //"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
                 imagePath + images[2]
               }
               description={
-                "Increase your reading speed in English"
+                "Modify Fluency testing, training, and assignment questions."
               }
             />
             <MainCard
@@ -119,7 +119,7 @@ const Main = ({ currentUser }) => {
                 //"https://www.remonline.com/wp-content/uploads/2016/12/Coming-Soon-1074x483.jpg"
                 imagePath + images[3]
               }
-              description={"Increase your meaning skills in English"}
+              description={"Modify meaning testing, training, and assignment questions."}
             />
           </div>
         )
@@ -127,7 +127,7 @@ const Main = ({ currentUser }) => {
         <div className="row" style={{ paddingLeft: 100, paddingRight: 100 }}>
           <MainCard
               title={"Sound Training"}
-              page={"/phonemetrain"}
+              page={"/"}
               image={
                 //"https://www.thoughtco.com/thmb/nPtQecIvAsrgTxFWZ1MRt338C24=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/phoenome-5981d954aad52b0010695179.png"
                 imagePath + images[0]
@@ -147,7 +147,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Speed Training"}
-              page={"/fluencytrain"}
+              page={"/"}
               image={
                 //"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/dB8d7l76rzNWTJUGKGm5sNVemYI=/1660x934/smart/filters:no_upscale()/arc-anglerfish-arc2-prod-dmn.s3.amazonaws.com/public/T36OGNZWGJDELAUHLARXICYOV4.jpg"
                 imagePath + images[2]
