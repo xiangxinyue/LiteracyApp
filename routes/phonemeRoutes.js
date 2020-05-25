@@ -6,8 +6,19 @@ const PhonemeTrain = mongoose.model("phoneme_trains");
 const PhonemeUser = mongoose.model("phoneme_user");
 const PhonemeAssign = mongoose.model("phoneme_assigns");
 const User = mongoose.model("users");
+const AWS = require("aws-sdk");
+const keys = require("../config/keys");
+const uuid = require("uuid/v1");
+
+const s3 = new AWS.S3({
+  accessKeyId: keys.AWSKeyId,
+  secretAccessKey: keys.AWSSecretKey,
+  region: keys.Region,
+});
 
 module.exports = (app) => {
+  // Student side
+  // test part
   app.get("/api/phoneme/test/get", requireLogin, async (req, res) => {
     const testData = await PhonemeTest.find();
     let words = [];
@@ -23,6 +34,7 @@ module.exports = (app) => {
     res.send({ words, phonemes, levels, id });
   });
 
+  // train part
   app.get("/api/phoneme/train/get", requireLogin, async (req, res) => {
     const trainData = await PhonemeTrain.find();
     let words = [];
@@ -67,6 +79,27 @@ module.exports = (app) => {
     }
   });
 
+  // Audio Recording
+  app.get("/api/phoneme/audio/", requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.mp3`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: keys.Bucket,
+        ContentType: "audio/wav",
+        Key: key,
+      },
+      (err, url) => res.send({ err, key, url })
+    );
+  });
+
+  app.get("/api/phoneme/audio/get", async (req, res) => {
+    const user = await User.findById(req.user.id);
+    res.send(user.phoneme_audio);
+  });
+
+  // ---------------------------------------------------------------------------
+  // Tutoe side
   app.get("/api/phoneme/train/gettable", requireTutor, async (req, res) => {
     const traindata = await PhonemeTrain.find();
     res.send(traindata);

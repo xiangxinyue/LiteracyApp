@@ -32,9 +32,10 @@ require("./models/fluency");
 require("./models/phoneme");
 
 require("./services/passport");
-require("./routes/fluencyRoutes")(app);
 require("./routes/authRoutes")(app);
+require("./routes/userRoutes")(app);
 require("./routes/phonemeRoutes")(app);
+require("./routes/fluencyRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

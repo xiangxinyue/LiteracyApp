@@ -16,6 +16,9 @@ const FluencyMaterials = lazy(() => import("./pages/fluencypage/materials"));
 const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
 const PhonemePractise = lazy(() => import("./pages/phonemepage/practise"));
 const PhonemeMaterials = lazy(() => import("./pages/phonemepage/materials"));
+const PhonemeAudioRecord = lazy(() =>
+  import("./pages/phonemepage/audiorecord")
+);
 
 // Tutor pages
 const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
@@ -68,6 +71,11 @@ class App extends React.Component {
                 exact
                 path="/student/phoneme/materials"
                 component={PhonemeMaterials}
+              />
+              <Route
+                exact
+                path="/student/phoneme/audiorecord"
+                component={PhonemeAudioRecord}
               />
 
               <Route exact path="/tutor/fluency" component={FluencyAssign} />

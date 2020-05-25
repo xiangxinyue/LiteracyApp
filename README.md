@@ -26,6 +26,7 @@ finish tutpr-side Speed training assignment train, test data operations
 
 1. Student-side update phoneme training main page
 2. Materials placeholder & reorder the training main page
+3. Implemented the Audio recoding and Upload it into AWS S3, then show on the page
 
 ## TODD - list:
 

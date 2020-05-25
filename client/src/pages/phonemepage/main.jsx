@@ -53,6 +53,11 @@ class PhonemeTrain extends Component {
                   description="In this part, you can practise the Speed Training as much as you want"
                 />
                 <TrainCard
+                  title="Audio Record"
+                  page="/student/phoneme/audiorecord"
+                  description="In this part, you can practise the Speed Training as much as you want"
+                />
+                <TrainCard
                   title="Weekly Assignment"
                   page="/student/phoneme/assignment"
                   description="In this part, you can do the weekly Speed training evaluation assignment"

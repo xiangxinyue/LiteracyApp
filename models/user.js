@@ -15,6 +15,7 @@ const userSchema = new Schema({
   numeracy_score: Object,
   fluency_curr_score: Number,
   phoneme_curr_score: Number,
+  phoneme_audio: Array,
   morp_awar_curr_score: Number,
   orth_awar_curr_score: Number,
   numeracy_curr_score: Number,
