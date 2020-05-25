@@ -20,7 +20,12 @@ finish tutpr-side Speed training assignment train, test data operations
 
 1. tutor-side speed training assignment number
 2. tutor-side speed training assignment auto generator
-3. tutor-side sound training assignment page
+3. tutor-side sound training assignment pa
+
+## 2020.05.25 - V2.3
+
+1. Student-side update phoneme training main page
+2. Materials placeholder & reorder the training main page
 
 ## TODD - list:
 
@@ -29,3 +34,4 @@ finish tutpr-side Speed training assignment train, test data operations
 3. Tutor-side score chart
 4. Training Timer
 5. training session 2 30 min a week
+6. Fluency train needs a summary board

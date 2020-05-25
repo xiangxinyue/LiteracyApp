@@ -6,13 +6,18 @@ import { setCurrentUser } from "./redux/user/useractions";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import axios from "axios";
 import Header from "./components/header/header";
-import Bottom from "./components/bottom/bottom";
+import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 // Fluency pages
 const FluencyMain = lazy(() => import("./pages/fluencypage/main"));
 const FluencyPractise = lazy(() => import("./pages/fluencypage/practise"));
+const FluencyMaterials = lazy(() => import("./pages/fluencypage/materials"));
 // Phoneme pages
 const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
+const PhonemePractise = lazy(() => import("./pages/phonemepage/practise"));
+const PhonemeMaterials = lazy(() => import("./pages/phonemepage/materials"));
+
+// Tutor pages
 const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
 const PhonemeAssign = lazy(() => import("./pages/assignpage/phonemeassign"));
 
@@ -47,8 +52,24 @@ class App extends React.Component {
                 path="/student/fluency/practise"
                 component={FluencyPractise}
               />
+              <Route
+                exact
+                path="/student/fluency/materials"
+                component={FluencyMaterials}
+              />
 
               <Route exact path="/student/phoneme" component={PhonemeMain} />
+              <Route
+                exact
+                path="/student/phoneme/practise"
+                component={PhonemePractise}
+              />
+              <Route
+                exact
+                path="/student/phoneme/materials"
+                component={PhonemeMaterials}
+              />
+
               <Route exact path="/tutor/fluency" component={FluencyAssign} />
               <Route exact path="/tutor/phoneme" component={PhonemeAssign} />
               {/*
@@ -75,7 +96,7 @@ class App extends React.Component {
             </Suspense>
           </ErrorBoundary>
         </Switch>
-        <Bottom />
+        <Footer />
       </div>
     );
   }

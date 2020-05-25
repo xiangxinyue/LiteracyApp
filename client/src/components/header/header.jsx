@@ -32,7 +32,7 @@ export const Header = ({ currentUser }) => {
             <ArrowRightAltIcon style={{ fontSize: 100 }} color="secondary" />
             <Button
               variant="contained"
-              color="inherit"
+              color="default"
               href="/auth/google_student"
               style={{ marginRight: 10 }}
             >
@@ -40,7 +40,7 @@ export const Header = ({ currentUser }) => {
             </Button>
             <Button
               variant="contained"
-              color="inherit"
+              color="default"
               href="/auth/google_tutor"
             >
               Tutor Signin

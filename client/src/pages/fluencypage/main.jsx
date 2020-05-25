@@ -32,6 +32,11 @@ class FluencyTrain extends Component {
               ) : (
                 <div>
                   <TrainCard
+                    title="Learning Materials"
+                    page="/student/fluency/materials"
+                    description="In this part, you can learn the lastest Speed training materials"
+                  />
+                  <TrainCard
                     title="Practise"
                     page="/student/fluency/practise"
                     description="In this part, you can practise the Speed Training as much as you want"
@@ -40,11 +45,6 @@ class FluencyTrain extends Component {
                     title="Weekly Assignment"
                     page="/student/fluency/assignment"
                     description="In this part, you can do the weekly Speed training evaluation assignment"
-                  />
-                  <TrainCard
-                    title="Learning Materials"
-                    page="/student/fluency/materials"
-                    description="In this part, you can learn the lastest Speed training materials"
                   />
                 </div>
               )}
