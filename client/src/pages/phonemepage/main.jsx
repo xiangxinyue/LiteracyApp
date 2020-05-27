@@ -5,6 +5,7 @@ import Phonemetestintro from "../../components/phoneme/testintro";
 import Process from "../../assets/process";
 import PhonemeHeader from "../../components/phoneme/header";
 import TrainCard from "../../assets/cards/trainpagecard";
+import { Container } from "@material-ui/core";
 
 class PhonemeTrain extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class PhonemeTrain extends Component {
     return (
       <div>
         <PhonemeHeader />
-        <div className="container">
+        <Container>
           {currentUser ? (
             currentUser.phoneme_curr_score === -1 ? (
               !understand ? (
@@ -41,7 +42,7 @@ class PhonemeTrain extends Component {
                 <PhonemeTestPart />
               )
             ) : (
-              <div>
+              <div className="row">
                 <TrainCard
                   title="Learning Materials"
                   page="/student/phoneme/materials"
@@ -67,7 +68,7 @@ class PhonemeTrain extends Component {
           ) : (
             <Process />
           )}
-        </div>
+        </Container>
       </div>
     );
   }

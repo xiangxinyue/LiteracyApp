@@ -17,21 +17,39 @@ const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
 const PhonemePractise = lazy(() => import("./pages/phonemepage/practise"));
 const PhonemeMaterials = lazy(() => import("./pages/phonemepage/materials"));
 const PhonemeAudioRecord = lazy(() =>
-  import("./pages/phonemepage/audiorecord")
+  import("./pages/phonemepage/audioassign")
 );
 
 // Tutor pages
-const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
-const PhonemeAssign = lazy(() => import("./pages/assignpage/phonemeassign"));
+// Fluency Page
+const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
+const FluencyTutorTrain = lazy(() =>
+  import("./pages/tutorpage/fluency/traindata")
+);
+const FluencyTutorTest = lazy(() =>
+  import("./pages/tutorpage/fluency/testdata")
+);
+const FluencyTutorAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/assignment")
+);
 
-// const PhonemeEvaluation = lazy(() => import("./pages/evaluation/phoneme"));
-// const FluencyEvaluation = lazy(() => import("./pages/evaluation/fluency"));
-// const StudentDashboard = lazy(() =>
-//   import("./pages/dashboard/studentdashpage")
-// );
-// const InstructorDashboard = lazy(() =>
-//   import("./pages/dashboard/instructordashpage")
-// );
+// Phoneme Page
+const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
+const PhonemeTutorTrain = lazy(() =>
+  import("./pages/tutorpage/phoneme/traindata")
+);
+const PhonemeTutorTest = lazy(() =>
+  import("./pages/tutorpage/phoneme/testdata")
+);
+const PhonemeTutorAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/assignment")
+);
+const PhonemeTutorAudioAll = lazy(() =>
+  import("./pages/tutorpage/phoneme/allaudios")
+);
+const PhonemeTutorAudioAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/audioassign")
+);
 
 class App extends React.Component {
   componentDidMount = async () => {
@@ -78,29 +96,48 @@ class App extends React.Component {
                 component={PhonemeAudioRecord}
               />
 
-              <Route exact path="/tutor/fluency" component={FluencyAssign} />
-              <Route exact path="/tutor/phoneme" component={PhonemeAssign} />
-              {/*
+              <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
               <Route
                 exact
-                path="/phonemeevaluation"
-                component={PhonemeEvaluation}
+                path="/tutor/fluency/traindata"
+                component={FluencyTutorTrain}
               />
               <Route
                 exact
-                path="/fluencyevaluation"
-                component={FluencyEvaluation}
+                path="/tutor/fluency/testdata"
+                component={FluencyTutorTest}
               />
               <Route
                 exact
-                path="/studentdashboard"
-                component={StudentDashboard}
+                path="/tutor/fluency/assignment"
+                component={FluencyTutorAssign}
+              />
+              <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
+              <Route
+                exact
+                path="/tutor/phoneme/traindata"
+                component={PhonemeTutorTrain}
               />
               <Route
                 exact
-                path="/instructordashboard"
-                component={InstructorDashboard}
-              /> */}
+                path="/tutor/phoneme/testdata"
+                component={PhonemeTutorTest}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/assignment"
+                component={PhonemeTutorAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/allaudios"
+                component={PhonemeTutorAudioAll}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/audioassign"
+                component={PhonemeTutorAudioAssign}
+              />
             </Suspense>
           </ErrorBoundary>
         </Switch>

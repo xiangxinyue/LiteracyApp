@@ -58,7 +58,7 @@ export const Header = ({ currentUser }) => {
             >
               Home
             </Button>
-            {currentUser.role === "student" ? (
+            {/* {currentUser.role === "student" ? (
               <Button
                 variant="contained"
                 color=""
@@ -76,7 +76,7 @@ export const Header = ({ currentUser }) => {
               >
                 Students' Score
               </Button>
-            )}
+            )} */}
             <Button variant="contained" color="" href="/auth/logout">
               Log Out
             </Button>

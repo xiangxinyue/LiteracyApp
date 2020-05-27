@@ -18,7 +18,7 @@ const FluencyHeader = (props) => {
             {currentUser.fluency_curr_score == -1 ? null : (
               <h3 className="text-success">
                 Your current reading speed is {currentUser.fluency_curr_score}{" "}
-                (words/min)
+                (ms / letter)
               </h3>
             )}
           </p>

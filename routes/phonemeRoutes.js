@@ -5,7 +5,12 @@ const PhonemeTest = mongoose.model("phoneme_tests");
 const PhonemeTrain = mongoose.model("phoneme_trains");
 const PhonemeUser = mongoose.model("phoneme_user");
 const PhonemeAssign = mongoose.model("phoneme_assigns");
-const User = mongoose.model("users");
+const PhonemeAudioAssign = mongoose.model("phoneme_audio_assigns");
+const PhonemeAudioStudentAssign = mongoose.model(
+  "phoneme_audio_student_assigns"
+);
+const Tutor = mongoose.model("tutors");
+const Student = mongoose.model("students");
 const AWS = require("aws-sdk");
 const keys = require("../config/keys");
 const uuid = require("uuid/v1");
@@ -50,28 +55,27 @@ module.exports = (app) => {
     res.send({ words, phonemes, levels, id });
   });
 
-  app.post("/api/phoneme/score/update", async (req, res) => {
-    const infor = await User.updateOne(
-      { _id: req.user._id },
-      { phoneme_curr_score: req.body.newScore }
-    ).catch((err) => console.log(err));
+  app.post("/api/phoneme/score/update", requireLogin, async (req, res) => {
+    const infor = await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_curr_score: req.body.newScore,
+    }).catch((err) => console.log(err));
     res.send(infor);
   });
 
-  app.post("/api/phoneme/rightwrong/update", async (req, res) => {
+  app.post("/api/phoneme/rightwrong/update", requireLogin, async (req, res) => {
     const { rightId, wrongId } = req.body;
-    const doc = await PhonemeUser.findById(req.user._id);
+    const doc = await PhonemeUser.findById(req.user.id);
     if (doc) {
       const newRightId = doc.rightId.concat(rightId);
       const newWrongId = doc.wrongId.concat(wrongId);
-      await PhonemeUser.updateOne(
-        { _id: req.user._id },
-        { rightId: newRightId, wrongId: newWrongId }
-      );
+      await PhonemeUser.findByIdAndUpdate(req.user.id, {
+        rightId: newRightId,
+        wrongId: newWrongId,
+      });
       res.send("Update ids");
     } else {
       const infor = await new PhonemeUser({
-        _id: req.user._id,
+        _id: req.user.id,
         rightId,
         wrongId,
       }).save();
@@ -86,20 +90,39 @@ module.exports = (app) => {
       "putObject",
       {
         Bucket: keys.Bucket,
-        ContentType: "audio/wav",
+        ContentType: "audio/*",
         Key: key,
       },
       (err, url) => res.send({ err, key, url })
     );
   });
 
-  app.get("/api/phoneme/audio/get", async (req, res) => {
-    const user = await User.findById(req.user.id);
+  app.get("/api/phoneme/audio/get", requireLogin, async (req, res) => {
+    const user = await Student.findById(req.user.id);
     res.send(user.phoneme_audio);
   });
 
+  app.get("/api/phoneme/audioassign/one", requireLogin, async (req, res) => {
+    const assignment = await PhonemeAudioAssign.find();
+    res.send(assignment);
+  });
+
+  app.post(
+    "/api/phoneme/audioassign/create",
+    requireLogin,
+    async (req, res) => {
+      const assign = new PhonemeAudioStudentAssign({
+        audioAssignId: req.body.id,
+        studentId: req.user.id,
+        studentName: req.user.displayName,
+        assignment: req.body.newAssignment,
+      }).save();
+      res.send(assign);
+    }
+  );
+
   // ---------------------------------------------------------------------------
-  // Tutoe side
+  // Tutor side
   app.get("/api/phoneme/train/gettable", requireTutor, async (req, res) => {
     const traindata = await PhonemeTrain.find();
     res.send(traindata);
@@ -137,4 +160,26 @@ module.exports = (app) => {
     }).save();
     res.send(data);
   });
+
+  // Audio Recording
+  app.get("/api/phoneme/audioassign/all", requireTutor, async (req, res) => {
+    const assignments = await PhonemeAudioStudentAssign.find();
+    res.send(assignments);
+  });
+
+  app.post(
+    "/api/phoneme/audioassign/create",
+    requireTutor,
+    async (req, res) => {
+      const tutor = req.user.displayName;
+      const createAt = new Date();
+      const assignment = req.body.assigndata;
+      const assign = await new PhonemeAudioAssign({
+        tutor,
+        createAt,
+        assignment,
+      }).save();
+      res.send(assign);
+    }
+  );
 };

@@ -3,6 +3,9 @@ const { Schema } = mongoose;
 
 const fluencyTestSchema = new Schema({
   paragraph: String,
+  question: String,
+  choices: Array,
+  answer: String,
 });
 
 mongoose.model("fluency_tests", fluencyTestSchema);

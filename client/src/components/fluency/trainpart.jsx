@@ -50,26 +50,24 @@ class FluencyTrainingPart extends Component {
 
   startReading = async () => {
     let index = 0;
-    const readSpeed = (1 / this.state.speed) * 1000;
-    console.log(`Real speed is ${readSpeed}`);
+    const { speed, length } = this.state;
     await setTimeout(() => {
       time = setInterval(async () => {
-        if (index < this.state.length) {
+        if (index < length) {
           await $(`.${index}`).css("color", "white"); // "#e9ecef"
           index += 1;
         } else {
           await this.setState({ readDone: true });
           clearInterval(time);
         }
-      }, readSpeed);
+      }, speed);
     }, 1000);
   };
 
   checkAnswer = async (e) => {
+    const { yourAnswer, answers, currentParaNum } = this.state;
     await this.setState({ yourAnswer: e.target.value });
-    if (
-      this.state.yourAnswer === this.state.answers[this.state.currentParaNum]
-    ) {
+    if (yourAnswer === answers[currentParaNum]) {
       this.setState({
         answerred: true,
         score: this.state.score + 1,
@@ -80,37 +78,49 @@ class FluencyTrainingPart extends Component {
   };
 
   changeQuestion = async () => {
+    const { currentParaNum, paragraphs, currPara, currParaArray } = this.state;
     await this.setState({
-      currentParaNum: this.state.currentParaNum + 1,
-      currPara: this.state.paragraphs[this.state.currentParaNum],
+      currentParaNum: currentParaNum + 1,
+      currPara: paragraphs[currentParaNum],
       readDone: false,
       answerred: false,
     });
-    const sentenceArray = await this.state.currPara.split("");
+    const sentenceArray = await currPara.split("");
     await this.setState({ currParaArray: sentenceArray });
-    await this.setState({ length: this.state.currParaArray.length });
+    await this.setState({ length: currParaArray.length });
 
     this.startReading();
   };
 
   finishTrain = async () => {
-    const levelUp = this.state.score / (this.state.maxNumOfQues + 1) >= 0.8;
+    const { score, maxNumOfQues, speed } = this.state;
+    const levelUp = score / (maxNumOfQues + 1) >= 0.8;
     if (levelUp) {
-      const newSpeed = Math.floor(this.state.speed * 1.2);
+      const newSpeed = Math.floor(speed * 1.2);
       await axios.post("/api/fluency/score/update", { newSpeed });
     } else {
-      const newSpeed = Math.floor(this.state.speed * 0.8);
+      const newSpeed = Math.floor(speed * 0.8);
       await axios.post("/api/fluency/score/update", { newSpeed });
     }
     window.location = "/student/fluency";
   };
 
   render() {
+    const {
+      readDone,
+      score,
+      answerred,
+      currentParaNum,
+      maxNumOfQues,
+      questions,
+      choices,
+      currParaArray,
+    } = this.state;
     return (
       <div>
-        {this.state.readDone ? (
-          this.state.answerred ? (
-            this.state.currentParaNum < this.state.maxNumOfQues ? (
+        {readDone ? (
+          answerred ? (
+            currentParaNum < maxNumOfQues ? (
               <Button
                 variant="contained"
                 color="primary"
@@ -134,33 +144,31 @@ class FluencyTrainingPart extends Component {
             )
           ) : (
             <div>
-              <h3>{this.state.questions[this.state.currentParaNum]}</h3>
-              {this.state.choices[this.state.currentParaNum].map(
-                (choice, index) => (
-                  <div className="row">
-                    <div className="col-3"></div>
-                    <div className="row col-6">
-                      <input
-                        type="radio"
-                        key={index}
-                        value={choice}
-                        defaultChecked={false}
-                        onClick={this.checkAnswer}
-                      />
-                      &nbsp;&nbsp;
-                      <h4>{choice}</h4>
-                    </div>
-                    <div className="col-3"></div>
+              <h3>{questions[currentParaNum]}</h3>
+              {choices[currentParaNum].map((choice, index) => (
+                <div className="row">
+                  <div className="col-3"></div>
+                  <div className="row col-6">
+                    <input
+                      type="radio"
+                      key={index}
+                      value={choice}
+                      defaultChecked={false}
+                      onClick={this.checkAnswer}
+                    />
+                    &nbsp;&nbsp;
+                    <h4>{choice}</h4>
                   </div>
-                )
-              )}
+                  <div className="col-3"></div>
+                </div>
+              ))}
             </div>
           )
         ) : (
           <div>
-            {this.state.currParaArray.length !== 0 ? (
+            {currParaArray.length !== 0 ? (
               <div className="row" style={{ paddingLeft: 30, fontSize: 20 }}>
-                {this.state.currParaArray.map((letter, index) => {
+                {currParaArray.map((letter, index) => {
                   if (letter === " ") {
                     return (
                       <div className={index} key={index}>
@@ -182,10 +190,9 @@ class FluencyTrainingPart extends Component {
           </div>
         )}
         <hr />
-        <h5>Your score is: {this.state.score}</h5>
+        <h5>Your score is: {score}</h5>
         <h5>
-          The process: {this.state.currentParaNum + 1} /{" "}
-          {this.state.maxNumOfQues + 1}
+          The process: {currentParaNum + 1} / {maxNumOfQues + 1}
         </h5>
       </div>
     );

@@ -28,6 +28,14 @@ finish tutpr-side Speed training assignment train, test data operations
 2. Materials placeholder & reorder the training main page
 3. Implemented the Audio recoding and Upload it into AWS S3, then show on the page
 
+## 2020.05.26 - v2.4
+
+1. Update speeding testing part to record the time multiple times and calculate the average speed
+2. Add tutor-side fluency main page, and seperate train, test, assignment data creation page
+3. Built phoneme audio assignment database
+4. Built student-side audio assignment page
+5. Built tutor-side audio assignment loop-up page
+
 ## TODD - list:
 
 1. student assignment aviability check

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
+const studentSchema = new Schema({
   createdAt: Date,
   role: String,
   googleId: String,
@@ -21,4 +21,4 @@ const userSchema = new Schema({
   numeracy_curr_score: Number,
 });
 
-mongoose.model("users", userSchema);
+mongoose.model("students", studentSchema);

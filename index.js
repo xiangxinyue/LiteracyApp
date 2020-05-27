@@ -5,8 +5,6 @@ const passport = require("passport");
 const app = express();
 const { json } = require("body-parser");
 app.use(json());
-// const cors = require("cors");
-// app.use(cors());
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
 
@@ -27,7 +25,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./models/user");
+require("./models/student");
+require("./models/tutor");
 require("./models/fluency");
 require("./models/phoneme");
 
