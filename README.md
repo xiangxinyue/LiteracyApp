@@ -20,7 +20,21 @@ finish tutpr-side Speed training assignment train, test data operations
 
 1. tutor-side speed training assignment number
 2. tutor-side speed training assignment auto generator
-3. tutor-side sound training assignment page
+3. tutor-side sound training assignment pa
+
+## 2020.05.25 - V2.3
+
+1. Student-side update phoneme training main page
+2. Materials placeholder & reorder the training main page
+3. Implemented the Audio recoding and Upload it into AWS S3, then show on the page
+
+## 2020.05.26 - v2.4
+
+1. Update speeding testing part to record the time multiple times and calculate the average speed
+2. Add tutor-side fluency main page, and seperate train, test, assignment data creation page
+3. Built phoneme audio assignment database
+4. Built student-side audio assignment page
+5. Built tutor-side audio assignment loop-up page
 
 ## TODD - list:
 
@@ -29,3 +43,4 @@ finish tutpr-side Speed training assignment train, test data operations
 3. Tutor-side score chart
 4. Training Timer
 5. training session 2 30 min a week
+6. Fluency train needs a summary board

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import FluencyTestPart from "../../components/fluency/testpart";
-// import FluencyAssignPart from "../../components/instructor/fluencyassign";
 import Process from "../../assets/process";
 import { connect } from "react-redux";
 import FluencyHeader from "../../components/fluency/header";
-import Button from "@material-ui/core/Button";
-import { Container } from "@material-ui/core";
+import FluencyTestIntro from "../../components/fluency/testintro";
+import FluencyTestPart from "../../components/fluency/testpart";
+import { Container, Button } from "@material-ui/core";
+import Paper from "../../assets/paper";
 import TrainCard from "../../assets/cards/trainpagecard";
 
 class FluencyTrain extends Component {
@@ -19,18 +19,30 @@ class FluencyTrain extends Component {
 
   render() {
     const { currentUser } = this.props;
+    const { understand } = this.state;
     return (
       <div>
         <FluencyHeader />
-        <div className={"container"} style={{ paddingBottom: 50 }}>
+        <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>
               {currentUser.fluency_curr_score == -1 ? (
-                <Container>
-                  <FluencyTestPart />
-                </Container>
+                !understand ? (
+                  <FluencyTestIntro
+                    handleClick={() =>
+                      this.setState({ understand: !understand })
+                    }
+                  />
+                ) : (
+                  <Paper component={FluencyTestPart} />
+                )
               ) : (
                 <div>
+                  <TrainCard
+                    title="Learning Materials"
+                    page="/student/fluency/materials"
+                    description="In this part, you can learn the lastest Speed training materials"
+                  />
                   <TrainCard
                     title="Practise"
                     page="/student/fluency/practise"
@@ -41,18 +53,13 @@ class FluencyTrain extends Component {
                     page="/student/fluency/assignment"
                     description="In this part, you can do the weekly Speed training evaluation assignment"
                   />
-                  <TrainCard
-                    title="Learning Materials"
-                    page="/student/fluency/materials"
-                    description="In this part, you can learn the lastest Speed training materials"
-                  />
                 </div>
               )}
             </div>
           ) : (
             <Process />
           )}
-        </div>
+        </Container>
       </div>
     );
   }

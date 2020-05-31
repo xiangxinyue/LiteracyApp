@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
+const studentSchema = new Schema({
   createdAt: Date,
   role: String,
   googleId: String,
@@ -15,9 +15,10 @@ const userSchema = new Schema({
   numeracy_score: Object,
   fluency_curr_score: Number,
   phoneme_curr_score: Number,
+  phoneme_audio: Array,
   morp_awar_curr_score: Number,
   orth_awar_curr_score: Number,
   numeracy_curr_score: Number,
 });
 
-mongoose.model("users", userSchema);
+mongoose.model("students", studentSchema);

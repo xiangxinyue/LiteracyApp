@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../header/signinheader";
 
-const FluencyHeader = (props) => {
+const PhonemeHeader = (props) => {
   const { currentUser } = props;
   const renderPage = () => {
     switch (currentUser) {
@@ -13,12 +13,12 @@ const FluencyHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Speed Training</h2>
+            <h2>Welcome to Sound Training</h2>
             <hr />
-            {currentUser.fluency_curr_score == -1 ? null : (
+            {currentUser.phoneme_curr_score == -1 ? null : (
               <h3 className="text-success">
-                Your current reading speed is {currentUser.fluency_curr_score}{" "}
-                (ms / letter)
+                Your current Sound Training Score is{" "}
+                {currentUser.phoneme_curr_score} / 20
               </h3>
             )}
           </p>
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(FluencyHeader);
+export default connect(mapStateToProps)(PhonemeHeader);

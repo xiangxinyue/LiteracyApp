@@ -1,94 +1,182 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import Process from "../../assets/process";
-import Button from "@material-ui/core/Button";
 import axios from "axios";
-let time;
+import { connect } from "react-redux";
+import { Button, Container } from "@material-ui/core";
+let timer;
+let newTime = 0;
 
-class SpeedTest extends Component {
+class FluencyTestPart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      testingState: null,
-      time: null,
-      paragraph: null,
+      score: 0,
+      currentParaNum: 0,
+      maxNumOfQues: 0,
+      length: 0,
+      currPara: null,
+      currParaArray: [],
+      paragraphs: [],
+      questions: [],
+      choices: [],
+      answers: [],
+      yourAnswer: null,
+      readDone: false,
+      answerred: false,
+      speeds: [],
+      time: 0,
     };
   }
 
   componentDidMount = async () => {
-    const data = await axios.get("/api/fluency/test/get");
-    const paragraph = data.data.paragraph;
-    this.setState({ paragraph });
+    const doc = await axios("/api/fluency/test/get");
+    const data = doc.data;
+    await this.setState({
+      paragraphs: data.paragraphs,
+      questions: data.questions,
+      choices: data.choices,
+      answers: data.answers,
+      maxNumOfQues: data.paragraphs.length - 1,
+      speed: this.props.currentUser.fluency_curr_score,
+    });
+    await this.setState({
+      currPara: this.state.paragraphs[this.state.currentParaNum],
+    });
+    const sentenceArray = await this.state.currPara.split("");
+    await this.setState({ currParaArray: sentenceArray });
+    await this.setState({
+      length: this.state.currParaArray.length,
+      readDone: true,
+    });
+    this.toggleReading();
   };
 
-  startTest = async () => {
-    await this.setState({ testingState: "start" });
-    time = setInterval(() => {
+  toggleReading = async () => {
+    const { readDone, speeds, length } = this.state;
+    if (readDone) {
+      await this.setState({ readDone: false });
+      timer = setInterval(() => (newTime += 1), 1);
+    } else {
+      clearInterval(timer);
+      let newSpeeds = speeds;
+      const newSpeed = newTime / length;
+      newSpeeds.push(newSpeed);
+      newTime = 0;
+      this.setState({ readDone: true, speeds: newSpeeds });
+    }
+  };
+
+  checkAnswer = async (e) => {
+    await this.setState({ yourAnswer: e.target.value });
+    if (
+      this.state.yourAnswer === this.state.answers[this.state.currentParaNum]
+    ) {
       this.setState({
-        time: Math.round((this.state.time + 0.01) * 100) / 100,
+        answerred: true,
+        score: this.state.score + 1,
       });
-    }, 10);
+    } else {
+      this.setState({ answerred: true });
+    }
   };
 
-  finishTest = async () => {
-    await this.setState({ testingState: "finish" });
-    await clearInterval(time);
-    const newScore = await Math.floor(
-      this.state.paragraph.length / this.state.time
-    );
-    await axios.post("/api/fluency/score/update", { newScore });
+  changeQuestion = async () => {
+    await this.setState({
+      currentParaNum: this.state.currentParaNum + 1,
+      currPara: this.state.paragraphs[this.state.currentParaNum],
+      answerred: false,
+    });
+    const sentenceArray = await this.state.currPara.split("");
+    await this.setState({ currParaArray: sentenceArray });
+    await this.setState({ length: this.state.currParaArray.length });
+    this.toggleReading();
+  };
+
+  finishTrain = async () => {
+    const { speeds } = this.state;
+    let sum = 0;
+    speeds.forEach((speed) => (sum += speed));
+    const newSpeed = Math.round(sum / speeds.length);
+    await axios.post("/api/fluency/score/update", { newSpeed });
     window.location = "/student/fluency";
   };
 
   render() {
+    const {
+      readDone,
+      answerred,
+      currentParaNum,
+      maxNumOfQues,
+      questions,
+      choices,
+      currPara,
+    } = this.state;
     return (
-      <div className="container">
-        {!this.state.testingState ? (
-          <div>
-            <h2 className="text-primary">
-              Test your reading speed before we start
-            </h2>
-            <h4>
-              Instructions: Watch the introduction video first, then click the
-              start button. Read the words as fast as possible. When you finish
-              click the finish button.
-            </h4>
-            <iframe
-              width="600"
-              height="340"
-              src="https://www.youtube.com/embed/rDg4S6jxLJI"
-              frameborder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-            <hr />
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={this.startTest}
-            >
-              Start
-            </Button>
-          </div>
-        ) : (
-          <div>
-            {this.state.paragraph ? (
+      <div>
+        {readDone ? (
+          answerred ? (
+            currentParaNum < maxNumOfQues ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.changeQuestion}
+                size="large"
+              >
+                Next Question
+              </Button>
+            ) : (
               <div>
-                <p>{this.state.paragraph}</p>
+                <h2>You have finish all the testing questions!</h2>
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={this.finishTest}
+                  onClick={this.finishTrain}
+                  size="large"
                 >
-                  Finish
+                  Good Job!
                 </Button>
               </div>
-            ) : (
-              <Process />
-            )}
+            )
+          ) : (
+            <div>
+              <h3>{questions[currentParaNum]}</h3>
+              {choices[currentParaNum].map((choice, index) => (
+                <div className="row">
+                  <div className="col-3"></div>
+                  <div className="row col-6">
+                    <input
+                      type="radio"
+                      key={index}
+                      value={choice}
+                      defaultChecked={false}
+                      onClick={this.checkAnswer}
+                    />
+                    &nbsp;&nbsp;
+                    <h4>{choice}</h4>
+                  </div>
+                  <div className="col-3"></div>
+                </div>
+              ))}
+            </div>
+          )
+        ) : (
+          <div>
+            <h3>{currPara}</h3>
+            <Button
+              size="large"
+              color="primary"
+              variant="contained"
+              onClick={this.toggleReading}
+            >
+              Finish
+            </Button>
           </div>
         )}
+        <hr />
+        <h5>Your score is: {this.state.score}</h5>
+        <h5>
+          The process: {this.state.currentParaNum + 1} /{" "}
+          {this.state.maxNumOfQues + 1}
+        </h5>
       </div>
     );
   }
@@ -98,4 +186,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(SpeedTest);
+export default connect(mapStateToProps)(FluencyTestPart);

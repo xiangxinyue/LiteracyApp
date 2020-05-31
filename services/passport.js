@@ -2,18 +2,23 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const keys = require("../config/keys");
 const mongoose = require("mongoose");
-const User = mongoose.model("users");
+const Tutor = mongoose.model("tutors");
+const Student = mongoose.model("students");
 
 passport.serializeUser((user, callback) => {
   callback(null, user.id);
 });
 
 passport.deserializeUser(async (id, callback) => {
-  // const tutor = await Tutor.findById(id);
-  // const student = await Student.findById(id);
-
-  const user = await User.findById(id);
-  return callback(null, user);
+  const tutor = await Tutor.findById(id);
+  if (tutor) {
+    return callback(null, tutor);
+  }
+  const student = await Student.findById(id);
+  if (student) {
+    return callback(null, student);
+  }
+  callback(null, null);
 });
 
 passport.use(
@@ -26,12 +31,12 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, callback) => {
-      const doc = await User.findOne({ googleId: profile.id });
+      const doc = await Student.findOne({ googleId: profile.id });
       if (doc) {
         return callback(null, doc);
       } else {
         const createdAt = new Date();
-        const user = await new User({
+        const student = await new Student({
           createdAt,
           role: "student",
           googleId: profile.id,
@@ -49,7 +54,7 @@ passport.use(
           orth_awar_curr_score: -1,
           numeracy_curr_score: -1,
         }).save();
-        return callback(null, user);
+        return callback(null, student);
       }
     }
   )
@@ -66,12 +71,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, callback) => {
       console.log(profile);
-      const doc = await User.findOne({ googleId: profile.id });
+      const doc = await Tutor.findOne({ googleId: profile.id });
       if (doc) {
         return callback(null, doc);
       } else {
         const createdAt = new Date();
-        const user = await new User({
+        const tutor = await new Tutor({
           createdAt,
           role: "tutor",
           googleId: profile.id,
@@ -79,7 +84,7 @@ passport.use(
           email: profile.emails[0].value,
           photo: profile.photos[0].value,
         }).save();
-        return callback(null, user);
+        return callback(null, tutor);
       }
     }
   )

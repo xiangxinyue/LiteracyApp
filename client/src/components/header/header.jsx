@@ -32,7 +32,7 @@ export const Header = ({ currentUser }) => {
             <ArrowRightAltIcon style={{ fontSize: 100 }} color="secondary" />
             <Button
               variant="contained"
-              color="secondary"
+              color="default"
               href="/auth/google_student"
               style={{ marginRight: 10 }}
             >
@@ -40,10 +40,10 @@ export const Header = ({ currentUser }) => {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              color="default"
               href="/auth/google_tutor"
             >
-              Instructor Signin
+              Tutor Signin
             </Button>
           </div>
         );
@@ -58,7 +58,7 @@ export const Header = ({ currentUser }) => {
             >
               Home
             </Button>
-            {currentUser.role === "student" ? (
+            {/* {currentUser.role === "student" ? (
               <Button
                 variant="contained"
                 color=""
@@ -76,7 +76,7 @@ export const Header = ({ currentUser }) => {
               >
                 Students' Score
               </Button>
-            )}
+            )} */}
             <Button variant="contained" color="" href="/auth/logout">
               Log Out
             </Button>

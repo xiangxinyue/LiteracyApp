@@ -6,24 +6,50 @@ import { setCurrentUser } from "./redux/user/useractions";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import axios from "axios";
 import Header from "./components/header/header";
-import Bottom from "./components/bottom/bottom";
+import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 // Fluency pages
 const FluencyMain = lazy(() => import("./pages/fluencypage/main"));
 const FluencyPractise = lazy(() => import("./pages/fluencypage/practise"));
+const FluencyMaterials = lazy(() => import("./pages/fluencypage/materials"));
 // Phoneme pages
 const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
-const FluencyAssign = lazy(() => import("./pages/assignpage/fluencyassign"));
-const PhonemeAssign = lazy(() => import("./pages/assignpage/phonemeassign"));
+const PhonemePractise = lazy(() => import("./pages/phonemepage/practise"));
+const PhonemeMaterials = lazy(() => import("./pages/phonemepage/materials"));
+const PhonemeAudioRecord = lazy(() =>
+  import("./pages/phonemepage/audioassign")
+);
 
-// const PhonemeEvaluation = lazy(() => import("./pages/evaluation/phoneme"));
-// const FluencyEvaluation = lazy(() => import("./pages/evaluation/fluency"));
-// const StudentDashboard = lazy(() =>
-//   import("./pages/dashboard/studentdashpage")
-// );
-// const InstructorDashboard = lazy(() =>
-//   import("./pages/dashboard/instructordashpage")
-// );
+// Tutor pages
+// Fluency Page
+const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
+const FluencyTutorTrain = lazy(() =>
+  import("./pages/tutorpage/fluency/traindata")
+);
+const FluencyTutorTest = lazy(() =>
+  import("./pages/tutorpage/fluency/testdata")
+);
+const FluencyTutorAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/assignment")
+);
+
+// Phoneme Page
+const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
+const PhonemeTutorTrain = lazy(() =>
+  import("./pages/tutorpage/phoneme/traindata")
+);
+const PhonemeTutorTest = lazy(() =>
+  import("./pages/tutorpage/phoneme/testdata")
+);
+const PhonemeTutorAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/assignment")
+);
+const PhonemeTutorAudioAll = lazy(() =>
+  import("./pages/tutorpage/phoneme/allaudios")
+);
+const PhonemeTutorAudioAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/audioassign")
+);
 
 class App extends React.Component {
   componentDidMount = async () => {
@@ -47,35 +73,75 @@ class App extends React.Component {
                 path="/student/fluency/practise"
                 component={FluencyPractise}
               />
+              <Route
+                exact
+                path="/student/fluency/materials"
+                component={FluencyMaterials}
+              />
 
               <Route exact path="/student/phoneme" component={PhonemeMain} />
-              <Route exact path="/tutor/fluency" component={FluencyAssign} />
-              <Route exact path="/tutor/phoneme" component={PhonemeAssign} />
-              {/*
               <Route
                 exact
-                path="/phonemeevaluation"
-                component={PhonemeEvaluation}
+                path="/student/phoneme/practise"
+                component={PhonemePractise}
               />
               <Route
                 exact
-                path="/fluencyevaluation"
-                component={FluencyEvaluation}
+                path="/student/phoneme/materials"
+                component={PhonemeMaterials}
               />
               <Route
                 exact
-                path="/studentdashboard"
-                component={StudentDashboard}
+                path="/student/phoneme/audiorecord"
+                component={PhonemeAudioRecord}
+              />
+
+              <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
+              <Route
+                exact
+                path="/tutor/fluency/traindata"
+                component={FluencyTutorTrain}
               />
               <Route
                 exact
-                path="/instructordashboard"
-                component={InstructorDashboard}
-              /> */}
+                path="/tutor/fluency/testdata"
+                component={FluencyTutorTest}
+              />
+              <Route
+                exact
+                path="/tutor/fluency/assignment"
+                component={FluencyTutorAssign}
+              />
+              <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
+              <Route
+                exact
+                path="/tutor/phoneme/traindata"
+                component={PhonemeTutorTrain}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/testdata"
+                component={PhonemeTutorTest}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/assignment"
+                component={PhonemeTutorAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/allaudios"
+                component={PhonemeTutorAudioAll}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/audioassign"
+                component={PhonemeTutorAudioAssign}
+              />
             </Suspense>
           </ErrorBoundary>
         </Switch>
-        <Bottom />
+        <Footer />
       </div>
     );
   }

@@ -21,7 +21,7 @@ const phonemetestintro = (props) => {
           wrong, the program will tell you the right answer.
         </p>
         <Button variant="contained" color="primary" onClick={props.handleClick}>
-          Understand
+          Start
         </Button>
       </div>
     );
