@@ -1,7 +1,7 @@
 import React from "react";
-import FluencyIntro from "../../../components/fluency/trainintro";
-import FluencyMain from "../../../components/fluency/trainpart";
-import FluencyHeader from "../../../components/fluency/header";
+import FluencyIntro from "../../../components/student/fluency/trainintro";
+import FluencyMain from "../../../components/student/fluency/trainpart";
+import FluencyHeader from "../../../components/student/fluency/header";
 import Paper from "../../../assets/paper";
 
 class FluencyPractise extends React.Component {

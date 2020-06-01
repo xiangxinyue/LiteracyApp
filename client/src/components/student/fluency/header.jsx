@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import SignInHeader from "../header/signinheader";
+import SignInHeader from "../../header/signinheader";
 
 const FluencyHeader = (props) => {
   const { currentUser } = props;

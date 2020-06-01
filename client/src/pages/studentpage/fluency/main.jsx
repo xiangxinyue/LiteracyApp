@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Process from "../../../assets/process";
 import { connect } from "react-redux";
-import FluencyHeader from "../../../components/fluency/header";
-import FluencyTestIntro from "../../../components/fluency/testintro";
-import FluencyTestPart from "../../../components/fluency/testpart";
+import FluencyHeader from "../../../components/student/fluency/header";
+import FluencyTestIntro from "../../../components/student/fluency/testintro";
+import FluencyTestPart from "../../../components/student/fluency/testpart";
 import { Container, Button } from "@material-ui/core";
 import Paper from "../../../assets/paper";
 import TrainCard from "../../../assets/cards/trainpagecard";

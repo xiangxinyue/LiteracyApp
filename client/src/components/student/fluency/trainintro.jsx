@@ -1,5 +1,5 @@
 import React from "react";
-import Paper from "../../assets/paper";
+import Paper from "../../../assets/paper";
 import { Button, Container } from "@material-ui/core";
 
 const Fluencytrainintro = (props) => {

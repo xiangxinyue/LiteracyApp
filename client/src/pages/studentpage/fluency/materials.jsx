@@ -1,4 +1,4 @@
-import FluencyHeader from "../../../components/fluency/header";
+import FluencyHeader from "../../../components/student/fluency/header";
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
