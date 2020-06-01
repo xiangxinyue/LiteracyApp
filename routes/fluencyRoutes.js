@@ -20,6 +20,7 @@ module.exports = (app) => {
       createAt: new Date(),
       averageSpeed: req.body.averageSpeed,
       assignment: req.body.assignment,
+      status: "pending",
     }).save();
 
     res.send(assign);
