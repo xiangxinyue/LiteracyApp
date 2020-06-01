@@ -37,7 +37,7 @@ class FluencyTrain extends Component {
                   <Paper component={FluencyTestPart} />
                 )
               ) : (
-                <div>
+                <div className="row">
                   <TrainCard
                     title="Learning Materials"
                     page="/student/fluency/materials"

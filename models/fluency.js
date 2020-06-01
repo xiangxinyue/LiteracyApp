@@ -10,6 +10,18 @@ const fluencyTestSchema = new Schema({
 
 mongoose.model("fluency_tests", fluencyTestSchema);
 
+const fluencyTestAssignSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
+  createAt: Date,
+  averageSpeed: Number,
+  assignment: Array,
+  status: String,
+});
+
+mongoose.model("fluency_test_assigns", fluencyTestAssignSchema);
+
 const fluencyTrainSchema = new Schema({
   paragraph: String,
   question: String,

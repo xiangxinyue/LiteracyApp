@@ -19,6 +19,7 @@ class FluencyTestPart extends Component {
       questions: [],
       choices: [],
       answers: [],
+      studentAnswers: [],
       yourAnswer: null,
       readDone: false,
       answerred: false,
@@ -66,13 +67,15 @@ class FluencyTestPart extends Component {
   };
 
   checkAnswer = async (e) => {
-    await this.setState({ yourAnswer: e.target.value });
-    if (
-      this.state.yourAnswer === this.state.answers[this.state.currentParaNum]
-    ) {
+    const studentAnswer = e.target.value;
+    const { studentAnswers, answers, currentParaNum, score } = this.state;
+    let newStudentAnswers = studentAnswers;
+    newStudentAnswers.push(e.target.value);
+    this.setState({ studentAnswers: newStudentAnswers });
+    if (studentAnswer === answers[currentParaNum]) {
       this.setState({
         answerred: true,
-        score: this.state.score + 1,
+        score: score + 1,
       });
     } else {
       this.setState({ answerred: true });
@@ -92,11 +95,34 @@ class FluencyTestPart extends Component {
   };
 
   finishTrain = async () => {
-    const { speeds } = this.state;
-    let sum = 0;
-    speeds.forEach((speed) => (sum += speed));
-    const newSpeed = Math.round(sum / speeds.length);
-    await axios.post("/api/fluency/score/update", { newSpeed });
+    const {
+      speeds,
+      questions,
+      paragraphs,
+      answers,
+      choices,
+      studentAnswers,
+    } = this.state;
+    let assignment = [];
+    for (let i = 0; i < questions.length; i++) {
+      let entry = {};
+      entry.paragraph = paragraphs[i];
+      entry.question = questions[i];
+      entry.choices = choices[i];
+      entry.answer = answers[i];
+      entry.studentAnswer = studentAnswers[i];
+      entry.speed = speeds[i];
+      assignment.push(entry);
+    }
+    let speedSum = 0;
+    for (let i = 0; i < speeds.length; i++) {
+      speedSum += speeds[i];
+    }
+    const averageSpeed = Math.round(speedSum / speeds.length);
+    await axios.post("/api/fluency/test/assign/create", {
+      assignment,
+      averageSpeed,
+    });
     window.location = "/student/fluency";
   };
 

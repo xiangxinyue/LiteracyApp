@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { Button, Container } from "@material-ui/core";
-import TrainCard from "../../../assets/cards/audiolookupcard";
+import TrainCard from "../../../assets/cards/tutorallassigncard";
 
 class PhonemeTutorAllAssign extends React.Component {
   constructor() {
     super();
-    this.state = { assignments: [], showAssign: null };
+    this.state = { assignments: [] };
   }
 
   componentDidMount = async () => {
@@ -15,7 +15,7 @@ class PhonemeTutorAllAssign extends React.Component {
   };
 
   render() {
-    const { assignments, showAssign } = this.state;
+    const { assignments } = this.state;
     return (
       <div>
         <div className="jumbotron">
