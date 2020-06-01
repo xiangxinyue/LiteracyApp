@@ -88,13 +88,6 @@ class PhonemeTutorAudioAssign extends React.Component {
     } = this.state;
     return (
       <div>
-        <div className="jumbotron">
-          <h2>Create a new audio assignment</h2>
-          <hr />
-          <Button variant="contained" color="default" href="/tutor/phoneme">
-            Go back
-          </Button>
-        </div>
         <Container>
           <TextField
             label="Num of Questions"

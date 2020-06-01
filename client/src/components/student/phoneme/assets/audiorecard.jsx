@@ -3,7 +3,7 @@ import PhonemeHeader from "./header";
 import { Container, Button, Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import MicRecorder from "mic-recorder-to-mp3";
-import keys from "../../assets/keys";
+import keys from "../../../../assets/keys";
 import axios from "axios";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -64,15 +64,16 @@ class FluencyAudioRecord extends React.Component {
   };
 
   render() {
-    const { file } = this.state;
+    const { file, isRecording, blobURL } = this.state;
     return (
       <div>
-        <audio src={this.state.blobURL} controls="controls" />
+        <audio src={blobURL} controls="controls" />
+        <br />
         <Button
           variant="outlined"
           color="primary"
           onClick={this.handleStart}
-          disabled={this.state.isRecording}
+          disabled={isRecording}
         >
           Record
         </Button>
@@ -80,15 +81,15 @@ class FluencyAudioRecord extends React.Component {
           variant="outlined"
           color="secondary"
           onClick={this.handleStop}
-          disabled={!this.state.isRecording}
+          disabled={!isRecording}
         >
           Stop
         </Button>
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => this.props.handleUpload(file)}
-          disabled={this.state.isRecording}
+          // onClick={() => this.props.handleUpload(file)}
+          disabled={isRecording}
         >
           Upload
         </Button>

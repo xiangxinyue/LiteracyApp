@@ -1,4 +1,4 @@
-import AudioTable from "../../assets/table/audioassigntable";
+import AudioCard from "../assets/audiotable";
 import React from "react";
 import axios from "axios";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -24,7 +24,7 @@ class PhonemeAudioAssign extends React.Component {
     const doc = await axios.get("/api/phoneme/audioassign/one");
     const assignment = doc.data[0].assignment;
     const id = doc.data[0]._id;
-    this.setState({ assignment, id });
+    this.setState({ assignment, id }, () => console.log(assignment));
   };
 
   handleCloseAlert = (event, reason) => {
@@ -44,7 +44,12 @@ class PhonemeAudioAssign extends React.Component {
     const audios = this.state.audios;
     let newAudios = audios;
     newAudios.push(uploadConfig.data.key);
-    this.setState({ audios: newAudios }, () => console.log(this.state));
+    this.setState({ audios: newAudios, rightAlert: true });
+  };
+
+  handleChangeQuestion = () => {
+    const { index } = this.state;
+    this.setState({ index: index + 1 });
   };
 
   handleSubmit = async () => {
@@ -70,20 +75,17 @@ class PhonemeAudioAssign extends React.Component {
     const { assignment, rightAlert, wrongAlert } = this.state;
     return (
       <div>
-        <div className="jumbotron">
-          <h2>Welcome to sound audio training</h2>
-          <hr />
-        </div>
         <Container>
-          <AudioTable
+          <AudioCard
             rows={assignment}
             handleUpload={(file) => this.handleUpload(file)}
           />
           <Button
             variant="contained"
             color="primary"
-            onClick={this.handleSubmit}
-            style={{ position: "absolute", right: "10%", margin: 10 }}
+            size="large"
+            // onClick={this.handleSubmit}
+            style={{ width: "90%", margin: 20 }}
           >
             Submit
           </Button>

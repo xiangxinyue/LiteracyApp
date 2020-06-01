@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PhonemeTestPart from "../../components/phoneme/testpart";
-import Phonemetestintro from "../../components/phoneme/testintro";
-import Process from "../../assets/process";
-import PhonemeHeader from "../../components/phoneme/header";
-import TrainCard from "../../assets/cards/trainpagecard";
+import PhonemeTestPart from "../../../components/student/phoneme/test/testpart";
+import Phonemetestintro from "../../../components/student/phoneme/test/testintro";
+import Process from "../../../assets/process";
+import PhonemeHeader from "../../../components/student/phoneme/assets/header";
+import TrainCard from "../../../assets/cards/trainpagecard";
 import { Container } from "@material-ui/core";
 
 class PhonemeTrain extends Component {
@@ -30,7 +30,7 @@ class PhonemeTrain extends Component {
     const { understand, startTrain, evaluationDone } = this.state;
     return (
       <div>
-        <PhonemeHeader />
+        <PhonemeHeader part="Training Main Page" />
         <Container>
           {currentUser ? (
             currentUser.phoneme_curr_score === -1 ? (
@@ -51,11 +51,6 @@ class PhonemeTrain extends Component {
                 <TrainCard
                   title="Practise"
                   page="/student/phoneme/practise"
-                  description="In this part, you can practise the Speed Training as much as you want"
-                />
-                <TrainCard
-                  title="Audio Record"
-                  page="/student/phoneme/audiorecord"
                   description="In this part, you can practise the Speed Training as much as you want"
                 />
                 <TrainCard

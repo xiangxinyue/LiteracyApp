@@ -1,6 +1,5 @@
-import FluencyHeader from "../../components/fluency/header";
+import FluencyHeader from "../../../components/fluency/header";
 import React from "react";
-import Paper from "../../assets/paper";
 import { Button, Container } from "@material-ui/core";
 
 const FluencyMaterials = (props) => {

@@ -1,18 +1,18 @@
 import React from "react";
-import WordCard from "../../assets/cards/wordcard";
-import Process from "../../assets/process";
+import WordCard from "../assets/wordcard";
+import Process from "../../../../assets/process";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Phonemesummary from "./trainsum";
+import Phonemesummary from "../assets/summary";
 import { connect } from "react-redux";
 import axios from "axios";
 
-class PhonemeTrainPart extends React.Component {
+class PhonemeTestPart extends React.Component {
   constructor() {
     super();
     this.state = {
       id: [],
-      word: [],
       level: [],
+      word: [],
       phoneme: [],
       index: 0,
       correct: false,
@@ -26,7 +26,7 @@ class PhonemeTrainPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/phoneme/train/get");
+    const doc = await axios.get("/api/phoneme/test/get");
     const data = doc.data;
     await this.setState({
       word: data.words,
@@ -71,6 +71,7 @@ class PhonemeTrainPart extends React.Component {
   };
 
   update = async () => {
+    const { rightWord, word } = this.state;
     let rightId = [];
     let wrongId = [];
     await this.state.word.forEach((word, index) => {
@@ -81,7 +82,7 @@ class PhonemeTrainPart extends React.Component {
       }
     });
     await axios.post("/api/phoneme/rightwrong/update", { rightId, wrongId });
-    const newScore = 20 * (rightId.length / this.state.word.length);
+    const newScore = 20 * (rightWord.length / word.length);
     axios.post("/api/phoneme/score/update", { newScore });
   };
 
@@ -130,4 +131,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(PhonemeTrainPart);
+export default connect(mapStateToProps)(PhonemeTestPart);

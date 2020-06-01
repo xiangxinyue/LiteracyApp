@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import SignInHeader from "../header/signinheader";
+import SignInHeader from "../../../header/signinheader";
 
 const PhonemeHeader = (props) => {
   const { currentUser } = props;
@@ -13,7 +13,7 @@ const PhonemeHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Sound Training</h2>
+            <h2>Welcome to Sound {props.part}</h2>
             <hr />
             {currentUser.phoneme_curr_score == -1 ? null : (
               <h3 className="text-success">

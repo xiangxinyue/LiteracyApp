@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ]
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -18,12 +24,11 @@
     "concurrently": "^5.2.0",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.3",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.14",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
-    "uuid": "^3.3.2",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "uuid": "^3.3.2"
   }
 }

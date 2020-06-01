@@ -9,15 +9,23 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 // Fluency pages
-const FluencyMain = lazy(() => import("./pages/fluencypage/main"));
-const FluencyPractise = lazy(() => import("./pages/fluencypage/practise"));
-const FluencyMaterials = lazy(() => import("./pages/fluencypage/materials"));
+const FluencyMain = lazy(() => import("./pages/studentpage/fluency/main"));
+const FluencyPractise = lazy(() =>
+  import("./pages/studentpage/fluency/practise")
+);
+const FluencyMaterials = lazy(() =>
+  import("./pages/studentpage/fluency/materials")
+);
 // Phoneme pages
-const PhonemeMain = lazy(() => import("./pages/phonemepage/main"));
-const PhonemePractise = lazy(() => import("./pages/phonemepage/practise"));
-const PhonemeMaterials = lazy(() => import("./pages/phonemepage/materials"));
-const PhonemeAudioRecord = lazy(() =>
-  import("./pages/phonemepage/audioassign")
+const PhonemeMain = lazy(() => import("./pages/studentpage/phoneme/main"));
+const PhonemePractise = lazy(() =>
+  import("./pages/studentpage/phoneme/practise")
+);
+const PhonemeMaterials = lazy(() =>
+  import("./pages/studentpage/phoneme/materials")
+);
+const PhonemeAssignment = lazy(() =>
+  import("./pages/studentpage/phoneme/assignment")
 );
 
 // Tutor pages
@@ -44,17 +52,13 @@ const PhonemeTutorTest = lazy(() =>
 const PhonemeTutorAssign = lazy(() =>
   import("./pages/tutorpage/phoneme/assignment")
 );
-const PhonemeTutorAudioAll = lazy(() =>
-  import("./pages/tutorpage/phoneme/allaudios")
-);
-const PhonemeTutorAudioAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/audioassign")
+const PhonemeTutorAllAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/allassign")
 );
 
 class App extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/auth/current_user");
-    console.log(doc.data);
     this.props.setCurrentUser(doc.data);
   };
 
@@ -92,8 +96,8 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/student/phoneme/audiorecord"
-                component={PhonemeAudioRecord}
+                path="/student/phoneme/assignment"
+                component={PhonemeAssignment}
               />
 
               <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
@@ -130,13 +134,8 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/tutor/phoneme/allaudios"
-                component={PhonemeTutorAudioAll}
-              />
-              <Route
-                exact
-                path="/tutor/phoneme/audioassign"
-                component={PhonemeTutorAudioAssign}
+                path="/tutor/phoneme/allassign"
+                component={PhonemeTutorAllAssign}
               />
             </Suspense>
           </ErrorBoundary>
