@@ -33,7 +33,12 @@ class FluencyTutorMain extends React.Component {
               description="In this part, you can modify speed tesing data"
             />
             <TrainCard
-              title="Modify Weekly Assignment"
+              title="Review Students' Testing Assignment"
+              page="/tutor/fluency/testassign"
+              description="In this part, you can review students' testing assignment"
+            />
+            <TrainCard
+              title="Create Weekly Assignment"
               page="/tutor/fluency/assignment"
               description="In this part, you can create new weekly assignment"
             />

@@ -1,9 +1,7 @@
 import React from "react";
-import PhonemeHeader from "./header";
 import { Container, Button, Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import MicRecorder from "mic-recorder-to-mp3";
-import keys from "../../../../assets/keys";
 import axios from "axios";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
