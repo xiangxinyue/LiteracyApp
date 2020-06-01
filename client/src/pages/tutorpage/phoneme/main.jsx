@@ -33,14 +33,9 @@ class PhonemeTutorMain extends React.Component {
               description="In this part, you can modify speed tesing data"
             />
             <TrainCard
-              title="Students' Audios"
-              page="/tutor/phoneme/allaudios"
-              description="In this part, you can check students' audios"
-            />
-            <TrainCard
-              title="Audio Assignment"
-              page="/tutor/phoneme/audioassign"
-              description="In this part, you can submit new audio assignments"
+              title="Students' Weekly Assignment"
+              page="/tutor/phoneme/allassign"
+              description="In this part, you can check students' weekly assignments"
             />
             <TrainCard
               title="Weekly Assignment"
