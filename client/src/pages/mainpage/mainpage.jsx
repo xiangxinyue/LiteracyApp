@@ -54,7 +54,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Meaning Training"}
-              page={"/"}
+              page={"/student/meaning"}
               image={imagePath + images[3]}
               description={"Increase your meaning skills in English"}
             />

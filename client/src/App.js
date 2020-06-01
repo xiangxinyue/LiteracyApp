@@ -8,6 +8,7 @@ import axios from "axios";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
+// Student pages
 // Fluency pages
 const FluencyMain = lazy(() => import("./pages/studentpage/fluency/main"));
 const FluencyPractise = lazy(() =>
@@ -28,8 +29,20 @@ const PhonemeAssignment = lazy(() =>
   import("./pages/studentpage/phoneme/assignment")
 );
 
+// Meaning pages
+const MeaningMain = lazy(() => import("./pages/studentpage/meaning/main"));
+const MeaningPractise = lazy(() =>
+  import("./pages/studentpage/meaning/practise")
+);
+const MeaningMaterials = lazy(() =>
+  import("./pages/studentpage/meaning/materials")
+);
+const MeaningAssignment = lazy(() =>
+  import("./pages/studentpage/meaning/assignment")
+);
+
 // Tutor pages
-// Fluency Page
+// Fluency pages
 const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
 const FluencyTutorTrain = lazy(() =>
   import("./pages/tutorpage/fluency/traindata")
@@ -106,6 +119,24 @@ class App extends React.Component {
                 path="/student/phoneme/assignment"
                 component={PhonemeAssignment}
               />
+
+              <Route exact path="/student/meaning" component={MeaningMain} />
+              <Route
+                exact
+                path="/student/meaning/practise"
+                component={MeaningPractise}
+              />
+              <Route
+                exact
+                path="/student/meaning/materials"
+                component={MeaningMaterials}
+              />
+              <Route
+                exact
+                path="/student/meaning/assignment"
+                component={MeaningAssignment}
+              />
+
 
               <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
               <Route
