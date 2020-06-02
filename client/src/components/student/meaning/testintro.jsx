@@ -9,13 +9,14 @@ const MeaningTestIntro = (props) => {
       </h3>
       <h4>
         Instructions: Watch the introduction video first, then click the start
-        button. Read the words as fast as possible. When you finish click the
-        finish button.
+        button to begin the meaning testing part. 
+        This is the knowledge or awareness of morphemes (smallest
+        meaningful unit). For example, there are 2 morphemes in the word: beautiful (beauty+ful)
       </h4>
       <iframe
         width="740"
         height="430"
-        src="https://www.youtube.com/embed/rDg4S6jxLJI"
+        src="https://www.youtube.com/embed/o4HXapRlr1A"
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
