@@ -1,11 +1,11 @@
-import FluencyHeader from "../../../components/student/fluency/header";
+import FluencyHeader from "../../../components/student/fluency/assets/header";
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
 const FluencyMaterials = (props) => {
   return (
     <div>
-      <FluencyHeader />
+      <FluencyHeader part="Training Materials page" />
 
       <Container>
         <h3 className="text-primary">
@@ -26,7 +26,6 @@ const FluencyMaterials = (props) => {
           style={{ marginTop: 20 }}
         ></iframe>
         <hr />
-
         <Button
           variant="contained"
           color="inherit"

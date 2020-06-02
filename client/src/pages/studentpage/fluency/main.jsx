@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Process from "../../../assets/process";
 import { connect } from "react-redux";
-import FluencyHeader from "../../../components/student/fluency/header";
-import FluencyTestIntro from "../../../components/student/fluency/testintro";
-import FluencyTestPart from "../../../components/student/fluency/testpart";
+import FluencyHeader from "../../../components/student/fluency/assets/header";
+import FluencyTestIntro from "../../../components/student/fluency/test/testintro";
+import FluencyTestPart from "../../../components/student/fluency/test/testpart";
 import { Container, Button } from "@material-ui/core";
 import Paper from "../../../assets/paper";
 import TrainCard from "../../../assets/cards/trainpagecard";
@@ -22,7 +22,7 @@ class FluencyTrain extends Component {
     const { understand } = this.state;
     return (
       <div>
-        <FluencyHeader />
+        <FluencyHeader part="Training Main Page" />
         <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>

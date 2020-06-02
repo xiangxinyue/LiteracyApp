@@ -23,7 +23,6 @@ class FluencyTutorAssignPage extends React.Component {
       assignAddChoice4: "",
       assignAddAnswer: "",
       assignNum: 20,
-      assignEntryShow: false,
     };
   }
 
@@ -93,11 +92,11 @@ class FluencyTutorAssignPage extends React.Component {
   };
 
   addNewAssign = async () => {
-    await axios.post("/api/fluency/assign/add", {
+    await axios.post("/api/fluency/assign/tutoradd", {
       data: this.state.assigndata,
     });
     await this.setState({ alert: true });
-    window.location = "/fluencyassign";
+    window.location = "/tutor/fluency";
   };
 
   handleCloseAlert = (event, reason) => {
@@ -117,7 +116,6 @@ class FluencyTutorAssignPage extends React.Component {
       assignAddChoice4,
       assignAddAnswer,
       assignNum,
-      assignEntryShow,
     } = this.state;
 
     return (
