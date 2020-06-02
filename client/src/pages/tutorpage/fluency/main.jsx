@@ -16,6 +16,34 @@ class FluencyTutorMain extends React.Component {
           <hr />
         </div>
         <Container>
+          <h2>Review Students' Assignments and Performance</h2>
+          <div className="row">
+            <TrainCard
+              title="Review Students' Testing Assignment"
+              page="/tutor/fluency/testassign"
+              description="In this part, you can review students' testing assignment"
+            />
+            <TrainCard
+              title="Check Students' Evaluation Assignment"
+              page="/tutor/fluency/evalassign"
+              description="In this part, you can review students' testing assignment"
+            />
+            <TrainCard
+              title="Create Weekly Assignment"
+              page="/tutor/fluency/assignment"
+              description="In this part, you can create new weekly assignment"
+            />
+            <TrainCard
+              title="Students' Performance"
+              page="/tutor/fluency/performance"
+              description="In this part, you can check students' performance"
+            />
+          </div>
+        </Container>
+        <hr />
+
+        <Container>
+          <h2>Modify Fluency Database</h2>
           <div className="row">
             <TrainCard
               title="Modify Learning Materials"
@@ -31,16 +59,6 @@ class FluencyTutorMain extends React.Component {
               title="Modify Testing data"
               page="/tutor/fluency/testdata"
               description="In this part, you can modify speed tesing data"
-            />
-            <TrainCard
-              title="Review Students' Testing Assignment"
-              page="/tutor/fluency/testassign"
-              description="In this part, you can review students' testing assignment"
-            />
-            <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/fluency/assignment"
-              description="In this part, you can create new weekly assignment"
             />
           </div>
         </Container>

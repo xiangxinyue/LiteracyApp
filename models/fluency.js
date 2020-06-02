@@ -41,7 +41,21 @@ mongoose.model("fluency_user", fluencyUserSchema);
 
 const fluencyAssignSchema = new Schema({
   tutor: String,
+  createAt: Date,
   assignment: Array,
 });
 
 mongoose.model("fluency_assigns", fluencyAssignSchema);
+
+const fluencyEvalAssignSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
+  assignment: Array,
+  createAt: Date,
+  score: Number,
+  newSpeed: Number,
+  oldSpeed: Number,
+});
+
+mongoose.model("fluency_eval_assigns", fluencyEvalAssignSchema);

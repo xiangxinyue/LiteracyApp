@@ -36,6 +36,16 @@ finish tutpr-side Speed training assignment train, test data operations
 4. Built student-side audio assignment page
 5. Built tutor-side audio assignment loop-up page
 
+## 2020.05.31 - V2.5
+
+1. Combine the phoneme separation assignment and audio recording assignment
+
+## 2020.06.01 - V2.6
+
+1. Fluency testing assignment is set to be reviewed manually by tutor.
+2. Fluency Weekly assignment works for both students and tutors now
+3. In Fluency Training part, Tutor can check both testing and evaluation assignments.
+
 ## TODD - list:
 
 1. student assignment aviability check
@@ -44,3 +54,4 @@ finish tutpr-side Speed training assignment train, test data operations
 4. Training Timer
 5. training session 2 30 min a week
 6. Fluency train needs a summary board
+7. Fluency student performance board.

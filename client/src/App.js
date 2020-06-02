@@ -17,6 +17,9 @@ const FluencyPractise = lazy(() =>
 const FluencyMaterials = lazy(() =>
   import("./pages/studentpage/fluency/materials")
 );
+const FluencyAssignment = lazy(() =>
+  import("./pages/studentpage/fluency/assignment")
+);
 // Phoneme pages
 const PhonemeMain = lazy(() => import("./pages/studentpage/phoneme/main"));
 const PhonemePractise = lazy(() =>
@@ -60,6 +63,12 @@ const FluencyTutorTestAllAssign = lazy(() =>
 const FluencyTutorTestOneAssign = lazy(() =>
   import("./pages/tutorpage/fluency/testoneassign")
 );
+const FluencyTutorEvalAllAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/evalallassign")
+);
+const FluencyTutorEvalOneAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/evaloneassign")
+);
 
 // Phoneme Page
 const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
@@ -102,7 +111,11 @@ class App extends React.Component {
                 path="/student/fluency/materials"
                 component={FluencyMaterials}
               />
-
+              <Route
+                exact
+                path="/student/fluency/assignment"
+                component={FluencyAssignment}
+              />
               <Route exact path="/student/phoneme" component={PhonemeMain} />
               <Route
                 exact
@@ -162,6 +175,15 @@ class App extends React.Component {
                 exact
                 path="/tutor/fluency/assignment"
                 component={FluencyTutorAssign}
+              />
+              <Route
+                exact
+                path="/tutor/fluency/evalassign"
+                component={FluencyTutorEvalAllAssign}
+              />
+              <Route
+                path="/tutor/fluency/evalassign/:id"
+                component={FluencyTutorEvalOneAssign}
               />
               <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
               <Route

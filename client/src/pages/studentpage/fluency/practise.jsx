@@ -1,7 +1,7 @@
 import React from "react";
-import FluencyIntro from "../../../components/student/fluency/trainintro";
-import FluencyMain from "../../../components/student/fluency/trainpart";
-import FluencyHeader from "../../../components/student/fluency/header";
+import FluencyIntro from "../../../components/student/fluency/train/trainintro";
+import FluencyMain from "../../../components/student/fluency/train/trainpart";
+import FluencyHeader from "../../../components/student/fluency/assets/header";
 import Paper from "../../../assets/paper";
 
 class FluencyPractise extends React.Component {
@@ -13,7 +13,7 @@ class FluencyPractise extends React.Component {
     const { understand } = this.state;
     return (
       <div>
-        <FluencyHeader />
+        <FluencyHeader part="Training Practise" />
         {understand ? (
           <Paper component={FluencyMain} />
         ) : (

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import SignInHeader from "../../header/signinheader";
+import SignInHeader from "../../../header/signinheader";
+import { Button } from "@material-ui/core";
 
 const FluencyHeader = (props) => {
   const { currentUser } = props;
@@ -13,7 +14,7 @@ const FluencyHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Speed Training</h2>
+            <h2>Welcome to Speed {props.part}</h2>
             <hr />
             {currentUser.fluency_curr_score == -1 ? (
               <h3 className="text-success">

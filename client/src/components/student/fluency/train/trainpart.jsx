@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Button, Container } from "@material-ui/core";
-import Process from "../../../assets/process";
+import Process from "../../../../assets/process";
 import $ from "jquery";
 let time;
 
