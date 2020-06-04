@@ -4,28 +4,48 @@ import PhonemePart from "../../../components/student/phoneme/assign/phonemepart"
 import AudioPart from "../../../components/student/phoneme/assign/audiopart";
 import PhonemeHeader from "../../../components/student/phoneme/assets/header";
 import { Container } from "@material-ui/core";
+import axios from "axios";
 
 class PhonemeAssign extends React.Component {
   state = {
     start: false,
+    phonemeDone: false,
+    phonemeAssign: [],
+  };
+
+  handleAudioAssign = async (data) => {
+    const { phonemeAssign } = this.state;
+    await axios.post("/api/phoneme/evalassign", {
+      phonemeAssign,
+      audioAssign: data,
+    });
+    window.location = "/student/phoneme";
   };
 
   render() {
-    const { start } = this.state;
+    const { start, phonemeDone } = this.state;
     return (
       <div>
         <PhonemeHeader part="Assignment" />
-        {start ? (
-          <Container>
-            <h2>Part 1: phoneme part</h2>
-            <PhonemePart />
-            <hr />
-            <h2>Part 2: sound record</h2>
-            <AudioPart />
-          </Container>
-        ) : (
-          <PhonemeIntro handleClick={() => this.setState({ start: !start })} />
-        )}
+        <Container>
+          {start ? (
+            !phonemeDone ? (
+              <PhonemePart
+                handlePhonemeAssign={(data) =>
+                  this.setState({ phonemeAssign: data, phonemeDone: true })
+                }
+              />
+            ) : (
+              <AudioPart
+                handleAudioAssign={(data) => this.handleAudioAssign(data)}
+              />
+            )
+          ) : (
+            <PhonemeIntro
+              handleClick={() => this.setState({ start: !start })}
+            />
+          )}
+        </Container>
       </div>
     );
   }

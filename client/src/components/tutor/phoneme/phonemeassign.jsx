@@ -1,13 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import MuiAlert from "@material-ui/lab/Alert";
-import { TextField, Button, Container, Snackbar } from "@material-ui/core";
-import Table from "../../../assets/table/phonemetable";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { TextField, Button, Container } from "@material-ui/core";
+import Table from "./phonemetable";
 
 class PhonemeTutorAssign extends React.Component {
   constructor(props) {
@@ -19,7 +14,6 @@ class PhonemeTutorAssign extends React.Component {
       assignAddLevel: "",
       assigndata: [],
       assignNum: 20,
-      alert: false,
     };
   }
 
@@ -49,7 +43,6 @@ class PhonemeTutorAssign extends React.Component {
       assignAddWord: "",
       assignAddPhoneme: "",
       assignAddLevel: "",
-      alert: true,
     });
   };
 
@@ -62,27 +55,14 @@ class PhonemeTutorAssign extends React.Component {
       console.log("choose", index);
       assign.push(traindata[index]);
     }
-    this.setState({ assigndata: assign, alert: true });
+    this.setState({ assigndata: assign });
   };
 
   deleteAssignEntry = (id) => {
     const newAssign = this.state.assigndata.filter((ele) => {
       if (ele.id !== id) return ele;
     });
-    this.setState({ assigndata: newAssign, alert: true });
-  };
-
-  addNewAssign = async () => {
-    await axios.post("/api/phoneme/assign/add", {
-      data: this.state.assigndata,
-    });
-    await this.setState({ alert: true });
-    window.location = "/phonemeassign";
-  };
-
-  handleCloseAlert = (event, reason) => {
-    if (reason === "clickaway") return;
-    this.setState({ alert: false });
+    this.setState({ assigndata: newAssign });
   };
 
   render() {
@@ -131,14 +111,14 @@ class PhonemeTutorAssign extends React.Component {
                 }
               />
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={this.addNewAssignEntry}
               >
                 Add New Entry
               </Button>
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={this.generateAssign}
               >
@@ -149,9 +129,9 @@ class PhonemeTutorAssign extends React.Component {
             <Button
               variant="contained"
               color="primary"
-              onClick={this.addNewAssign}
+              onClick={() => this.props.handlePhonemeAssign(assigndata)}
             >
-              Submit New Assignment
+              Submit This Part
             </Button>
           )}
           <Table
@@ -163,15 +143,6 @@ class PhonemeTutorAssign extends React.Component {
             three="level"
           />
         </Container>
-        <Snackbar
-          open={alert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert onClose={this.handleClose} severity="success">
-            Operation Successfully!
-          </Alert>
-        </Snackbar>
       </div>
     );
   }

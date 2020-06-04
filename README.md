@@ -46,6 +46,11 @@ finish tutpr-side Speed training assignment train, test data operations
 2. Fluency Weekly assignment works for both students and tutors now
 3. In Fluency Training part, Tutor can check both testing and evaluation assignments.
 
+## 2020.06.03 - V2.7
+
+1. Phoneme Assignment, student-side applies the card format.
+2. Phoneme assignment, tutors can review and mark students' assignments.
+
 ## TODD - list:
 
 1. student assignment aviability check

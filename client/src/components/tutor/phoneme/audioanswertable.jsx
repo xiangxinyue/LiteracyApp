@@ -8,8 +8,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import keys from "../../../../assets/keys";
-import AudioRecord from "./audiorecard";
+import keys from "../../../assets/keys";
 
 const useStyles = makeStyles({
   table: {
@@ -25,22 +24,20 @@ export default function SimpleTable(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Question</TableCell>
-            <TableCell align="right">Original Audio</TableCell>
-            <TableCell align="right">Your Recording Audio</TableCell>
+            <TableCell align="left">Question</TableCell>
+            <TableCell align="left">Audio</TableCell>
+            <TableCell align="left">Answer</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell align="right">{row.question}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left">{row.question}</TableCell>
+              <TableCell align="left">
                 <audio src={keys.AWS + row.audio} controls="controls" />
               </TableCell>
-              <TableCell align="right">
-                <AudioRecord
-                  handleUpload={(file) => props.handleUpload(file)}
-                />
+              <TableCell align="left">
+                <audio src={keys.AWS + row.answer} controls="controls" />
               </TableCell>
             </TableRow>
           ))}

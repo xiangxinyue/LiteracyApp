@@ -1,13 +1,9 @@
 import React from "react";
-import { Container, Button, Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
+import { Container, Button } from "@material-ui/core";
 import MicRecorder from "mic-recorder-to-mp3";
 import axios from "axios";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 class FluencyAudioRecord extends React.Component {
   state = {
@@ -86,7 +82,7 @@ class FluencyAudioRecord extends React.Component {
         <Button
           variant="outlined"
           color="primary"
-          // onClick={() => this.props.handleUpload(file)}
+          onClick={() => this.props.handleUpload(file)}
           disabled={isRecording}
         >
           Upload

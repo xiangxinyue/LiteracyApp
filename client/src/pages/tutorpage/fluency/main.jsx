@@ -16,7 +16,7 @@ class FluencyTutorMain extends React.Component {
           <hr />
         </div>
         <Container>
-          <h2>Review Students' Assignments and Performance</h2>
+          <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
               title="Review Students' Testing Assignment"
@@ -43,7 +43,7 @@ class FluencyTutorMain extends React.Component {
         <hr />
 
         <Container>
-          <h2>Modify Fluency Database</h2>
+          <h3>Modify Fluency Database</h3>
           <div className="row">
             <TrainCard
               title="Modify Learning Materials"

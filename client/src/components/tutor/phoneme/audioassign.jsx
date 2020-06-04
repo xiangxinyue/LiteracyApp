@@ -1,12 +1,7 @@
 import React from "react";
 import axios from "axios";
-import MuiAlert from "@material-ui/lab/Alert";
-import { Button, Container, TextField, Snackbar } from "@material-ui/core";
-import AudioTable from "../../../assets/table/audiotable";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { Button, Container, TextField } from "@material-ui/core";
+import AudioTable from "./audiotable";
 
 class PhonemeTutorAudioAssign extends React.Component {
   constructor() {
@@ -17,8 +12,6 @@ class PhonemeTutorAudioAssign extends React.Component {
       currQuestion: "",
       currAudio: "",
       audios: [],
-      rightAlert: false,
-      wrongAlert: false,
     };
   }
 
@@ -50,14 +43,10 @@ class PhonemeTutorAudioAssign extends React.Component {
       let newAssignDataArray = assigndata;
       newAssignDataArray.push(newAssignData);
       this.setState({
-        rightAlert: true,
         assigndata: newAssignDataArray,
         currAudio: null,
         currQuestion: "",
       });
-      console.log(this.state);
-    } else {
-      this.setState({ wrongAlert: true });
     }
   };
 
@@ -69,23 +58,8 @@ class PhonemeTutorAudioAssign extends React.Component {
     this.setState({ assigndata: newAssignData });
   };
 
-  handleSubmit = async () => {
-    const { assigndata } = this.state;
-    const doc = await axios.post("/api/phoneme/audioassign/create", {
-      assigndata,
-    });
-    if (doc.data) this.setState({ rightAlert: true });
-    else this.setState({ wrongAlert: true });
-  };
-
   render() {
-    const {
-      assigndata,
-      number,
-      currQuestion,
-      rightAlert,
-      wrongAlert,
-    } = this.state;
+    const { assigndata, number, currQuestion } = this.state;
     return (
       <div>
         <Container>
@@ -113,7 +87,7 @@ class PhonemeTutorAudioAssign extends React.Component {
                 }
               />
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={this.handleAddEntry}
               >
@@ -124,9 +98,9 @@ class PhonemeTutorAudioAssign extends React.Component {
             <Button
               variant="contained"
               color="primary"
-              onClick={this.handleSubmit}
+              onClick={() => this.props.handleAudioAssign(assigndata)}
             >
-              Submit New Assignment
+              Submit This Part
             </Button>
           )}
           <AudioTable
@@ -134,24 +108,6 @@ class PhonemeTutorAudioAssign extends React.Component {
             handleDelete={(audiokey) => this.handleDeleteEntry(audiokey)}
           />
         </Container>
-        <Snackbar
-          open={rightAlert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert onClose={this.handleClose} severity="success">
-            Operation Successfully!
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          open={wrongAlert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert severity="warning">
-            you did not choose the right audio file
-          </Alert>
-        </Snackbar>
       </div>
     );
   }

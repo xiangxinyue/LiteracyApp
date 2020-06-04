@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import MuiAlert from "@material-ui/lab/Alert";
 import { TextField, Button, Container, Snackbar } from "@material-ui/core";
-import Table from "../../../assets/table/phonemetable";
+import Table from "../../../components/tutor/phoneme/phonemetable";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
