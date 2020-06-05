@@ -81,8 +81,11 @@ const PhonemeTutorTest = lazy(() =>
 const PhonemeTutorAssign = lazy(() =>
   import("./pages/tutorpage/phoneme/assignment")
 );
-const PhonemeTutorAllAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/allassign")
+const PhonemeTutorEvalAllAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/evalallassign")
+);
+const PhonemeTutorEvalOneAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/evaloneassign")
 );
 
 class App extends React.Component {
@@ -204,7 +207,11 @@ class App extends React.Component {
               <Route
                 exact
                 path="/tutor/phoneme/allassign"
-                component={PhonemeTutorAllAssign}
+                component={PhonemeTutorEvalAllAssign}
+              />
+              <Route
+                path="/tutor/phoneme/allassign/:id"
+                component={PhonemeTutorEvalOneAssign}
               />
             </Suspense>
           </ErrorBoundary>

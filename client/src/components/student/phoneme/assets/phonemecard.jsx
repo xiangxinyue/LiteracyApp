@@ -1,37 +1,59 @@
 import React from "react";
-import Table from "@material-ui/core/Table";
-import Button from "@material-ui/core/Button";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import CircularIntegration from "../../../../assets/answerbutton";
+import Grid from "@material-ui/core/Grid";
 
-export default function SimpleTable(props) {
+const useStyles = makeStyles({
+  root: {
+    minWidth: 375,
+    margin: 10,
+    textAlign: "center",
+  },
+});
+
+export default function WordCard(props) {
+  const classes = useStyles();
+  const array = props.phoneme.split(" ");
+  const phonemeWord = array.join("•");
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">Number</TableCell>
-            <TableCell align="right">Word</TableCell>
-            <TableCell align="right">Phoneme</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell align="right">{index + 1}</TableCell>
-              <TableCell align="right">{row.word}</TableCell>
-              <TableCell align="right">
-                <TextField />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Card className={classes.root} variant="outlined">
+      <CardContent>
+        {props.answered ? (
+          <Typography variant="h3" component="h2">
+            {phonemeWord}
+          </Typography>
+        ) : (
+          <Typography variant="h3" component="h2">
+            {props.word}
+          </Typography>
+        )}
+      </CardContent>
+      <Grid container spacing={0}>
+        <Grid item xs={7}>
+          <TextField
+            id="outlined-basic"
+            label="Phoneme"
+            variant="outlined"
+            value={props.input}
+            onChange={(e) => props.handleInput(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={5}>
+          <CircularIntegration
+            next={props.next}
+            handleClick={props.handleClick}
+            answered={props.answered}
+            correct={props.correct}
+            last={props.last}
+            update={props.update}
+          />
+        </Grid>
+      </Grid>
+    </Card>
   );
 }

@@ -1,38 +1,40 @@
-import AudioCard from "../assets/audiotable";
 import React from "react";
 import axios from "axios";
-import MuiAlert from "@material-ui/lab/Alert";
-import { Button, Container, Snackbar } from "@material-ui/core";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { Button, Container, Paper } from "@material-ui/core";
+import AudioRecord from "./audiorecord";
+import keys from "../../../../assets/keys";
 
 class PhonemeAudioAssign extends React.Component {
   constructor() {
     super();
     this.state = {
-      assignment: [],
-      id: null,
-      audios: [],
-      wrongAlert: false,
-      rightAlert: false,
+      originalAudios: [],
+      questions: [],
+      assignId: null,
+      answerAudios: [],
+      audioDone: false,
+      index: 0,
     };
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/audioassign/one");
-    const assignment = doc.data[0].assignment;
-    const id = doc.data[0]._id;
-    this.setState({ assignment, id }, () => console.log(assignment));
-  };
-
-  handleCloseAlert = (event, reason) => {
-    if (reason === "clickaway") return;
-    this.setState({ wrongAlert: false, rightAlert: false });
+    const doc = await axios.get("/api/phoneme/evalassign");
+    const assignment = doc.data.audioAssign;
+    let audios = [];
+    let question = [];
+    for (let i = 0; i < assignment.length; i++) {
+      audios.push(assignment[i].audio);
+      question.push(assignment[i].question);
+    }
+    this.setState({
+      originalAudios: audios,
+      questions: question,
+      assignId: doc.data._id,
+    });
   };
 
   handleUpload = async (file) => {
+    const { index, answerAudios } = this.state;
     const uploadConfig = await axios.get("/api/phoneme/audio/");
     await axios
       .put(uploadConfig.data.url, file, {
@@ -41,73 +43,86 @@ class PhonemeAudioAssign extends React.Component {
         },
       })
       .catch((err) => console.log(err));
-    const audios = this.state.audios;
-    let newAudios = audios;
+    let newAudios = answerAudios;
     newAudios.push(uploadConfig.data.key);
-    this.setState({ audios: newAudios, rightAlert: true });
+    this.setState(
+      {
+        answerAudios: newAudios,
+        audioDone: true,
+        index: index + 1,
+      },
+      () => console.log(this.state)
+    );
   };
 
   handleChangeQuestion = () => {
-    const { index } = this.state;
-    this.setState({ index: index + 1 });
-  };
-
-  handleSubmit = async () => {
-    const { assignment, id, audios } = this.state;
-    let newAssignment = [];
-    for (let i = 0; i < assignment.length; i++) {
-      const dataset = {
-        question: assignment[i].question,
-        audio: assignment[i].audio,
-        answer: audios[i],
-      };
-      newAssignment.push(dataset);
+    const { index, originalAudios, answerAudios, questions } = this.state;
+    if (originalAudios.length === index) {
+      console.log("arrives here");
+      let audioAssign = [];
+      for (let i = 0; i < originalAudios.length; i++) {
+        audioAssign.push({
+          question: questions[i],
+          audio: originalAudios[i],
+          answer: answerAudios[i],
+        });
+      }
+      this.props.handleAudioAssign(audioAssign);
     }
-    const doc = await axios.post("/api/phoneme/audioassign/create", {
-      newAssignment,
-      id,
-    });
-    if (doc.data) this.setState({ rightAlert: true });
-    else this.setState({ wrongAlert: true });
+    this.setState({ audioDone: false }, () => console.log(this.state));
   };
 
+  // handleAudioAssign
   render() {
-    const { assignment, rightAlert, wrongAlert } = this.state;
+    const {
+      audioDone,
+      originalAudios,
+      index,
+      audioAssign,
+      questions,
+    } = this.state;
     return (
       <div>
         <Container>
-          <AudioCard
-            rows={assignment}
-            handleUpload={(file) => this.handleUpload(file)}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            // onClick={this.handleSubmit}
-            style={{ width: "90%", margin: 20 }}
-          >
-            Submit
-          </Button>
+          <Paper>
+            {originalAudios.length === 0 ? null : originalAudios.length !==
+              index ? (
+              audioDone ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={this.handleChangeQuestion}
+                >
+                  Next Question
+                </Button>
+              ) : (
+                <Container>
+                  <h3>{questions[index]}</h3>
+                  <br />
+                  <audio
+                    src={keys.AWS + originalAudios[index]}
+                    controls="controls"
+                  />
+                  <hr />
+                  <AudioRecord
+                    handleUpload={(file) => this.handleUpload(file)}
+                  />
+                </Container>
+              )
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={this.handleChangeQuestion}
+                style={{ width: "90%", margin: 20 }}
+              >
+                Submit
+              </Button>
+            )}
+          </Paper>
         </Container>
-        <Snackbar
-          open={rightAlert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert onClose={this.handleClose} severity="success">
-            Operation Successfully!
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          open={wrongAlert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert severity="warning">
-            you did not choose the right audio file
-          </Alert>
-        </Snackbar>
       </div>
     );
   }

@@ -5,10 +5,7 @@ const PhonemeTest = mongoose.model("phoneme_tests");
 const PhonemeTrain = mongoose.model("phoneme_trains");
 const PhonemeUser = mongoose.model("phoneme_user");
 const PhonemeAssign = mongoose.model("phoneme_assigns");
-const PhonemeAudioAssign = mongoose.model("phoneme_audio_assigns");
-const PhonemeAudioStudentAssign = mongoose.model(
-  "phoneme_audio_student_assigns"
-);
+const PhonemeEvalAssign = mongoose.model("phoneme_eval_assigns");
 const Tutor = mongoose.model("tutors");
 const Student = mongoose.model("students");
 const AWS = require("aws-sdk");
@@ -55,13 +52,6 @@ module.exports = (app) => {
     res.send({ words, phonemes, levels, id });
   });
 
-  app.post("/api/phoneme/score/update", requireLogin, async (req, res) => {
-    const infor = await Student.findByIdAndUpdate(req.user.id, {
-      phoneme_curr_score: req.body.newScore,
-    }).catch((err) => console.log(err));
-    res.send(infor);
-  });
-
   app.post("/api/phoneme/rightwrong/update", requireLogin, async (req, res) => {
     const { rightId, wrongId } = req.body;
     const doc = await PhonemeUser.findById(req.user.id);
@@ -83,7 +73,7 @@ module.exports = (app) => {
     }
   });
 
-  // Audio Recording
+  // evaluation
   app.get("/api/phoneme/audio/", requireLogin, async (req, res) => {
     const key = `${req.user.id}/${uuid()}.mp3`;
     s3.getSignedUrl(
@@ -97,29 +87,25 @@ module.exports = (app) => {
     );
   });
 
-  app.get("/api/phoneme/audio/get", requireLogin, async (req, res) => {
-    const user = await Student.findById(req.user.id);
-    res.send(user.phoneme_audio);
+  app.get("/api/phoneme/evalassign", requireLogin, async (req, res) => {
+    const assign = await PhonemeAssign.find();
+    res.send(assign.pop());
   });
 
-  app.get("/api/phoneme/audioassign/one", requireLogin, async (req, res) => {
-    const assignment = await PhonemeAudioAssign.find();
-    res.send(assignment);
+  app.post("/api/phoneme/evalassign", requireLogin, async (req, res) => {
+    await new PhonemeEvalAssign({
+      createAt: new Date(),
+      phonemeAssign: req.body.phonemeAssign,
+      audioAssign: req.body.audioAssign,
+      studentId: req.user.id,
+      studentEmail: req.user.email,
+      studentName: req.user.displayName,
+      oldScore: req.user.phoneme_curr_score,
+      assignId: req.body.assignId,
+      status: "pending",
+    }).save();
+    res.send({});
   });
-
-  app.post(
-    "/api/phoneme/audioassign/create",
-    requireLogin,
-    async (req, res) => {
-      const assign = new PhonemeAudioStudentAssign({
-        audioAssignId: req.body.id,
-        studentId: req.user.id,
-        studentName: req.user.displayName,
-        assignment: req.body.newAssignment,
-      }).save();
-      res.send(assign);
-    }
-  );
 
   // ---------------------------------------------------------------------------
   // Tutor side
@@ -153,33 +139,38 @@ module.exports = (app) => {
     res.send(data);
   });
 
-  app.post("/api/phoneme/assign/add", requireTutor, async (req, res) => {
+  app.post("/api/phoneme/evalassign/add", requireTutor, async (req, res) => {
     const data = await new PhonemeAssign({
       tutor: req.user.displayName,
-      assignment: req.body.data,
+      phonemeAssign: req.body.phonemeAssign,
+      audioAssign: req.body.audioAssign,
+      createAt: new Date(),
     }).save();
     res.send(data);
   });
 
-  // Audio Recording
-  app.get("/api/phoneme/audioassign/all", requireTutor, async (req, res) => {
-    const assignments = await PhonemeAudioStudentAssign.find();
+  app.get("/api/phoneme/allassign", requireTutor, async (req, res) => {
+    const assignments = await PhonemeEvalAssign.find();
     res.send(assignments);
   });
 
-  app.post(
-    "/api/phoneme/audioassign/create",
+  app.get(
+    "/api/tutor/phoneme/allassign/:id",
     requireTutor,
     async (req, res) => {
-      const tutor = req.user.displayName;
-      const createAt = new Date();
-      const assignment = req.body.assigndata;
-      const assign = await new PhonemeAudioAssign({
-        tutor,
-        createAt,
-        assignment,
-      }).save();
-      res.send(assign);
+      console.log(req.params.id);
+      const assignment = await PhonemeEvalAssign.findById(req.params.id);
+      res.send(assignment);
     }
   );
+
+  app.post("/api/phoneme/score/update", requireLogin, async (req, res) => {
+    const infor = await Student.findByIdAndUpdate(req.body.studentId, {
+      phoneme_curr_score: req.body.newScore,
+    }).catch((err) => console.log(err));
+    await PhonemeEvalAssign.findByIdAndUpdate(req.body.assignId, {
+      status: "done",
+    });
+    res.send(infor);
+  });
 };

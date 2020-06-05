@@ -24,25 +24,21 @@ mongoose.model("phoneme_user", phonemeUserSchema);
 
 const phonemeAssignSchema = new Schema({
   tutor: String,
+  phonemeAssign: Array,
+  audioAssign: Array,
   createAt: Date,
-  assignment: Array,
 });
 mongoose.model("phoneme_assigns", phonemeAssignSchema);
 
-const phonemeAudioAssignSchema = new Schema({
-  tutor: String,
-  createAt: Date,
-  assignment: Array,
-});
-mongoose.model("phoneme_audio_assigns", phonemeAudioAssignSchema);
-
-const phonemeAudioAssignStudentSchema = new Schema({
+const phonemeEvalAssignSchema = new Schema({
   studentId: String,
-  audioAssignId: String,
   studentName: String,
-  assignment: Array,
+  studentEmail: String,
+  phonemeAssign: Array,
+  audioAssign: Array,
+  createAt: Date,
+  oldScore: Number,
+  assignId: String,
+  status: String,
 });
-mongoose.model(
-  "phoneme_audio_student_assigns",
-  phonemeAudioAssignStudentSchema
-);
+mongoose.model("phoneme_eval_assigns", phonemeEvalAssignSchema);
