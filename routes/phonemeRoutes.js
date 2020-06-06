@@ -88,8 +88,14 @@ module.exports = (app) => {
   });
 
   app.get("/api/phoneme/evalassign", requireLogin, async (req, res) => {
-    const assign = await PhonemeAssign.find();
-    res.send(assign.pop());
+    const assignments = await PhonemeAssign.find();
+    while (assignments.length > 0) {
+      const currAssign = assignments.pop();
+      if (currAssign.status === "done") {
+        return res.send(currAssign);
+      }
+    }
+    res.send({});
   });
 
   app.post("/api/phoneme/evalassign", requireLogin, async (req, res) => {
@@ -102,8 +108,21 @@ module.exports = (app) => {
       studentName: req.user.displayName,
       oldScore: req.user.phoneme_curr_score,
       assignId: req.body.assignId,
+      assignDate: req.body.assignDate,
       status: "pending",
     }).save();
+    res.send({});
+  });
+
+  app.post("/api/phoneme/historyscore/update", async (req, res) => {
+    const user = await Student.findById(req.user.id);
+    let scores = user.phoneme_score.scores;
+    let dates = user.phoneme_score.dates;
+    scores.push(0);
+    dates.push(req.body.assignDate);
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_score: { scores, dates },
+    });
     res.send({});
   });
 
@@ -144,10 +163,20 @@ module.exports = (app) => {
       tutor: req.user.displayName,
       phonemeAssign: req.body.phonemeAssign,
       audioAssign: req.body.audioAssign,
-      createAt: new Date(),
+      createAt: req.body.schedule,
+      status: "pending",
     }).save();
     res.send(data);
   });
+
+  setInterval(async () => {
+    console.log("Running Phoneme Assign check daily!");
+    const doc = await PhonemeAssign.find();
+    const latest = doc.pop();
+    if (latest && latest.createAt < new Date()) {
+      await PhonemeAssign.findByIdAndUpdate(latest._id, { status: "done" });
+    }
+  }, 43200000);
 
   app.get("/api/phoneme/allassign", requireTutor, async (req, res) => {
     const assignments = await PhonemeEvalAssign.find();
@@ -165,8 +194,14 @@ module.exports = (app) => {
   );
 
   app.post("/api/phoneme/score/update", requireLogin, async (req, res) => {
+    const student = await Student.findById(req.body.studentId);
+    let dates = student.phoneme_score.dates;
+    let scores = student.phoneme_score.scores;
+    scores.pop();
+    scores.push(req.body.newScore);
     const infor = await Student.findByIdAndUpdate(req.body.studentId, {
       phoneme_curr_score: req.body.newScore,
+      phoneme_score: { dates, scores },
     }).catch((err) => console.log(err));
     await PhonemeEvalAssign.findByIdAndUpdate(req.body.assignId, {
       status: "done",

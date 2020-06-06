@@ -30,7 +30,7 @@ class FluencyTrainingPart extends Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/fluency/assign/latest");
+    const doc = await axios("/api/fluency/evalassign");
     const data = doc.data.assignment;
     let paragraphs = [];
     let questions = [];
@@ -145,7 +145,7 @@ class FluencyTrainingPart extends Component {
         studentAnswer: studentAnswers[i],
       });
     }
-    await axios.post("/api/fluency/assign/studentadd", {
+    await axios.post("/api/fluency/evalassign", {
       assignment,
       score,
       newSpeed,

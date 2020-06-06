@@ -51,6 +51,10 @@ finish tutpr-side Speed training assignment train, test data operations
 1. Phoneme Assignment, student-side applies the card format.
 2. Phoneme assignment, tutors can review and mark students' assignments.
 
+## 2020.06.05 - V2.8
+
+1. Create Assignment time Schedule feature.
+
 ## TODD - list:
 
 1. student assignment aviability check

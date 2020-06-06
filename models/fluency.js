@@ -43,6 +43,7 @@ const fluencyAssignSchema = new Schema({
   tutor: String,
   createAt: Date,
   assignment: Array,
+  status: String,
 });
 
 mongoose.model("fluency_assigns", fluencyAssignSchema);

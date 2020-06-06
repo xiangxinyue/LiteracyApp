@@ -23,6 +23,7 @@ class PhonemeTutorAllAssign extends React.Component {
       newScore,
       studentId: assignments.studentId,
       assignId: assignments._id,
+      assignDate: assignments.assignDate,
     });
     window.location = "/tutor/phoneme/allassign";
   };

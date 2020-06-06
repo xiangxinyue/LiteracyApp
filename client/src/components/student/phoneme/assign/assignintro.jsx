@@ -1,49 +1,89 @@
 import React from "react";
 import { Button, Container } from "@material-ui/core";
+import { connect } from "react-redux";
+import axios from "axios";
 
-const PhonemeAssignIntro = (props) => {
-  return (
-    <Container>
-      <h3 className="text-primary">
-        This is the introduction of phoneme assignment.
-      </h3>
-      <h4>
-        In this lesson, you will see a non-word or made-up word on the screen. I
-        want you to break down the word into different sounds that it is made
-        of. You will do so by inserting space between different sounds. For
-        example, there are 3 sounds in the word 'bint'. So, I will write "b i
-        nt" as my response and press 'Enter' After you respond, you will get
-        feedback on whether you answered correctly or not. If you are wrong, the
-        program will tell you the right answer.
-      </h4>
-      <iframe
-        width="740"
-        height="430"
-        src="https://www.youtube.com/embed/rDg4S6jxLJI"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style={{ marginTop: 20 }}
-      ></iframe>
-      <hr />
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={props.handleClick}
-      >
-        Start
-      </Button>
-      <Button
-        variant="contained"
-        color="inherit"
-        size="large"
-        onClick={() => (window.location = "/student/phoneme")}
-      >
-        Go Back
-      </Button>
-    </Container>
-  );
-};
+class PhonemeAssignIntro extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newAssign: null,
+    };
+  }
+  componentDidMount = async () => {
+    const latestAssign = await axios.get("/api/phoneme/evalassign");
+    if (latestAssign.data.createAt === undefined) {
+      this.setState({ newAssign: false });
+    } else {
+      this.setState({ newAssign: latestAssign.data.createAt });
+    }
+  };
 
-export default PhonemeAssignIntro;
+  renderAssignButton = () => {
+    const { currentUser } = this.props;
+    const { newAssign } = this.state;
+    const studentAssign = currentUser.phoneme_score.dates.pop();
+    switch (newAssign) {
+      case null:
+        return null;
+      case false:
+        return <h3>Tutor has not posted new assignment.</h3>;
+      default:
+        if (!studentAssign || newAssign > studentAssign) {
+          return (
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={this.props.handleClick}
+            >
+              Start
+            </Button>
+          );
+        } else {
+          return <h3>You have finished this week assignment.</h3>;
+        }
+    }
+  };
+
+  render() {
+    const { currentUser } = this.props;
+    return (
+      <Container>
+        <h3 className="text-primary">
+          This is the introduction of Phoneme Assignment.
+        </h3>
+        <h4>
+          Instructions: Watch the introduction video first, then click the start
+          button. Read the words as fast as possible. When you finish click the
+          finish button.
+        </h4>
+        <iframe
+          width="740"
+          height="430"
+          src="https://www.youtube.com/embed/rDg4S6jxLJI"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style={{ marginTop: 20 }}
+        ></iframe>
+        <hr />
+        {currentUser ? this.renderAssignButton() : null}
+        <Button
+          variant="contained"
+          color="inherit"
+          size="large"
+          onClick={() => (window.location = "/student/phoneme")}
+        >
+          Go Back
+        </Button>
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(PhonemeAssignIntro);

@@ -66,9 +66,15 @@ module.exports = (app) => {
   });
 
   // assignment
-  app.get("/api/fluency/assign/latest", async (req, res) => {
+  app.get("/api/fluency/evalassign", async (req, res) => {
     const assignments = await FluencyAssign.find();
-    res.send(assignments.pop());
+    while (assignments.length > 0) {
+      const currAssign = assignments.pop();
+      if (currAssign.status === "done") {
+        return res.send(currAssign);
+      }
+    }
+    res.send({});
   });
 
   app.post("/api/fluency/historyscore/update", async (req, res) => {
@@ -83,7 +89,7 @@ module.exports = (app) => {
     res.send({});
   });
 
-  app.post("/api/fluency/assign/studentadd", async (req, res) => {
+  app.post("/api/fluency/evalassign", async (req, res) => {
     const { score, newSpeed, oldSpeed } = req.body;
     await new FluencyEvalAssign({
       studentId: req.user.id,
@@ -179,14 +185,24 @@ module.exports = (app) => {
   });
 
   // assign
-  app.post("/api/fluency/assign/tutoradd", requireTutor, async (req, res) => {
+  app.post("/api/fluency/evalassign/add", requireTutor, async (req, res) => {
     const data = await new FluencyAssign({
       tutor: req.user.displayName,
-      createAt: new Date(),
+      createAt: req.body.schedule,
+      status: "pending",
       assignment: req.body.data,
     }).save();
     res.send(data);
   });
+
+  setInterval(async () => {
+    console.log("Running Fluency Assign check daily!");
+    const doc = await FluencyAssign.find();
+    const latest = doc.pop();
+    if (latest && latest.createAt < new Date()) {
+      await FluencyAssign.findByIdAndUpdate(latest._id, { status: "done" });
+    }
+  }, 43200000);
 
   app.get("/api/fluency/assign/getall", async (req, res) => {
     const assignments = await FluencyEvalAssign.find();
