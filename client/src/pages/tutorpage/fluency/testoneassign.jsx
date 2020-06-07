@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Button, Container, TextField } from "@material-ui/core";
 import AssignTable from "../../../components/tutor/fluency/testassigntable";
+import LineChart from "../../../assets/assignchart";
 
 class FluencyTutorTestAllAssign extends React.Component {
   constructor(props) {
@@ -23,6 +24,24 @@ class FluencyTutorTestAllAssign extends React.Component {
     window.location = "/tutor/fluency/testassign";
   };
 
+  renderChart = () => {
+    const { assignment } = this.state;
+    let data = [];
+    assignment.assignment.forEach((assign, index) => {
+      data.push({
+        label: index,
+        value: assign.speed,
+      });
+    });
+    return (
+      <LineChart
+        data={data}
+        title="Testing Reading Speed Chart"
+        color="#3E517A"
+      />
+    );
+  };
+
   render() {
     const { assignment } = this.state;
     return (
@@ -42,6 +61,7 @@ class FluencyTutorTestAllAssign extends React.Component {
           <Container>
             <AssignTable rows={assignment.assignment} />
             <hr />
+            <div className="main chart-wrapper">{this.renderChart()}</div>
             <h4>AverageSpeed is {assignment.averageSpeed} millisec / letter</h4>
             <h3>
               The final speed:{" "}

@@ -8,6 +8,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import CloseIcon from "@material-ui/icons/Close";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useStyles = makeStyles({
   table: {
@@ -18,6 +20,15 @@ const useStyles = makeStyles({
 export default function SimpleTable(props) {
   const classes = useStyles();
 
+  const checkAnswer = (row) => {
+    const { phoneme, answer } = row;
+    if (phoneme === answer) {
+      return <CheckIcon fontSize="large" style={{ color: "green" }} />;
+    } else {
+      return <CloseIcon color="secondary" fontSize="large" />;
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -27,6 +38,7 @@ export default function SimpleTable(props) {
             <TableCell align="left">Word</TableCell>
             <TableCell align="left">Phoneme</TableCell>
             <TableCell align="left">Answer</TableCell>
+            <TableCell align="left">Evaluation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,6 +48,7 @@ export default function SimpleTable(props) {
               <TableCell align="left">{row.word}</TableCell>
               <TableCell align="left">{row.phoneme}</TableCell>
               <TableCell align="left">{row.answer}</TableCell>
+              <TableCell align="left">{checkAnswer(row)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

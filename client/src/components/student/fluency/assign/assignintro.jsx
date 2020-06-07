@@ -50,7 +50,6 @@ class FluencyAssignIntro extends React.Component {
 
   render() {
     const { currentUser } = this.props;
-    const { assignDone } = this.state;
     return (
       <Container>
         <h3 className="text-primary">

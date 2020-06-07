@@ -55,6 +55,12 @@ finish tutpr-side Speed training assignment train, test data operations
 
 1. Create Assignment time Schedule feature.
 
+## 2020.06.06 - V2.9
+
+1. All: Show correct and wrong color sign at each answer in all assignments
+2. Speed testing assignment reading speed line chart.
+3. Speed: reading speed chart in evaluation assignment
+
 ## TODD - list:
 
 1. student assignment aviability check
