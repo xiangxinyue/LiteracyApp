@@ -51,15 +51,20 @@ finish tutpr-side Speed training assignment train, test data operations
 1. Phoneme Assignment, student-side applies the card format.
 2. Phoneme assignment, tutors can review and mark students' assignments.
 
-## 2020.06.05 - V2.8
+## 2020.06.05
 
 1. Create Assignment time Schedule feature.
 
-## 2020.06.06 - V2.9
+## 2020.06.06 - V2.8
 
 1. All: Show correct and wrong color sign at each answer in all assignments
 2. Speed testing assignment reading speed line chart.
 3. Speed: reading speed chart in evaluation assignment
+
+## 2020.06.07
+
+1. Speed: change reading speed by each question
+2. Speed: automatically marked by right answers
 
 ## TODD - list:
 

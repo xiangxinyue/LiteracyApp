@@ -23,7 +23,9 @@ class FluencyTestPart extends Component {
       yourAnswer: null,
       readDone: false,
       answerred: false,
+      correctNum: 0,
       speeds: [],
+      check: [],
       time: 0,
     };
   }
@@ -37,7 +39,6 @@ class FluencyTestPart extends Component {
       choices: data.choices,
       answers: data.answers,
       maxNumOfQues: data.paragraphs.length - 1,
-      speed: this.props.currentUser.fluency_curr_score,
     });
     await this.setState({
       currPara: this.state.paragraphs[this.state.currentParaNum],
@@ -59,7 +60,7 @@ class FluencyTestPart extends Component {
     } else {
       clearInterval(timer);
       let newSpeeds = speeds;
-      const newSpeed = newTime / length;
+      const newSpeed = Number((newTime / length).toFixed(3));
       newSpeeds.push(newSpeed);
       newTime = 0;
       this.setState({ readDone: true, speeds: newSpeeds });
@@ -68,17 +69,30 @@ class FluencyTestPart extends Component {
 
   checkAnswer = async (e) => {
     const studentAnswer = e.target.value;
-    const { studentAnswers, answers, currentParaNum, score } = this.state;
+    const {
+      studentAnswers,
+      answers,
+      currentParaNum,
+      score,
+      speeds,
+      correctNum,
+      check,
+    } = this.state;
     let newStudentAnswers = studentAnswers;
     newStudentAnswers.push(e.target.value);
     this.setState({ studentAnswers: newStudentAnswers });
+    let newCheck = check;
     if (studentAnswer === answers[currentParaNum]) {
+      newCheck.push(true);
       this.setState({
         answerred: true,
         score: score + 1,
+        correctNum: correctNum + 1,
+        check: newCheck,
       });
     } else {
-      this.setState({ answerred: true });
+      newCheck.push(false);
+      this.setState({ answerred: true, check: newCheck });
     }
   };
 
@@ -102,6 +116,7 @@ class FluencyTestPart extends Component {
       answers,
       choices,
       studentAnswers,
+      check,
     } = this.state;
     let assignment = [];
     for (let i = 0; i < questions.length; i++) {
@@ -114,14 +129,23 @@ class FluencyTestPart extends Component {
       entry.speed = speeds[i];
       assignment.push(entry);
     }
+    // update student's current speed
     let speedSum = 0;
+    let num = 0;
     for (let i = 0; i < speeds.length; i++) {
-      speedSum += speeds[i];
+      if (check[i]) {
+        speedSum += speeds[i];
+        num += 1;
+      }
     }
-    const averageSpeed = Math.round(speedSum / speeds.length);
+    const newSpeed = Number((speedSum / num).toFixed(3));
+    if (newSpeed !== 0) {
+      await axios.post("/api/fluency/score/update", { newSpeed });
+    }
+    // update the assignment
     await axios.post("/api/fluency/test/assign/create", {
       assignment,
-      averageSpeed,
+      averageSpeed: newSpeed,
     });
     window.location = "/student/fluency";
   };

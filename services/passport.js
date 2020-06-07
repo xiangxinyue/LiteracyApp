@@ -70,7 +70,6 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, callback) => {
-      console.log(profile);
       const doc = await Tutor.findOne({ googleId: profile.id });
       if (doc) {
         return callback(null, doc);
