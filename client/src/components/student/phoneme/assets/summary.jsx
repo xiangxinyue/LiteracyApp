@@ -6,10 +6,10 @@ const phonemesummary = (props) => {
   const Summary = () => {
     return (
       <div>
-        <h3>Summary of Phoneme Training</h3>
-        <p>You have finished {props.number} questions in this training</p>
-        <p>Your accuracy now is {props.accuracy}%</p>
-        <p>Please review those wrong phoneme</p>
+        <h3>Summary of Sound Training</h3>
+        <h5>You have finished {props.number} questions in this training</h5>
+        <h5>Your accuracy now is {props.accuracy}%</h5>
+        <h5>Go over these made-up words</h5>
         <List>
           {props.wrongPhoneme.map((e, index) => {
             return (

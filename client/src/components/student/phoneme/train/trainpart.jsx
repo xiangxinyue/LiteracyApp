@@ -82,7 +82,7 @@ class PhonemeTrainPart extends React.Component {
     });
     await axios.post("/api/phoneme/rightwrong/update", { rightId, wrongId });
     const newScore = 20 * (rightId.length / this.state.word.length);
-    axios.post("/api/phoneme/score/update", { newScore });
+    axios.post("/api/phoneme/testscore/update", { newScore });
   };
 
   render() {

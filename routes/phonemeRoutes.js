@@ -36,6 +36,13 @@ module.exports = (app) => {
     res.send({ words, phonemes, levels, id });
   });
 
+  app.post("/api/phoneme/testscore/update", requireLogin, async (req, res) => {
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_curr_score: req.body.newScore,
+    });
+    res.send({});
+  });
+
   // train part
   app.get("/api/phoneme/train/get", requireLogin, async (req, res) => {
     const trainData = await PhonemeTrain.find();
@@ -74,7 +81,7 @@ module.exports = (app) => {
   });
 
   // evaluation
-  app.get("/api/phoneme/audio/", requireLogin, async (req, res) => {
+  app.get("/api/phoneme/audio", requireLogin, async (req, res) => {
     const key = `${req.user.id}/${uuid()}.mp3`;
     s3.getSignedUrl(
       "putObject",
