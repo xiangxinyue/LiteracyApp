@@ -109,20 +109,19 @@ class FluencyTrainingPart extends Component {
         speed: newSpeed,
       });
     }
-    console.log(speed);
   };
 
   changeQuestion = async () => {
-    const { currentParaNum, paragraphs, currPara, currParaArray } = this.state;
+    const { currentParaNum, paragraphs } = this.state;
+    await this.setState({ currentParaNum: currentParaNum + 1 });
     await this.setState({
-      currentParaNum: currentParaNum + 1,
-      currPara: paragraphs[currentParaNum],
+      currPara: paragraphs[this.state.currentParaNum],
       readDone: false,
       answerred: false,
     });
-    const sentenceArray = await currPara.split("");
+    const sentenceArray = await this.state.currPara.split("");
     await this.setState({ currParaArray: sentenceArray });
-    await this.setState({ length: currParaArray.length });
+    await this.setState({ length: this.state.currParaArray.length });
 
     this.startReading();
   };

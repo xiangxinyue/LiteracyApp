@@ -44,3 +44,24 @@ const phonemeEvalAssignSchema = new Schema({
   status: String,
 });
 mongoose.model("phoneme_eval_assigns", phonemeEvalAssignSchema);
+
+const phonemeTestAssignSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
+  phonemeAssign: Array,
+  createAt: Date,
+  newScore: Number,
+});
+mongoose.model("phoneme_test_assigns", phonemeTestAssignSchema);
+
+const phonemeTrainAssignSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
+  phonemeAssign: Array,
+  createAt: Date,
+  oldScore: Number,
+  newScore: Number,
+});
+mongoose.model("phoneme_train_assigns", phonemeTrainAssignSchema);

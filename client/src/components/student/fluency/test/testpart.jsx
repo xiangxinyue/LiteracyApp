@@ -31,7 +31,7 @@ class FluencyTestPart extends Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/fluency/test/get");
+    const doc = await axios.get("/api/fluency/student/testassign");
     const data = doc.data;
     await this.setState({
       paragraphs: data.paragraphs,
@@ -120,14 +120,14 @@ class FluencyTestPart extends Component {
     } = this.state;
     let assignment = [];
     for (let i = 0; i < questions.length; i++) {
-      let entry = {};
-      entry.paragraph = paragraphs[i];
-      entry.question = questions[i];
-      entry.choices = choices[i];
-      entry.answer = answers[i];
-      entry.studentAnswer = studentAnswers[i];
-      entry.speed = speeds[i];
-      assignment.push(entry);
+      assignment.push({
+        paragraph: paragraphs[i],
+        question: questions[i],
+        choices: choices[i],
+        answer: answers[i],
+        studentAnswer: studentAnswers[i],
+        speed: speeds[i],
+      });
     }
     // update student's current speed
     let speedSum = 0;
@@ -143,7 +143,7 @@ class FluencyTestPart extends Component {
       await axios.post("/api/fluency/score/update", { newSpeed });
     }
     // update the assignment
-    await axios.post("/api/fluency/test/assign/create", {
+    await axios.post("/api/fluency/student/testassign", {
       assignment,
       averageSpeed: newSpeed,
     });

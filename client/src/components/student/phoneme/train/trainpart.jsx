@@ -14,6 +14,7 @@ class PhonemeTrainPart extends React.Component {
       word: [],
       level: [],
       phoneme: [],
+      answers: [],
       index: 0,
       correct: false,
       answer: false,
@@ -60,6 +61,9 @@ class PhonemeTrainPart extends React.Component {
         wrongWord: newWrongWord,
       });
     }
+    const newAnswers = this.state.answers;
+    newAnswers.push(this.state.input);
+    this.setState({ answers: newAnswers });
   };
 
   changeQuestion = async () => {
@@ -71,6 +75,7 @@ class PhonemeTrainPart extends React.Component {
   };
 
   update = async () => {
+    const { word, phoneme, answers, level } = this.state;
     let rightId = [];
     let wrongId = [];
     await this.state.word.forEach((word, index) => {
@@ -80,9 +85,22 @@ class PhonemeTrainPart extends React.Component {
         wrongId.push(this.state.id[index]);
       }
     });
+    // save wrong and right questions
     await axios.post("/api/phoneme/rightwrong/update", { rightId, wrongId });
     const newScore = 20 * (rightId.length / this.state.word.length);
-    axios.post("/api/phoneme/testscore/update", { newScore });
+    let phonemeAssign = [];
+    for (let i = 0; i < word.length; i++) {
+      phonemeAssign.push({
+        word: word[i],
+        phoneme: phoneme[i],
+        level: level[i],
+        answer: answers[i],
+      });
+    }
+    // create practice student-side assignment
+    await axios.post("/api/phoneme/trainassign", { newScore, phonemeAssign });
+    // update new phoneme score
+    axios.post("/api/phoneme/currscore/update", { newScore });
   };
 
   render() {

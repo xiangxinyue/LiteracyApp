@@ -10,8 +10,9 @@ class PhonemeTutorAllAssign extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/allassign");
+    const doc = await axios.get("/api/phoneme/evalassign");
     this.setState({ assignments: doc.data });
+    console.log(doc.data);
   };
 
   render() {
@@ -27,34 +28,40 @@ class PhonemeTutorAllAssign extends React.Component {
         </div>
         <Container>
           <h3>Pending assignments:</h3>
-          {assignments.map((assign, index) => {
-            if (assign.status === "pending") {
-              return (
-                <TrainCard
-                  title={assign.studentName}
-                  description={assign.createAt}
-                  handleClick={() =>
-                    (window.location = "/tutor/phoneme/allassign/" + assign._id)
-                  }
-                />
-              );
-            }
-          })}
+          {assignments.length !== 0
+            ? assignments.map((assign, index) => {
+                if (assign.status === "pending") {
+                  return (
+                    <TrainCard
+                      title={assign.studentName}
+                      description={assign.createAt}
+                      handleClick={() =>
+                        (window.location =
+                          "/tutor/phoneme/evalassign/" + assign._id)
+                      }
+                    />
+                  );
+                }
+              })
+            : null}
           <hr />
           <h3>Marked assignments:</h3>
-          {assignments.map((assign, index) => {
-            if (assign.status === "done") {
-              return (
-                <TrainCard
-                  title={assign.studentName}
-                  description={assign.createAt}
-                  handleClick={() =>
-                    (window.location = "/tutor/phoneme/allassign/" + assign._id)
-                  }
-                />
-              );
-            }
-          })}
+          {assignments.length !== 0
+            ? assignments.map((assign, index) => {
+                if (assign.status === "done") {
+                  return (
+                    <TrainCard
+                      title={assign.studentName}
+                      description={assign.createAt}
+                      handleClick={() =>
+                        (window.location =
+                          "/tutor/phoneme/evalassign/" + assign._id)
+                      }
+                    />
+                  );
+                }
+              })
+            : null}
         </Container>
       </div>
     );

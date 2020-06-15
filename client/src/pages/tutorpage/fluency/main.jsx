@@ -19,12 +19,17 @@ class FluencyTutorMain extends React.Component {
           <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
-              title="Review Students' Testing Assignment"
+              title="Students' Testing Assignment"
               page="/tutor/fluency/testassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
-              title="Check Students' Evaluation Assignment"
+              title="Students' Practice Assignment"
+              page="/tutor/fluency/trainassign"
+              description="In this part, you can review students' testing assignment"
+            />
+            <TrainCard
+              title="Students' Evaluation Assignment"
               page="/tutor/fluency/evalassign"
               description="In this part, you can review students' testing assignment"
             />

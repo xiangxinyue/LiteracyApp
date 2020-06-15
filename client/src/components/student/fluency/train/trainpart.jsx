@@ -21,6 +21,7 @@ class FluencyTrainingPart extends Component {
       questions: [],
       choices: [],
       answers: [],
+      studentAnswers: [],
       yourAnswer: null,
       readDone: false,
       answerred: false,
@@ -29,7 +30,7 @@ class FluencyTrainingPart extends Component {
 
   componentDidMount = async () => {
     const { currentUser } = this.props;
-    const doc = await axios("/api/fluency/train/get");
+    const doc = await axios.get("/api/fluency/student/trainassign");
     const data = doc.data;
     await this.setState({
       paragraphs: data.paragraphs,
@@ -67,12 +68,12 @@ class FluencyTrainingPart extends Component {
   };
 
   checkAnswer = async (e) => {
-    const { yourAnswer, answers, currentParaNum, speed } = this.state;
-    await this.setState({ yourAnswer: e.target.value });
+    const { answers, currentParaNum, speed, studentAnswers } = this.state;
+    const answer = e.target.value;
     const newSpeed = speed;
     const oldSpeed = newSpeed[currentParaNum];
-    if (yourAnswer === answers[currentParaNum]) {
-      const addNewSpeed = Number((oldSpeed * 1.02).toFixed(3));
+    if (answer === answers[currentParaNum]) {
+      const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({
         answerred: true,
@@ -80,30 +81,57 @@ class FluencyTrainingPart extends Component {
         speed: newSpeed,
       });
     } else {
-      const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
+      const addNewSpeed = Number((oldSpeed * 1.02).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({ answerred: true, speed: newSpeed });
     }
+    const newStudentAnsers = studentAnswers;
+    newStudentAnsers.push(answer);
+    this.setState({
+      studentAnswers: newStudentAnsers,
+    });
   };
 
   changeQuestion = async () => {
-    const { currentParaNum, paragraphs, currPara, currParaArray } = this.state;
+    const { currentParaNum, paragraphs } = this.state;
+    await this.setState({ currentParaNum: currentParaNum + 1 });
     await this.setState({
-      currentParaNum: currentParaNum + 1,
-      currPara: paragraphs[currentParaNum],
+      currPara: paragraphs[this.state.currentParaNum],
       readDone: false,
       answerred: false,
     });
-    const sentenceArray = await currPara.split("");
+    const sentenceArray = await this.state.currPara.split("");
     await this.setState({ currParaArray: sentenceArray });
-    await this.setState({ length: currParaArray.length });
+    await this.setState({ length: this.state.currParaArray.length });
 
     this.startReading();
   };
 
   finishTrain = async () => {
-    const { speed } = this.state;
+    const {
+      speed,
+      questions,
+      paragraphs,
+      answers,
+      choices,
+      studentAnswers,
+    } = this.state;
     const newSpeed = speed.pop();
+    let assignment = [];
+    for (let i = 0; i < questions.length; i++) {
+      assignment.push({
+        paragraph: paragraphs[i],
+        question: questions[i],
+        choices: choices[i],
+        answer: answers[i],
+        studentAnswer: studentAnswers[i],
+        speed: speed[i],
+      });
+    }
+    await axios.post("/api/fluency/student/trainassign", {
+      assignment,
+      newSpeed,
+    });
     await axios.post("/api/fluency/score/update", { newSpeed });
     window.location = "/student/fluency";
   };

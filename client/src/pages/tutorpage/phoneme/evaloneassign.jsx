@@ -12,7 +12,7 @@ class PhonemeTutorAllAssign extends React.Component {
 
   componentDidMount = async () => {
     const doc = await axios.get(
-      "/api/tutor/phoneme/allassign/" + this.props.match.params.id
+      "/api/phoneme/evalassign/" + this.props.match.params.id
     );
     this.setState({ assignments: doc.data });
   };
@@ -38,7 +38,7 @@ class PhonemeTutorAllAssign extends React.Component {
           <Button
             variant="contained"
             color="default"
-            href="/tutor/phoneme/allassign"
+            href="/tutor/phoneme/evalassign"
           >
             Go back
           </Button>
