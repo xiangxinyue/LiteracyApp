@@ -1,4 +1,6 @@
 const passport = require("passport");
+const mongoose = require("mongoose");
+const Student = mongoose.model("students");
 
 module.exports = (app) => {
   app.get(
@@ -38,5 +40,10 @@ module.exports = (app) => {
 
   app.get("/auth/current_user", (req, res) => {
     res.send(req.user);
+  });
+
+  app.get("/api/student/getall", async (req, res) => {
+    const students = await Student.find();
+    res.send(students);
   });
 };

@@ -11,7 +11,7 @@ class PhonemeAssignIntro extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const latestAssign = await axios.get("/api/phoneme/evalassign");
+    const latestAssign = await axios.get("/api/phoneme/student/evalassign");
     if (latestAssign.data.createAt === undefined) {
       this.setState({ newAssign: false });
     } else {
@@ -22,7 +22,10 @@ class PhonemeAssignIntro extends React.Component {
   renderAssignButton = () => {
     const { currentUser } = this.props;
     const { newAssign } = this.state;
-    const studentAssign = currentUser.phoneme_score.dates.pop();
+    let studentAssign = null;
+    if (currentUser.phoneme_eval_score.length !== 0) {
+      studentAssign = currentUser.phoneme_eval_score.pop().label;
+    }
     switch (newAssign) {
       case null:
         return null;
@@ -51,7 +54,7 @@ class PhonemeAssignIntro extends React.Component {
     return (
       <Container>
         <h3 className="text-primary">
-          This is the introduction of Phoneme Assignment.
+          This is the introduction of Sound Assignment.
         </h3>
         <h4>
           Instructions: Watch the introduction video first, then click the start

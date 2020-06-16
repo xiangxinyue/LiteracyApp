@@ -33,14 +33,14 @@ function getStepContent(step) {
     case 0:
       return (
         <h4>
-          Attention: This is your first time to use sound train. So, we will
-          find your current level of skill.
+          Attention: This is your first time doing the sound training. So, we
+          need to find your current level of skill.
         </h4>
       );
     case 1:
       return (
         <h4>
-          In this lesson, you will see a made-up word on the screen. You will
+          In this exercise,, you will see a made-up word on the screen. You will
           break down the word into different sounds that it is made of. You will
           do so by inserting space between different sounds.
         </h4>
@@ -49,7 +49,7 @@ function getStepContent(step) {
       return (
         <h4>
           For example, there are 3 sounds in the made-up word 'bint'. So, you
-          will write "b i nt" as my response and press 'Enter' After you
+          will write "b i nt" as your response and press 'Enter' After you
           respond, you will get feedback on whether you answered correctly or
           not.
         </h4>

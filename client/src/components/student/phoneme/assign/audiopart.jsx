@@ -18,7 +18,7 @@ class PhonemeAudioAssign extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/evalassign");
+    const doc = await axios.get("/api/phoneme/student/evalassign");
     const assignment = doc.data.audioAssign;
     let audios = [];
     let question = [];

@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
       width: theme.spacing(300),
-      height: theme.spacing(40),
     },
   },
   component: {
@@ -23,7 +22,7 @@ export default function SimplePaper(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Paper elevation={3}>
+      <Paper elevation={5}>
         <div className={classes.component}>
           <props.component />
         </div>

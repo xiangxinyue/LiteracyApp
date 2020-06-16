@@ -24,7 +24,10 @@ class FluencyAssignIntro extends React.Component {
   renderAssignButton = () => {
     const { currentUser } = this.props;
     const { newAssign } = this.state;
-    const studentAssign = currentUser.fluency_score.dates.pop();
+    let studentAssign = null;
+    if (currentUser.fluency_eval_score.length !== 0) {
+      studentAssign = currentUser.fluency_eval_score.pop().label;
+    }
     switch (newAssign) {
       case null:
         return null;

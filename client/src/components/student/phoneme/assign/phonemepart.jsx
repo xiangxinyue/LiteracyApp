@@ -27,7 +27,7 @@ class PhonemeTrainPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/phoneme/evalassign");
+    const doc = await axios("/api/phoneme/student/evalassign");
     const data = doc.data.phonemeAssign;
     let word = [];
     let phoneme = [];

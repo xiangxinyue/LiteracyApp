@@ -41,17 +41,17 @@ class FluencyTrain extends Component {
                   <TrainCard
                     title="Learning Materials"
                     page="/student/fluency/materials"
-                    description="In this part, you can learn the lastest Speed training materials"
+                    description="Here, you will learn how to increase your reading speed"
                   />
                   <TrainCard
                     title="Practise"
                     page="/student/fluency/practise"
-                    description="In this part, you can practise the Speed Training as much as you want"
+                    description="In this part, you will practice increasing your reading speed"
                   />
                   <TrainCard
                     title="Weekly Assignment"
                     page="/student/fluency/assignment"
-                    description="In this part, you can do the weekly Speed training evaluation assignment"
+                    description="Here, you will complete tests of reading speed"
                   />
                 </div>
               )}

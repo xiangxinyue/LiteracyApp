@@ -8,17 +8,11 @@ class LineChart extends React.Component {
     this.canvasRef = React.createRef();
   }
 
-  componentDidUpdate() {
-    this.myChart.data.labels = this.props.data.map((d) => d.time);
-    this.myChart.data.datasets[0].data = this.props.data.map((d) => d.value);
-    this.myChart.update();
-  }
-
   componentDidMount() {
     this.myChart = new Chart(this.canvasRef.current, {
       type: "line",
       options: {
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
       },
 
       data: {
@@ -40,7 +34,7 @@ class LineChart extends React.Component {
   }
 
   render() {
-    return <canvas ref={this.canvasRef} height={500} />;
+    return <canvas ref={this.canvasRef} height="100%" />;
   }
 }
 

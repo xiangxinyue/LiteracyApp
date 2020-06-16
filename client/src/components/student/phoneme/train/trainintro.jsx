@@ -5,16 +5,15 @@ const PhonemeIntroPart = (props) => {
   return (
     <Container>
       <h3 className="text-primary">
-        This is the introduction of phoneme training.
+        This is the introduction of sound training.
       </h3>
       <h4>
-        In this lesson, you will see a non-word or made-up word on the screen. I
-        want you to break down the word into different sounds that it is made
-        of. You will do so by inserting space between different sounds. For
-        example, there are 3 sounds in the word 'bint'. So, I will write "b i
-        nt" as my response and press 'Enter' After you respond, you will get
-        feedback on whether you answered correctly or not. If you are wrong, the
-        program will tell you the right answer.
+        In this exercise,, you will see a made-up word on the screen. You will
+        break down the word into different sounds that it is made of. You will
+        do so by inserting space between different sounds. For example, there
+        are 3 sounds in the made-up word 'bint'. So, you will write "b i nt" as
+        your response and press 'Enter' After you respond, you will get feedback
+        on whether you answered correctly or not.
       </h4>
       <iframe
         width="740"

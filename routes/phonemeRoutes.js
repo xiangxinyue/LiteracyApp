@@ -107,6 +107,19 @@ module.exports = (app) => {
     res.send({});
   });
 
+  app.post("/api/phoneme/train/historyscore", async (req, res) => {
+    const user = await Student.findById(req.user.id);
+    const newArray = user.phoneme_train_score;
+    newArray.push({
+      label: new Date(),
+      value: req.body.newScore,
+    });
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_train_score: newArray,
+    });
+    res.send({});
+  });
+
   // evaluation
   app.get("/api/phoneme/audio", requireLogin, async (req, res) => {
     const key = `${req.user.id}/${uuid()}.mp3`;
@@ -152,14 +165,15 @@ module.exports = (app) => {
     }
   );
 
-  app.post("/api/phoneme/historyscore/update", async (req, res) => {
+  app.post("/api/phoneme/eval/historyscore", async (req, res) => {
     const user = await Student.findById(req.user.id);
-    let scores = user.phoneme_score.scores;
-    let dates = user.phoneme_score.dates;
-    scores.push(0);
-    dates.push(req.body.assignDate);
+    const newArray = user.phoneme_eval_score;
+    newArray.push({
+      label: req.body.assignDate,
+      value: 0,
+    });
     await Student.findByIdAndUpdate(req.user.id, {
-      phoneme_score: { scores, dates },
+      phoneme_eval_score: newArray,
     });
     res.send({});
   });
@@ -196,6 +210,21 @@ module.exports = (app) => {
   app.post("/api/phoneme/test/delete", requireTutor, async (req, res) => {
     const data = await PhonemeTest.findByIdAndDelete(req.body.id);
     res.send(data);
+  });
+
+  app.get("/api/phoneme/train/historyscore", async (req, res) => {
+    const students = await Student.find();
+    const scores = students.map((student) => {
+      if (student.phoneme_train_score.dates.length !== 0) {
+        return {
+          studentName: student.displayName,
+          studentEmail: student.email,
+          dates: student.phoneme_train_score.dates,
+          scores: student.phoneme_train_score.scores,
+        };
+      }
+    });
+    res.send(scores);
   });
 
   // assignments
@@ -251,17 +280,27 @@ module.exports = (app) => {
 
   app.post("/api/phoneme/score/update", requireLogin, async (req, res) => {
     const student = await Student.findById(req.body.studentId);
-    let dates = student.phoneme_score.dates;
-    let scores = student.phoneme_score.scores;
-    scores.pop();
-    scores.push(req.body.newScore);
+    const newArray = student.phoneme_eval_score;
+    const assignDate = newArray.pop().label;
+    newArray.push({
+      label: assignDate,
+      value: req.body.newScore,
+    });
     const infor = await Student.findByIdAndUpdate(req.body.studentId, {
       phoneme_curr_score: req.body.newScore,
-      phoneme_score: { dates, scores },
+      phoneme_eval_score: newArray,
     }).catch((err) => console.log(err));
     await PhonemeEvalAssign.findByIdAndUpdate(req.body.assignId, {
       status: "done",
     });
     res.send(infor);
+  });
+
+  app.get("/api/phoneme/historyscore/:id", async (req, res) => {
+    const student = await Student.findById(req.params.id);
+    res.send({
+      trainScore: student.phoneme_train_score,
+      evalScore: student.phoneme_eval_score,
+    });
   });
 };

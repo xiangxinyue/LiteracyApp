@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
 import Process from "../../../../assets/process";
 import $ from "jquery";
 let time;
@@ -142,7 +142,7 @@ class FluencyTrainingPart extends Component {
     // update new score
     await axios.post("/api/fluency/score/update", { newSpeed });
     // update history evaluation score
-    await axios.post("/api/fluency/historyscore/update", {
+    await axios.post("/api/fluency/eval/historyscore", {
       newSpeed,
       assignDate,
     });
@@ -207,23 +207,33 @@ class FluencyTrainingPart extends Component {
           ) : (
             <div>
               <h3>{questions[currentParaNum]}</h3>
-              {choices[currentParaNum].map((choice, index) => (
-                <div className="row">
-                  <div className="col-3"></div>
-                  <div className="row col-6">
-                    <input
-                      type="radio"
-                      key={index}
-                      value={choice}
-                      defaultChecked={false}
-                      onClick={this.checkAnswer}
-                    />
-                    &nbsp;&nbsp;
-                    <h4>{choice}</h4>
-                  </div>
-                  <div className="col-3"></div>
-                </div>
-              ))}
+              <FormControlLabel
+                value={choices[currentParaNum][0]}
+                label={choices[currentParaNum][0]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][1]}
+                label={choices[currentParaNum][1]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][2]}
+                label={choices[currentParaNum][2]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][3]}
+                label={choices[currentParaNum][3]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
             </div>
           )
         ) : (

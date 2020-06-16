@@ -100,7 +100,9 @@ class PhonemeTrainPart extends React.Component {
     // create practice student-side assignment
     await axios.post("/api/phoneme/trainassign", { newScore, phonemeAssign });
     // update new phoneme score
-    axios.post("/api/phoneme/currscore/update", { newScore });
+    await axios.post("/api/phoneme/currscore/update", { newScore });
+    // update train history score
+    await axios.post("/api/phoneme/train/historyscore", { newScore });
   };
 
   render() {

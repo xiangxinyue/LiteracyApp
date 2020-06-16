@@ -65,6 +65,12 @@ const FluencyTutorTrainOneAssign = lazy(() =>
   import("./pages/tutorpage/fluency/trainoneassign")
 );
 
+const FluencyTutorAllPerformance = lazy(() =>
+  import("./pages/tutorpage/fluency/allperformance")
+);
+const FluencyTutorOnePerformance = lazy(() =>
+  import("./pages/tutorpage/fluency/oneperformance")
+);
 // Phoneme Page
 const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
 const PhonemeTutorTrain = lazy(() =>
@@ -95,6 +101,12 @@ const PhonemeTutorTrainAllAssign = lazy(() =>
 );
 const PhonemeTutorTrainOneAssign = lazy(() =>
   import("./pages/tutorpage/phoneme/trainoneassign")
+);
+const PhonemeTutorAllPerformance = lazy(() =>
+  import("./pages/tutorpage/phoneme/allperformance")
+);
+const PhonemeTutorOnePerformance = lazy(() =>
+  import("./pages/tutorpage/phoneme/oneperformance")
 );
 
 class App extends React.Component {
@@ -188,6 +200,15 @@ class App extends React.Component {
                 path="/tutor/fluency/evalassign/:id"
                 component={FluencyTutorEvalOneAssign}
               />
+              <Route
+                exact
+                path="/tutor/fluency/performance"
+                component={FluencyTutorAllPerformance}
+              />
+              <Route
+                path="/tutor/fluency/performance/:id"
+                component={FluencyTutorOnePerformance}
+              />
               <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
               <Route
                 exact
@@ -230,6 +251,15 @@ class App extends React.Component {
               <Route
                 path="/tutor/phoneme/trainassign/:id"
                 component={PhonemeTutorTrainOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/performance"
+                component={PhonemeTutorAllPerformance}
+              />
+              <Route
+                path="/tutor/phoneme/performance/:id"
+                component={PhonemeTutorOnePerformance}
               />
             </Suspense>
           </ErrorBoundary>

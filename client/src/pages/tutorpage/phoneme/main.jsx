@@ -34,13 +34,18 @@ class PhonemeTutorMain extends React.Component {
               description="In this part, you can check students' weekly assignments"
             />
             <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/phoneme/assignment"
-              description="In this part, you can create new weekly assignment"
+              title="Students' Performance"
+              page="/tutor/phoneme/performance"
+              description="In this part, you can check students' performance"
             />
           </div>
           <h3>Modify Phoneme Database</h3>
           <div className="row">
+            <TrainCard
+              title="Create Weekly Assignment"
+              page="/tutor/phoneme/assignment"
+              description="In this part, you can create new weekly assignment"
+            />
             <TrainCard
               title="Modify Learning Materials"
               page="/tutor/phoneme/materials"

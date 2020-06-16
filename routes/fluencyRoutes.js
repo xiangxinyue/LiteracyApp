@@ -19,7 +19,7 @@ module.exports = (app) => {
     });
     res.send(infor);
   });
-  app.post("/api/fluency/test/assign/create", async (req, res) => {
+  app.post("/api/fluency/student/testassign", async (req, res) => {
     const assign = await new FluencyTestAssign({
       studentId: req.user.id,
       studentName: req.user.displayName,
@@ -30,13 +30,6 @@ module.exports = (app) => {
     }).save();
 
     res.send(assign);
-  });
-
-  app.post("/api/fluency/student/testassign", async (req, res) => {
-    const infor = await Student.findByIdAndUpdate(req.user.id, {
-      fluency_curr_score: req.body.newSpeed,
-    }).catch((err) => console.log(err));
-    res.send(infor);
   });
 
   app.get("/api/fluency/student/testassign", requireLogin, async (req, res) => {
@@ -84,8 +77,20 @@ module.exports = (app) => {
       newSpeed: req.body.newSpeed,
       assignment: req.body.assignment,
     }).save();
-
     res.send(assign);
+  });
+
+  app.post("/api/fluency/train/historyscore", async (req, res) => {
+    const user = await Student.findById(req.user.id);
+    const newArray = user.fluency_train_score;
+    newArray.push({
+      label: new Date(),
+      value: req.body.newSpeed,
+    });
+    await Student.findByIdAndUpdate(req.user.id, {
+      fluency_train_score: newArray,
+    });
+    res.send({});
   });
 
   // assignment
@@ -100,14 +105,15 @@ module.exports = (app) => {
     res.send({});
   });
 
-  app.post("/api/fluency/historyscore/update", async (req, res) => {
+  app.post("/api/fluency/eval/historyscore", async (req, res) => {
     const user = await Student.findById(req.user.id);
-    let scores = user.fluency_score.scores;
-    let dates = user.fluency_score.dates;
-    scores.push(req.body.newSpeed);
-    dates.push(req.body.assignDate);
+    const newArray = user.fluency_eval_score;
+    newArray.push({
+      label: req.body.assignDate,
+      value: req.body.newSpeed,
+    });
     await Student.findByIdAndUpdate(req.user.id, {
-      fluency_score: { scores, dates },
+      fluency_eval_score: newArray,
     });
     res.send({});
   });
@@ -242,5 +248,13 @@ module.exports = (app) => {
   app.get("/api/fluency/assign/getone/:id", async (req, res) => {
     const assignment = await FluencyEvalAssign.findById(req.params.id);
     res.send(assignment);
+  });
+
+  app.get("/api/fluency/historyscore/:id", async (req, res) => {
+    const student = await Student.findById(req.params.id);
+    res.send({
+      trainScore: student.fluency_train_score,
+      evalScore: student.fluency_eval_score,
+    });
   });
 };

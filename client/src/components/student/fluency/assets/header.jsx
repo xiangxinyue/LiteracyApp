@@ -16,15 +16,7 @@ const FluencyHeader = (props) => {
           <p>
             <h2>Welcome to Speed {props.part}</h2>
             <hr />
-            {currentUser.fluency_curr_score == -1 ? (
-              <h3 className="text-success">
-                You have not had Reading Speed score yet, this may be caused by:
-                <br />
-                1. You have not taken the testing assignment.
-                <br />
-                2. Your testing assignment has not been reviewed by your tutor.
-              </h3>
-            ) : (
+            {currentUser.fluency_curr_score == -1 ? null : (
               <h3 className="text-success">
                 Your current reading speed is {currentUser.fluency_curr_score}{" "}
                 (ms / letter)
