@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
 import Process from "../../../../assets/process";
 import $ from "jquery";
 let time;
@@ -10,7 +10,7 @@ class FluencyTrainingPart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      speed: 0,
+      speed: [],
       score: 0,
       currentParaNum: 0,
       maxNumOfQues: 0,
@@ -21,6 +21,7 @@ class FluencyTrainingPart extends Component {
       questions: [],
       choices: [],
       answers: [],
+      studentAnswers: [],
       yourAnswer: null,
       readDone: false,
       answerred: false,
@@ -28,7 +29,8 @@ class FluencyTrainingPart extends Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/fluency/train/get");
+    const { currentUser } = this.props;
+    const doc = await axios.get("/api/fluency/student/trainassign");
     const data = doc.data;
     await this.setState({
       paragraphs: data.paragraphs,
@@ -36,9 +38,8 @@ class FluencyTrainingPart extends Component {
       choices: data.choices,
       answers: data.answers,
       maxNumOfQues: data.paragraphs.length - 1,
-      speed: this.props.currentUser.fluency_curr_score,
+      speed: [currentUser.fluency_curr_score],
     });
-    console.log(this.state);
     await this.setState({
       currPara: this.state.paragraphs[this.state.currentParaNum],
     });
@@ -50,7 +51,9 @@ class FluencyTrainingPart extends Component {
 
   startReading = async () => {
     let index = 0;
-    const { speed, length } = this.state;
+    const { speed, length, currentParaNum } = this.state;
+    console.log(speed);
+    let currSpeed = speed[currentParaNum];
     await setTimeout(() => {
       time = setInterval(async () => {
         if (index < length) {
@@ -60,48 +63,80 @@ class FluencyTrainingPart extends Component {
           await this.setState({ readDone: true });
           clearInterval(time);
         }
-      }, speed);
+      }, currSpeed);
     }, 1000);
   };
 
   checkAnswer = async (e) => {
-    const { yourAnswer, answers, currentParaNum } = this.state;
-    await this.setState({ yourAnswer: e.target.value });
-    if (yourAnswer === answers[currentParaNum]) {
+    const { answers, currentParaNum, speed, studentAnswers } = this.state;
+    const answer = e.target.value;
+    const newSpeed = speed;
+    const oldSpeed = newSpeed[currentParaNum];
+    if (answer === answers[currentParaNum]) {
+      const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
+      newSpeed.push(addNewSpeed);
       this.setState({
         answerred: true,
         score: this.state.score + 1,
+        speed: newSpeed,
       });
     } else {
-      this.setState({ answerred: true });
+      const addNewSpeed = Number((oldSpeed * 1.02).toFixed(3));
+      newSpeed.push(addNewSpeed);
+      this.setState({ answerred: true, speed: newSpeed });
     }
+    const newStudentAnsers = studentAnswers;
+    newStudentAnsers.push(answer);
+    this.setState({
+      studentAnswers: newStudentAnsers,
+    });
   };
 
   changeQuestion = async () => {
-    const { currentParaNum, paragraphs, currPara, currParaArray } = this.state;
+    const { currentParaNum, paragraphs } = this.state;
+    await this.setState({ currentParaNum: currentParaNum + 1 });
     await this.setState({
-      currentParaNum: currentParaNum + 1,
-      currPara: paragraphs[currentParaNum],
+      currPara: paragraphs[this.state.currentParaNum],
       readDone: false,
       answerred: false,
     });
-    const sentenceArray = await currPara.split("");
+    const sentenceArray = await this.state.currPara.split("");
     await this.setState({ currParaArray: sentenceArray });
-    await this.setState({ length: currParaArray.length });
+    await this.setState({ length: this.state.currParaArray.length });
 
     this.startReading();
   };
 
   finishTrain = async () => {
-    const { score, maxNumOfQues, speed } = this.state;
-    const levelUp = score / (maxNumOfQues + 1) >= 0.8;
-    if (levelUp) {
-      const newSpeed = Math.floor(speed * 1.2);
-      await axios.post("/api/fluency/score/update", { newSpeed });
-    } else {
-      const newSpeed = Math.floor(speed * 0.8);
-      await axios.post("/api/fluency/score/update", { newSpeed });
+    const {
+      speed,
+      questions,
+      paragraphs,
+      answers,
+      choices,
+      studentAnswers,
+    } = this.state;
+    const newSpeed = speed.pop();
+    let assignment = [];
+    for (let i = 0; i < questions.length; i++) {
+      assignment.push({
+        paragraph: paragraphs[i],
+        question: questions[i],
+        choices: choices[i],
+        answer: answers[i],
+        studentAnswer: studentAnswers[i],
+        speed: speed[i],
+      });
     }
+    // create the practice assignment
+    await axios.post("/api/fluency/student/trainassign", {
+      assignment,
+      newSpeed,
+    });
+    // update fluency current score
+    await axios.post("/api/fluency/score/update", { newSpeed });
+    // update fluency practice history score
+    await axios.post("/api/fluency/train/historyscore", { newSpeed });
     window.location = "/student/fluency";
   };
 
@@ -145,23 +180,33 @@ class FluencyTrainingPart extends Component {
           ) : (
             <div>
               <h3>{questions[currentParaNum]}</h3>
-              {choices[currentParaNum].map((choice, index) => (
-                <div className="row">
-                  <div className="col-3"></div>
-                  <div className="row col-6">
-                    <input
-                      type="radio"
-                      key={index}
-                      value={choice}
-                      defaultChecked={false}
-                      onClick={this.checkAnswer}
-                    />
-                    &nbsp;&nbsp;
-                    <h4>{choice}</h4>
-                  </div>
-                  <div className="col-3"></div>
-                </div>
-              ))}
+              <FormControlLabel
+                value={choices[currentParaNum][0]}
+                label={choices[currentParaNum][0]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][1]}
+                label={choices[currentParaNum][1]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][2]}
+                label={choices[currentParaNum][2]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
+              <br />
+              <FormControlLabel
+                value={choices[currentParaNum][3]}
+                label={choices[currentParaNum][3]}
+                control={<Radio />}
+                onChange={this.checkAnswer}
+              />
             </div>
           )
         ) : (

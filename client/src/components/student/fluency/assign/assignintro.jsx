@@ -13,22 +13,46 @@ class FluencyAssignIntro extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const latestAssign = await axios.get("/api/fluency/assign/latest");
-    this.setState({ newAssign: latestAssign.data.createAt });
+    const latestAssign = await axios.get("/api/fluency/evalassign");
+    if (latestAssign.data.createAt === undefined) {
+      this.setState({ newAssign: false });
+    } else {
+      this.setState({ newAssign: latestAssign.data.createAt });
+    }
   };
 
-  checkAssign = () => {
+  renderAssignButton = () => {
     const { currentUser } = this.props;
     const { newAssign } = this.state;
-    const studentAssign = currentUser.fluency_score.dates.pop();
-    if (!studentAssign || newAssign > studentAssign) {
-      this.setState({ assignDone: false });
+    let studentAssign = null;
+    if (currentUser.fluency_eval_score.length !== 0) {
+      studentAssign = currentUser.fluency_eval_score.pop().label;
+    }
+    switch (newAssign) {
+      case null:
+        return null;
+      case false:
+        return <h3>Tutor has not posted new assignment.</h3>;
+      default:
+        if (!studentAssign || newAssign > studentAssign) {
+          return (
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={this.props.handleClick}
+            >
+              Start
+            </Button>
+          );
+        } else {
+          return <h3>You have finished this week assignment.</h3>;
+        }
     }
   };
 
   render() {
     const { currentUser } = this.props;
-    const { assignDone } = this.state;
     return (
       <Container>
         <h3 className="text-primary">
@@ -49,23 +73,7 @@ class FluencyAssignIntro extends React.Component {
           style={{ marginTop: 20 }}
         ></iframe>
         <hr />
-
-        {assignDone ? (
-          <div>
-            {currentUser ? this.checkAssign() : null}
-            <h3>You have finished this week assignment.</h3>
-          </div>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={this.props.handleClick}
-          >
-            Start
-          </Button>
-        )}
-
+        {currentUser ? this.renderAssignButton() : null}
         <Button
           variant="contained"
           color="inherit"

@@ -3,8 +3,20 @@ import crypto from "crypto";
 import { connect } from "react-redux";
 import axios from "axios";
 import MuiAlert from "@material-ui/lab/Alert";
-import { TextField, Button, Container, Snackbar } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Container,
+  Snackbar,
+  Grid,
+} from "@material-ui/core";
 import Table from "../../../assets/table/fluencytable";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -24,6 +36,7 @@ class FluencyTutorAssignPage extends React.Component {
       assignAddChoice4: "",
       assignAddAnswer: "",
       assignNum: 20,
+      selectedDate: null,
     };
   }
 
@@ -93,8 +106,9 @@ class FluencyTutorAssignPage extends React.Component {
   };
 
   addNewAssign = async () => {
-    await axios.post("/api/fluency/assign/tutoradd", {
+    await axios.post("/api/fluency/evalassign/add", {
       data: this.state.assigndata,
+      schedule: this.state.selectedDate,
     });
     await this.setState({ alert: true });
     window.location = "/tutor/fluency";
@@ -117,6 +131,7 @@ class FluencyTutorAssignPage extends React.Component {
       assignAddChoice4,
       assignAddAnswer,
       assignNum,
+      selectedDate,
     } = this.state;
 
     return (
@@ -129,7 +144,7 @@ class FluencyTutorAssignPage extends React.Component {
         </div>
         <Container>
           {assigndata.length != assignNum ? (
-            <div>
+            <Container>
               <TextField
                 id="standard-multiline-flexible"
                 label="Number of questions"
@@ -223,15 +238,34 @@ class FluencyTutorAssignPage extends React.Component {
               >
                 Generate assignment
               </Button>
-            </div>
+            </Container>
           ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.addNewAssign}
-            >
-              Submit New Assignment
-            </Button>
+            <Container className="row">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Date picker inline"
+                  value={selectedDate}
+                  onChange={(date) =>
+                    this.setState({ selectedDate: date }, console.log(date))
+                  }
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.addNewAssign}
+              >
+                Submit New Assignment
+              </Button>
+            </Container>
           )}
           <Table
             rows={assigndata}

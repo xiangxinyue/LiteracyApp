@@ -12,16 +12,9 @@ class FluencyTutorTestAllAssign extends React.Component {
 
   componentDidMount = async () => {
     const doc = await axios.get(
-      "/api/fluency/testassign/" + this.props.match.params.id
+      "/api/fluency/trainassign/" + this.props.match.params.id
     );
     this.setState({ assignment: doc.data });
-    console.log(doc.data);
-  };
-
-  handleSubmit = async () => {
-    const { finalSpeed, assignment } = this.state;
-    await axios.post("/api/fluency/score/create", { finalSpeed, assignment });
-    window.location = "/tutor/fluency/testassign";
   };
 
   renderChart = () => {
@@ -52,7 +45,7 @@ class FluencyTutorTestAllAssign extends React.Component {
           <Button
             variant="contained"
             color="default"
-            href="/tutor/fluency/testassign"
+            href="/tutor/fluency/trainassign"
           >
             Go back
           </Button>
@@ -62,25 +55,8 @@ class FluencyTutorTestAllAssign extends React.Component {
             <AssignTable rows={assignment.assignment} />
             <hr />
             <div className="main chart-wrapper">{this.renderChart()}</div>
-            <h4>AverageSpeed is {assignment.averageSpeed} millisec / letter</h4>
-            {/* <div className="row">
-              <h3>
-                The final speed:{" "}
-                <TextField
-                  onChange={(e) =>
-                    this.setState({ finalSpeed: parseFloat(e.target.value) })
-                  }
-                />
-              </h3>
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleSubmit}
-              >
-                Submit
-              </Button>
-            </div> */}
+            <h4>Old Speed is {assignment.oldSpeed} millisec / letter</h4>
+            <h4>New Speed is {assignment.newSpeed} millisec / letter</h4>
           </Container>
         ) : null}
       </div>

@@ -94,9 +94,10 @@ export default function CircularIntegration(props) {
       <div className={classes.wrapper}>
         <Fab
           aria-label="save"
-          color="primary"
+          color="default"
           className={props.correct ? buttonClassname1 : buttonClassname2}
           onClick={checkAnswer}
+          disabled={success}
         >
           {success ? (
             props.correct ? (

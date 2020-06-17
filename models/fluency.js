@@ -17,7 +17,6 @@ const fluencyTestAssignSchema = new Schema({
   createAt: Date,
   averageSpeed: Number,
   assignment: Array,
-  status: String,
 });
 
 mongoose.model("fluency_test_assigns", fluencyTestAssignSchema);
@@ -28,8 +27,18 @@ const fluencyTrainSchema = new Schema({
   choices: Array,
   answer: String,
 });
-
 mongoose.model("fluency_trains", fluencyTrainSchema);
+
+const fluencyTrainAssignSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
+  createAt: Date,
+  assignment: Array,
+  oldSpeed: Number,
+  newSpeed: Number,
+});
+mongoose.model("fluency_train_assigns", fluencyTrainAssignSchema);
 
 const fluencyUserSchema = new Schema({
   userId: String,
@@ -43,6 +52,7 @@ const fluencyAssignSchema = new Schema({
   tutor: String,
   createAt: Date,
   assignment: Array,
+  status: String,
 });
 
 mongoose.model("fluency_assigns", fluencyAssignSchema);

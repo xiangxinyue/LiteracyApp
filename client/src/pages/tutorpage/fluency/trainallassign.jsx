@@ -10,7 +10,7 @@ class FluencyTutorTestAllAssign extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/fluency/testassign");
+    const doc = await axios.get("/api/fluency/trainassign");
     this.setState({ assignments: doc.data });
   };
 
@@ -32,7 +32,7 @@ class FluencyTutorTestAllAssign extends React.Component {
                 title={assign.studentName}
                 description={assign.createAt}
                 handleClick={() =>
-                  (window.location = "/tutor/fluency/testassign/" + assign._id)
+                  (window.location = "/tutor/fluency/trainassign/" + assign._id)
                 }
               />
             );

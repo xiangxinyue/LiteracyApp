@@ -70,6 +70,20 @@ const FluencyTutorEvalOneAssign = lazy(() =>
   import("./pages/tutorpage/fluency/evaloneassign")
 );
 
+const FluencyTutorTrainAllAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/trainallassign")
+);
+
+const FluencyTutorTrainOneAssign = lazy(() =>
+  import("./pages/tutorpage/fluency/trainoneassign")
+);
+
+const FluencyTutorAllPerformance = lazy(() =>
+  import("./pages/tutorpage/fluency/allperformance")
+);
+const FluencyTutorOnePerformance = lazy(() =>
+  import("./pages/tutorpage/fluency/oneperformance")
+);
 // Phoneme Page
 const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
 const PhonemeTutorTrain = lazy(() =>
@@ -86,6 +100,26 @@ const PhonemeTutorEvalAllAssign = lazy(() =>
 );
 const PhonemeTutorEvalOneAssign = lazy(() =>
   import("./pages/tutorpage/phoneme/evaloneassign")
+);
+
+const PhonemeTutorTestAllAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/testallassign")
+);
+const PhonemeTutorTestOneAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/testoneassign")
+);
+
+const PhonemeTutorTrainAllAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/trainallassign")
+);
+const PhonemeTutorTrainOneAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/trainoneassign")
+);
+const PhonemeTutorAllPerformance = lazy(() =>
+  import("./pages/tutorpage/phoneme/allperformance")
+);
+const PhonemeTutorOnePerformance = lazy(() =>
+  import("./pages/tutorpage/phoneme/oneperformance")
 );
 
 class App extends React.Component {
@@ -176,6 +210,15 @@ class App extends React.Component {
               />
               <Route
                 exact
+                path="/tutor/fluency/trainassign"
+                component={FluencyTutorTrainAllAssign}
+              />
+              <Route
+                path="/tutor/fluency/trainassign/:id"
+                component={FluencyTutorTrainOneAssign}
+              />
+              <Route
+                exact
                 path="/tutor/fluency/assignment"
                 component={FluencyTutorAssign}
               />
@@ -187,6 +230,15 @@ class App extends React.Component {
               <Route
                 path="/tutor/fluency/evalassign/:id"
                 component={FluencyTutorEvalOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/fluency/performance"
+                component={FluencyTutorAllPerformance}
+              />
+              <Route
+                path="/tutor/fluency/performance/:id"
+                component={FluencyTutorOnePerformance}
               />
               <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
               <Route
@@ -206,12 +258,39 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/tutor/phoneme/allassign"
+                path="/tutor/phoneme/evalassign"
                 component={PhonemeTutorEvalAllAssign}
               />
               <Route
-                path="/tutor/phoneme/allassign/:id"
+                path="/tutor/phoneme/evalassign/:id"
                 component={PhonemeTutorEvalOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/testassign"
+                component={PhonemeTutorTestAllAssign}
+              />
+              <Route
+                path="/tutor/phoneme/testassign/:id"
+                component={PhonemeTutorTestOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/trainassign"
+                component={PhonemeTutorTrainAllAssign}
+              />
+              <Route
+                path="/tutor/phoneme/trainassign/:id"
+                component={PhonemeTutorTrainOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/phoneme/performance"
+                component={PhonemeTutorAllPerformance}
+              />
+              <Route
+                path="/tutor/phoneme/performance/:id"
+                component={PhonemeTutorOnePerformance}
               />
             </Suspense>
           </ErrorBoundary>

@@ -30,56 +30,45 @@ export const Header = ({ currentUser }) => {
         return (
           <div>
             <ArrowRightAltIcon style={{ fontSize: 100 }} color="secondary" />
-            <Button
-              variant="contained"
-              color="default"
+            <a
+              role="button"
+              aria-pressed="true"
+              className="btn btn-info btn-lg active"
               href="/auth/google_student"
               style={{ marginRight: 10 }}
             >
-              Student Signin
-            </Button>
-            <Button
-              variant="contained"
-              color="default"
+              Student Sign In
+            </a>
+            <a
+              role="button"
+              aria-pressed="true"
+              className="btn btn-info btn-lg active"
               href="/auth/google_tutor"
             >
-              Tutor Signin
-            </Button>
+              Tutor Sign In
+            </a>
           </div>
         );
       default:
         return (
           <div>
-            <Button
-              variant="contained"
-              color=""
+            <a
+              role="button"
+              aria-pressed="true"
+              className="btn btn-info btn-lg active"
               href="/"
               style={{ marginRight: 10 }}
             >
               Home
-            </Button>
-            {/* {currentUser.role === "student" ? (
-              <Button
-                variant="contained"
-                color=""
-                href="/studentdashboard"
-                style={{ marginRight: 10 }}
-              >
-                My Scores
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color=""
-                href="/instructordashboard"
-                style={{ marginRight: 10 }}
-              >
-                Students' Score
-              </Button>
-            )} */}
-            <Button variant="contained" color="" href="/auth/logout">
+            </a>
+            <a
+              role="button"
+              aria-pressed="true"
+              className="btn btn-info btn-lg active"
+              href="/auth/logout"
+            >
               Log Out
-            </Button>
+            </a>
           </div>
         );
     }

@@ -3,14 +3,14 @@ import axios from "axios";
 import { Button, Container } from "@material-ui/core";
 import TrainCard from "../../../assets/cards/tutorallassigncard";
 
-class FluencyTutorTestAllAssign extends React.Component {
+class PhonemeTutorAllAssign extends React.Component {
   constructor() {
     super();
     this.state = { assignments: [] };
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/fluency/testassign");
+    const doc = await axios.get("/api/phoneme/testassign");
     this.setState({ assignments: doc.data });
   };
 
@@ -19,9 +19,9 @@ class FluencyTutorTestAllAssign extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Review Students' Testing Assignment</h2>
+          <h2>Check Students' Testing Assignment</h2>
           <hr />
-          <Button variant="contained" color="default" href="/tutor/fluency">
+          <Button variant="contained" color="default" href="/tutor/phoneme">
             Go back
           </Button>
         </div>
@@ -32,7 +32,7 @@ class FluencyTutorTestAllAssign extends React.Component {
                 title={assign.studentName}
                 description={assign.createAt}
                 handleClick={() =>
-                  (window.location = "/tutor/fluency/testassign/" + assign._id)
+                  (window.location = "/tutor/phoneme/testassign/" + assign._id)
                 }
               />
             );
@@ -43,4 +43,4 @@ class FluencyTutorTestAllAssign extends React.Component {
   }
 }
 
-export default FluencyTutorTestAllAssign;
+export default PhonemeTutorAllAssign;

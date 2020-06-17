@@ -2,7 +2,6 @@ import React from "react";
 import WordCard from "../assets/wordcard";
 import Process from "../../../../assets/process";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import Phonemesummary from "../assets/summary";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -14,6 +13,7 @@ class PhonemeTestPart extends React.Component {
       level: [],
       word: [],
       phoneme: [],
+      answers: [],
       index: 0,
       correct: false,
       answer: false,
@@ -60,6 +60,9 @@ class PhonemeTestPart extends React.Component {
         wrongWord: newWrongWord,
       });
     }
+    const newAnswers = this.state.answers;
+    newAnswers.push(this.state.input);
+    this.setState({ answers: newAnswers });
   };
 
   changeQuestion = async () => {
@@ -71,7 +74,7 @@ class PhonemeTestPart extends React.Component {
   };
 
   update = async () => {
-    const { rightWord, word } = this.state;
+    const { rightWord, word, phoneme, answers, level } = this.state;
     let rightId = [];
     let wrongId = [];
     await this.state.word.forEach((word, index) => {
@@ -81,9 +84,23 @@ class PhonemeTestPart extends React.Component {
         wrongId.push(this.state.id[index]);
       }
     });
+    // save wrong and right questions
     await axios.post("/api/phoneme/rightwrong/update", { rightId, wrongId });
     const newScore = 20 * (rightWord.length / word.length);
-    axios.post("/api/phoneme/score/update", { newScore });
+    let phonemeAssign = [];
+    for (let i = 0; i < word.length; i++) {
+      phonemeAssign.push({
+        word: word[i],
+        phoneme: phoneme[i],
+        level: level[i],
+        answer: answers[i],
+      });
+    }
+    // create practice student-side assignment
+    await axios.post("/api/phoneme/testassign", { newScore, phonemeAssign });
+    // update the first score
+    await axios.post("/api/phoneme/currscore/update", { newScore });
+    window.location = "/student/phoneme";
   };
 
   render() {
@@ -94,30 +111,19 @@ class PhonemeTestPart extends React.Component {
       <div>
         {this.state.word.length !== 0 ? (
           <div style={{ margin: "30px 25%" }}>
-            {this.state.index !== this.state.word.length ? (
-              <div>
-                <WordCard
-                  word={this.state.word[this.state.index]}
-                  phoneme={this.state.phoneme[this.state.index]}
-                  input={this.state.input}
-                  answered={this.state.answer}
-                  correct={this.state.correct}
-                  handleClick={() => this.handleFlip(this.state.index)}
-                  handleInput={(input) => this.setState({ input: input })}
-                  next={() => this.changeQuestion()}
-                  last={this.state.index + 1 === this.state.word.length}
-                  update={() => this.update()}
-                />
-                <LinearProgress variant="determinate" value={progress} />
-              </div>
-            ) : (
-              <Phonemesummary
-                wrongWord={this.state.wrongWord}
-                wrongPhoneme={this.state.wrongPhoneme}
-                accuracy={accuracy}
-                number={this.state.word.length}
-              />
-            )}
+            <WordCard
+              word={this.state.word[this.state.index]}
+              phoneme={this.state.phoneme[this.state.index]}
+              input={this.state.input}
+              answered={this.state.answer}
+              correct={this.state.correct}
+              handleClick={() => this.handleFlip(this.state.index)}
+              handleInput={(input) => this.setState({ input: input })}
+              next={() => this.changeQuestion()}
+              last={this.state.index + 1 === this.state.word.length}
+              update={() => this.update()}
+            />
+            <LinearProgress variant="determinate" value={progress} />
           </div>
         ) : (
           <Process />

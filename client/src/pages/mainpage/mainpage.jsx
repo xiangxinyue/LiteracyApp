@@ -38,25 +38,25 @@ const Main = ({ currentUser }) => {
               title={"Sound Training"}
               page={"/student/phoneme"}
               image={imagePath + images[0]}
-              description={"Increase your sound skills in English"}
+              description={"Increase your sound skills "}
             />
             <MainCard
               title={"Print Training"}
               page={"/"}
               image={imagePath + images[1]}
-              description={"Increase your spelling skills in English"}
+              description={"Increase your spelling skills "}
             />
             <MainCard
               title={"Speed Training"}
               page={"/student/fluency"}
               image={imagePath + images[2]}
-              description={"Increase your reading speed in English"}
+              description={"Increase your reading speed "}
             />
             <MainCard
               title={"Meaning Training"}
               page={"/student/meaning"}
               image={imagePath + images[3]}
-              description={"Increase your meaning skills in English"}
+              description={"Increase your meaning skills "}
             />
           </div>
         ) : (
@@ -101,25 +101,25 @@ const Main = ({ currentUser }) => {
             title={"Sound Training"}
             page={"/"}
             image={imagePath + images[0]}
-            description={"Increase your sound skills in English"}
+            description={"Increase your sound skills "}
           />
           <MainCard
             title={"Print Training"}
             page={"/"}
             image={imagePath + images[1]}
-            description={"Increase your spelling skills in English"}
+            description={"Increase your spelling skills "}
           />
           <MainCard
             title={"Speed Training"}
             page={"/"}
             image={imagePath + images[2]}
-            description={"Increase your reading speed in English"}
+            description={"Increase your reading speed "}
           />
           <MainCard
             title={"Meaning Training"}
             page={"/"}
             image={imagePath + images[3]}
-            description={"Increase your meaning skills in English"}
+            description={"Increase your meaning skills "}
           />
         </div>
       )}

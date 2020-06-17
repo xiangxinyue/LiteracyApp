@@ -19,19 +19,19 @@ class FluencyTutorMain extends React.Component {
           <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
-              title="Review Students' Testing Assignment"
+              title="Students' Testing Assignment"
               page="/tutor/fluency/testassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
-              title="Check Students' Evaluation Assignment"
-              page="/tutor/fluency/evalassign"
+              title="Students' Practice Assignment"
+              page="/tutor/fluency/trainassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/fluency/assignment"
-              description="In this part, you can create new weekly assignment"
+              title="Students' Evaluation Assignment"
+              page="/tutor/fluency/evalassign"
+              description="In this part, you can review students' testing assignment"
             />
             <TrainCard
               title="Students' Performance"
@@ -45,6 +45,11 @@ class FluencyTutorMain extends React.Component {
         <Container>
           <h3>Modify Fluency Database</h3>
           <div className="row">
+            <TrainCard
+              title="Create Weekly Assignment"
+              page="/tutor/fluency/assignment"
+              description="In this part, you can create new weekly assignment"
+            />
             <TrainCard
               title="Modify Learning Materials"
               page="/tutor/fluency/materials"
