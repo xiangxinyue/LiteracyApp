@@ -30,6 +30,15 @@ const PhonemeMaterials = lazy(() =>
 const PhonemeAssignment = lazy(() =>
   import("./pages/studentpage/phoneme/assignment")
 );
+// Print pages
+const PrintMain = lazy(() => import("./pages/studentpage/print/main"));
+const PrintPractise = lazy(() => import("./pages/studentpage/print/practise"));
+const PrintMaterials = lazy(() =>
+  import("./pages/studentpage/print/materials")
+);
+const PrintAssignment = lazy(() =>
+  import("./pages/studentpage/print/assignment")
+);
 
 // Tutor pages
 // Fluency Page
@@ -156,7 +165,22 @@ class App extends React.Component {
                 path="/student/phoneme/assignment"
                 component={PhonemeAssignment}
               />
-
+              <Route exact path="/student/print" component={PrintMain} />
+              <Route
+                exact
+                path="/student/print/practise"
+                component={PrintPractise}
+              />
+              <Route
+                exact
+                path="/student/print/materials"
+                component={PrintMaterials}
+              />
+              <Route
+                exact
+                path="/student/print/assignment"
+                component={PrintAssignment}
+              />
               <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
               <Route
                 exact

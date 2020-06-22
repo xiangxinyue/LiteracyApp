@@ -92,7 +92,7 @@ class FluencyTrainingPart extends Component {
     const newSpeed = speed;
     const oldSpeed = newSpeed[currentParaNum];
     if (yourAnswer === answers[currentParaNum]) {
-      const addNewSpeed = Number((oldSpeed * 1.02).toFixed(3));
+      const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({
         answerred: true,
@@ -101,7 +101,7 @@ class FluencyTrainingPart extends Component {
         speed: newSpeed,
       });
     } else {
-      const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
+      const addNewSpeed = Number((oldSpeed * 1.08).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({
         answerred: true,

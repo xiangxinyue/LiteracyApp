@@ -81,7 +81,7 @@ class FluencyTrainingPart extends Component {
         speed: newSpeed,
       });
     } else {
-      const addNewSpeed = Number((oldSpeed * 1.02).toFixed(3));
+      const addNewSpeed = Number((oldSpeed * 1.08).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({ answerred: true, speed: newSpeed });
     }

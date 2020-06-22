@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   component: {
     margin: 10,
     padding: 10,
-    textAlign: "center",
+    // textAlign: "center",
   },
 }));
 

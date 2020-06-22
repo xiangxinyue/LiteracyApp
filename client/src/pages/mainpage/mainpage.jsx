@@ -42,7 +42,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Print Training"}
-              page={"/"}
+              page={"/student/print"}
               image={imagePath + images[1]}
               description={"Increase your spelling skills "}
             />
