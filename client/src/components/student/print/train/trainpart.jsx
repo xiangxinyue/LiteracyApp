@@ -5,7 +5,7 @@ import Q1Table from "../assets/q1-table";
 import Q2Table from "../assets/q2-table";
 import Q3Table from "../assets/q3-table";
 
-class PrintTestPart extends React.Component {
+class PrintTrainPart extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +23,7 @@ class PrintTestPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/print/testdata");
+    const doc = await axios.get("/api/print/traindata");
     this.setState({ q1: doc.data.q1, q2: doc.data.q2, q3: doc.data.q3 });
   };
 
@@ -125,6 +125,8 @@ class PrintTestPart extends React.Component {
     return (
       <div>
         {this.renderQuestion()}
+        <br />
+        <br />
         {q_show == 2 ? (
           <Button
             variant="contained"
@@ -143,4 +145,4 @@ class PrintTestPart extends React.Component {
   }
 }
 
-export default PrintTestPart;
+export default PrintTrainPart;

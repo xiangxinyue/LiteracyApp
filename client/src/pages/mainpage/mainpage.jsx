@@ -71,7 +71,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Print Training"}
-              page={"/"}
+              page={"/tutor/print"}
               image={imagePath + images[1]}
               description={
                 "Modify print testing, training, and assignment questions."

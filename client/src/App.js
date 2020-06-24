@@ -117,6 +117,9 @@ const PhonemeTutorAllPerformance = lazy(() =>
 const PhonemeTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/phoneme/oneperformance")
 );
+// print page
+const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
+const PrintTutorData = lazy(() => import("./pages/tutorpage/print/data"));
 
 class App extends React.Component {
   componentDidMount = async () => {
@@ -284,6 +287,12 @@ class App extends React.Component {
               <Route
                 path="/tutor/phoneme/performance/:id"
                 component={PhonemeTutorOnePerformance}
+              />
+              <Route exact path="/tutor/print/" component={PrintTutorMain} />
+              <Route
+                exact
+                path="/tutor/print/data"
+                component={PrintTutorData}
               />
             </Suspense>
           </ErrorBoundary>
