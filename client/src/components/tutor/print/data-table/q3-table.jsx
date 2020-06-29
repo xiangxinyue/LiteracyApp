@@ -36,15 +36,27 @@ export default function SimpleTable(props) {
               <TableCell align="left">{row.level}</TableCell>
               <TableCell align="left">{row.question}</TableCell>
               <TableCell align="left">
-                {row.choices.map((choice) => choice + ",")}
+                {row.choices.map((dataset) => (
+                  <div>
+                    {dataset.choice1 + " / " + dataset.choice2}
+                    <br />
+                  </div>
+                ))}
               </TableCell>
-              <TableCell align="left">{row.answer}</TableCell>
+              <TableCell align="left">
+                {row.choices.map((dataset) => (
+                  <div>
+                    {dataset.answer}
+                    <br />
+                  </div>
+                ))}
+              </TableCell>
               <TableCell align="left">
                 <Button
                   color="secondary"
                   variant="outlined"
-                  key={row._id}
-                  onClick={() => props.handleDelete(row._id)}
+                  key={row}
+                  onClick={() => props.handleDelete(row)}
                 >
                   Delete
                 </Button>

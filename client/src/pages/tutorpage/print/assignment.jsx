@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import { TextField, Button, Container } from "@material-ui/core";
 import Q1Table from "../../../components/tutor/print/data-table/q1-table";
 import Q2Table from "../../../components/tutor/print/data-table/q2-table";
 import Q3Table from "../../../components/tutor/print/data-table/q3-table";
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 
 class PrintData extends React.Component {
   constructor(props) {
@@ -33,75 +34,122 @@ class PrintData extends React.Component {
       q3_answer: "",
       q3_choices: [],
       alert: false,
+      schedule: null,
+      q1_num: 0,
+      q2_num: 0,
+      q3_num: 0,
     };
   }
 
-  componentDidMount = () => {
-    this.renderQ1Data();
-    this.renderQ2Data();
-    this.renderQ3Data();
-  };
-
-  renderQ1Data = async () => {
+  generateQ1Date = async () => {
+    const { q1_num } = this.state;
     const doc = await axios.get("/api/print/q1/alldata");
-    this.setState({ q1: doc.data });
+    const q1 = doc.data.filter((question, index) => index < q1_num);
+    this.setState({ q1 });
   };
 
-  renderQ2Data = async () => {
+  generateQ2Date = async () => {
+    const { q2_num } = this.state;
     const doc = await axios.get("/api/print/q2/alldata");
-    this.setState({ q2: doc.data });
+    const q2 = doc.data.filter((question, index) => index < q2_num);
+    this.setState({ q2 });
   };
 
-  renderQ3Data = async () => {
+  generateQ3Date = async () => {
+    const { q3_num } = this.state;
     const doc = await axios.get("/api/print/q3/alldata");
-    this.setState({ q3: doc.data });
+    const q3 = doc.data.filter((question, index) => index < q3_num);
+    this.setState({ q3 });
   };
 
   addQ1Data = async () => {
-    const { q1_level, q1_question, q1_answer } = this.state;
-    await axios.post("/api/print/q1/onedata", {
-      level: q1_level,
-      question: q1_question,
-      answer: q1_answer,
+    this.setState((state) => {
+      const newQ1 = state.q1;
+      newQ1.push({
+        level: state.q1_level,
+        question: state.q1_question,
+        answer: state.q1_answer,
+      });
+      return {
+        ...state,
+        q1: newQ1,
+        q1_level: "",
+        q1_question: "",
+        q1_answer: [],
+      };
     });
-    this.renderQ1Data();
   };
 
   addQ2Data = async () => {
-    const { q2_level, q2_question, q2_choices, q2_answer } = this.state;
-    await axios.post("/api/print/q2/onedata", {
-      level: q2_level,
-      question: q2_question,
-      answer: q2_answer,
-      choices: q2_choices,
+    this.setState((state) => {
+      const newQ2 = state.q2;
+      newQ2.push({
+        level: state.q2_level,
+        question: state.q2_question,
+        answer: state.q2_answer,
+        choices: state.q2_choices,
+      });
+      return {
+        ...state,
+        q2: newQ2,
+        q2_level: "",
+        q2_question: "",
+        q2_answer: "",
+        q2_choices: [],
+      };
     });
-    this.renderQ2Data();
   };
 
   addQ3Data = async () => {
-    const { q3_level, q3_question, q3_choices } = this.state;
-    await axios.post("/api/print/q3/onedata", {
-      level: q3_level,
-      question: q3_question,
-      choices: q3_choices,
+    this.setState((state) => {
+      const newQ3 = state.q3;
+      newQ3.push({
+        level: state.q3_level,
+        question: state.q3_question,
+        choices: state.q3_choices,
+      });
+      return {
+        ...state,
+        q3: newQ3,
+        q3_level: "",
+        q3_question: "",
+        q3_choices: [],
+      };
     });
-    this.renderQ3Data();
   };
 
   deleteQ1 = async (row) => {
-    await axios.delete("/api/print/q1/onedata/" + row._id);
-    this.renderQ1Data();
+    this.setState((state) => {
+      const q1 = state.q1.filter((data) => data !== row);
+      return { ...state, q1 };
+    });
   };
 
   deleteQ2 = async (row) => {
-    await axios.delete("/api/print/q2/onedata/" + row._id);
-    this.renderQ2Data();
+    this.setState((state) => {
+      const q2 = state.q2.filter((data) => data !== row);
+      return { ...state, q2 };
+    });
   };
 
   deleteQ3 = async (row) => {
-    await axios.delete("/api/print/q3/onedata/" + row._id);
-    this.renderQ3Data();
+    this.setState((state) => {
+      const q3 = state.q3.filter((data) => data !== row);
+      return { ...state, q3 };
+    });
   };
+
+  handleCreate = async () => {
+    const { q1, q2, q3, schedule } = this.state;
+    await axios.post("/api/print/eval", {
+      q1Assign: q1,
+      q2Assign: q2,
+      q3Assign: q3,
+      schedule,
+    });
+    window.location = "/tutor/print";
+  };
+
   render() {
     const {
       q1,
@@ -122,20 +170,28 @@ class PrintData extends React.Component {
       q3_choice2,
       q3_answer,
       q3_choices,
-      alert,
+      schedule,
+      q1_num,
+      q2_num,
+      q3_num,
     } = this.state;
 
     return (
       <div>
         <div className="jumbotron">
-          <h2>Modify the Print training data</h2>
+          <h2>Create new Print Evaluation Assignment</h2>
           <hr />
           <Button variant="contained" color="default" href="/tutor/print">
             Go back
           </Button>
         </div>
         <Container>
-          <h3>Modify Question 1 data</h3>
+          <h3>Question 1 data</h3>
+          <TextField
+            label="Number"
+            value={q1_num}
+            onChange={(e) => this.setState({ q1_num: e.target.value })}
+          />
           <TextField
             label="level"
             value={q1_level}
@@ -161,7 +217,7 @@ class PrintData extends React.Component {
                 const q1_answer = state.q1_answer;
                 q1_answer.push(q1_curr_answer);
                 this.setState({ q1_curr_answer: "" });
-                return { q1_answer, ...state };
+                return { ...state, q1_answer };
               })
             }
           >
@@ -175,12 +231,23 @@ class PrintData extends React.Component {
           <Button variant="outlined" color="primary" onClick={this.addQ1Data}>
             Add an Entry
           </Button>
-
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.generateQ1Date}
+          >
+            Generate Automatically
+          </Button>
           <Q1Table data={q1} handleDelete={this.deleteQ1} />
         </Container>
         <hr />
         <Container>
-          <h3>Modify Question 2 data</h3>
+          <h3>Question 2 data</h3>
+          <TextField
+            label="Number"
+            value={q2_num}
+            onChange={(e) => this.setState({ q2_num: e.target.value })}
+          />
           <TextField
             label="level"
             value={q2_level}
@@ -211,7 +278,7 @@ class PrintData extends React.Component {
                 const q2_choices = state.q2_choices;
                 q2_choices.push(q2_curr_choice);
                 this.setState({ q2_curr_choice: "" });
-                return { q2_choices, ...state };
+                return { ...state, q2_choices };
               })
             }
           >
@@ -223,11 +290,23 @@ class PrintData extends React.Component {
           <Button variant="outlined" color="primary" onClick={this.addQ2Data}>
             Add an Entry
           </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.generateQ2Date}
+          >
+            Generate Automatically
+          </Button>
           <Q2Table data={q2} handleDelete={this.deleteQ2} />
         </Container>
         <hr />
         <Container>
-          <h3>Modify Question 3 data</h3>
+          <h3>Question 3 data</h3>
+          <TextField
+            label="Number"
+            value={q3_num}
+            onChange={(e) => this.setState({ q3_num: e.target.value })}
+          />
           <TextField
             label="level"
             value={q3_level}
@@ -273,8 +352,8 @@ class PrintData extends React.Component {
                   q3_answer: "",
                 });
                 return {
-                  q3_choices,
                   ...state,
+                  q3_choices,
                 };
               });
             }}
@@ -296,17 +375,42 @@ class PrintData extends React.Component {
           <Button variant="outlined" color="primary" onClick={this.addQ3Data}>
             Add an Entry
           </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={this.generateQ3Date}
+          >
+            Generate Automatically
+          </Button>
           <Q3Table data={q3} handleDelete={this.deleteQ3} />
         </Container>
-        <Snackbar
-          open={alert}
-          autoHideDuration={2000}
-          onClose={this.handleCloseAlert}
-        >
-          <Alert onClose={this.handleClose} severity="success">
-            Operation Successfully!
-          </Alert>
-        </Snackbar>
+        <hr />
+        <Container className="row">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={schedule}
+              onChange={(date) =>
+                this.setState({ schedule: date }, console.log(date))
+              }
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleCreate}
+          >
+            Create
+          </Button>
+        </Container>
       </div>
     );
   }

@@ -16,27 +16,33 @@ class PrintTrainPart extends React.Component {
       q1Assign: [],
       q2Assign: [],
       q_show: 0,
+      assignDate: null,
     };
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/print/traindata");
-    await this.setState({ q1: doc.data.q1, q2: doc.data.q2, q3: doc.data.q3 });
+    const doc = await axios.get("/api/print/eval");
+    await this.setState({
+      q1: doc.data.q1Assign,
+      q2: doc.data.q2Assign,
+      q3: doc.data.q3Assign,
+      assignDate: doc.data.createAt,
+    });
     console.log(this.state);
   };
 
   handleSubmit = async (q3_score, q3Assign) => {
-    const { q1_score, q2_score, q1Assign, q2Assign } = this.state;
+    const { q1_score, q2_score, q1Assign, q2Assign, assignDate } = this.state;
     const newScore = q1_score + q2_score + q3_score;
     console.log(q1_score, q2_score, q3_score, q1Assign, q2Assign, q3Assign);
-    await axios.post("/api/print/trainassign", {
+    await axios.post("/api/print/evalassign", {
       newScore,
       q1Assign,
       q2Assign,
       q3Assign,
     });
     await axios.put("/api/print/score", { newScore });
-    await axios.put("/api/print/train/historyscore", { newScore });
+    await axios.put("/api/print/eval/historyscore", { newScore, assignDate });
     window.location = "/student/print";
   };
 

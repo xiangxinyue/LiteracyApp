@@ -25,6 +25,7 @@ export default function SimpleTable(props) {
           <TableRow>
             <TableCell align="left">Level</TableCell>
             <TableCell align="left">Question</TableCell>
+            <TableCell align="left">Choices</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">Operation</TableCell>
           </TableRow>
@@ -35,14 +36,15 @@ export default function SimpleTable(props) {
               <TableCell align="left">{row.level}</TableCell>
               <TableCell align="left">{row.question}</TableCell>
               <TableCell align="left">
-                {row.answer.map((answer) => answer + ",")}
+                {row.choices.map((choice) => choice + ",")}
               </TableCell>
+              <TableCell align="left">{row.answer}</TableCell>
               <TableCell align="left">
                 <Button
                   color="secondary"
                   variant="outlined"
-                  key={row._id}
-                  onClick={() => props.handleDelete(row._id)}
+                  key={row}
+                  onClick={() => props.handleDelete(row)}
                 >
                   Delete
                 </Button>
