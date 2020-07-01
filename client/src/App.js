@@ -130,7 +130,30 @@ const PhonemeTutorAllPerformance = lazy(() =>
 const PhonemeTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/phoneme/oneperformance")
 );
-
+// print page
+const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
+const PrintTutorData = lazy(() => import("./pages/tutorpage/print/data"));
+const PrintTutorAssign = lazy(() =>
+  import("./pages/tutorpage/print/assignment")
+);
+const PrintTutorTestAllAssign = lazy(() =>
+  import("./pages/tutorpage/print/testallassign")
+);
+const PrintTutorTestOneAssign = lazy(() =>
+  import("./pages/tutorpage/print/testoneassign")
+);
+const PrintTutorTrainAllAssign = lazy(() =>
+  import("./pages/tutorpage/print/trainallassign")
+);
+const PrintTutorTrainOneAssign = lazy(() =>
+  import("./pages/tutorpage/print/trainoneassign")
+);
+const PrintTutorEvalAllAssign = lazy(() =>
+  import("./pages/tutorpage/print/evalallassign")
+);
+const PrintTutorEvalOneAssign = lazy(() =>
+  import("./pages/tutorpage/print/evaloneassign")
+);
 class App extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/auth/current_user");
@@ -316,6 +339,44 @@ class App extends React.Component {
               <Route
                 path="/tutor/phoneme/performance/:id"
                 component={PhonemeTutorOnePerformance}
+              />
+              <Route exact path="/tutor/print/" component={PrintTutorMain} />
+              <Route
+                exact
+                path="/tutor/print/data"
+                component={PrintTutorData}
+              />
+              <Route
+                exact
+                path="/tutor/print/assignment"
+                component={PrintTutorAssign}
+              />
+              <Route
+                exact
+                path="/tutor/print/testassign"
+                component={PrintTutorTestAllAssign}
+              />
+              <Route
+                path="/tutor/print/testassign/:id"
+                component={PrintTutorTestOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/print/trainassign"
+                component={PrintTutorTrainAllAssign}
+              />
+              <Route
+                path="/tutor/print/trainassign/:id"
+                component={PrintTutorTrainOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/print/evalassign"
+                component={PrintTutorEvalAllAssign}
+              />
+              <Route
+                path="/tutor/print/evalassign/:id"
+                component={PrintTutorEvalOneAssign}
               />
             </Suspense>
           </ErrorBoundary>
