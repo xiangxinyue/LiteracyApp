@@ -154,6 +154,13 @@ const PrintTutorEvalAllAssign = lazy(() =>
 const PrintTutorEvalOneAssign = lazy(() =>
   import("./pages/tutorpage/print/evaloneassign")
 );
+const PrintTutorAllPerform = lazy(() =>
+  import("./pages/tutorpage/print/allperformance")
+);
+const PrintTutorOnePerform = lazy(() =>
+  import("./pages/tutorpage/print/oneperformance")
+);
+
 class App extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/auth/current_user");
@@ -377,6 +384,15 @@ class App extends React.Component {
               <Route
                 path="/tutor/print/evalassign/:id"
                 component={PrintTutorEvalOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/print/performance"
+                component={PrintTutorAllPerform}
+              />
+              <Route
+                path="/tutor/print/performance/:id"
+                component={PrintTutorOnePerform}
               />
             </Suspense>
           </ErrorBoundary>
