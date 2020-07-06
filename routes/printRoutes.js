@@ -215,4 +215,13 @@ module.exports = (app) => {
     const assign = await PrintEvalAssign.findById(req.params.id);
     res.send(assign);
   });
+
+  // history performance
+  app.get("/api/print/historyscore/:id", async (req, res) => {
+    const student = await Student.findById(req.params.id);
+    res.send({
+      trainScore: student.print_train_score,
+      evalScore: student.print_eval_score,
+    });
+  });
 };
