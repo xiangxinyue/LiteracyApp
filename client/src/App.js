@@ -54,6 +54,7 @@ const MeaningAssignment = lazy(() =>
 );
 
 // Tutor pages
+
 // Fluency pages
 const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
 const FluencyTutorTrain = lazy(() =>
@@ -130,7 +131,8 @@ const PhonemeTutorAllPerformance = lazy(() =>
 const PhonemeTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/phoneme/oneperformance")
 );
-// print page
+
+// Print Page
 const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
 const PrintTutorData = lazy(() => import("./pages/tutorpage/print/data"));
 const PrintTutorAssign = lazy(() =>
@@ -160,6 +162,9 @@ const PrintTutorAllPerform = lazy(() =>
 const PrintTutorOnePerform = lazy(() =>
   import("./pages/tutorpage/print/oneperformance")
 );
+
+// Meaning Page
+const MeaningTutorMain = lazy(() => import("./pages/tutorpage/meaning/main"));
 
 class App extends React.Component {
   componentDidMount = async () => {
@@ -394,6 +399,9 @@ class App extends React.Component {
                 path="/tutor/print/performance/:id"
                 component={PrintTutorOnePerform}
               />
+
+              <Route exact path="/tutor/meaning/" component={MeaningTutorMain} />
+
             </Suspense>
           </ErrorBoundary>
         </Switch>

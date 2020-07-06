@@ -1,28 +1,28 @@
 import React from "react";
-import FluencyIntro from "../../../components/student/fluency/train/trainintro";
-import FluencyMain from "../../../components/student/fluency/train/trainpart";
-import FluencyHeader from "../../../components/student/fluency/assets/header";
-import Paper from "../../../assets/paper";
+import MeaningIntro from "../../../components/student/meaning/train/trainintro";
+import MeaningTrain from "../../../components/student/meaning/train/trainpart";
+import MeaningHeader from "../../../components/student/meaning/assets/header";
+import { Container } from "@material-ui/core";
 
-class FluencyPractise extends React.Component {
+class MeaningPractise extends React.Component {
   state = {
-    understand: false,
+    start: false,
   };
 
   render() {
-    const { understand } = this.state;
+    const { start } = this.state;
     return (
       <div>
-        <FluencyHeader part="Training Practise" />
-        {understand ? (
-          <Paper component={FluencyMain} />
-        ) : (
-          <FluencyIntro
-            handleClick={() => this.setState({ understand: !understand })}
-          />
-        )}
+        <MeaningHeader part="Training" />
+        <Container>
+          {start ? (
+            <MeaningTrain />
+          ) : (
+            <MeaningIntro handleClick={() => this.setState({ start: !start })} />
+          )}
+        </Container>
       </div>
     );
   }
 }
-export default FluencyPractise;
+export default MeaningPractise;

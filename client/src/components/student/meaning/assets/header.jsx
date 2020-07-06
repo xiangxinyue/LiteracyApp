@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import SignInHeader from "../../header/signinheader";
+import SignInHeader from "../../../header/signinheader";
 
-const MeaningHeader = (props) => {
+const PrintHeader = (props) => {
   const { currentUser } = props;
   const renderPage = () => {
     switch (currentUser) {
@@ -13,7 +13,13 @@ const MeaningHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Meaning Training</h2>
+            <h2>Welcome to Meaning {props.part}</h2>
+            <hr />
+            {currentUser.print_curr_score == -1 ? null : (
+              <h3 className="text-success">
+                Your current meaning score is {currentUser.print_curr_score}
+              </h3>
+            )}
           </p>
         );
     }
@@ -25,4 +31,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(MeaningHeader);
+export default connect(mapStateToProps)(PrintHeader);

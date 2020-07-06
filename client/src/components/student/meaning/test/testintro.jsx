@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
-const MeaningTestIntro = (props) => {
+const PrintTestIntro = (props) => {
   return (
     <Container>
       <h3 className="text-primary">
@@ -9,14 +9,13 @@ const MeaningTestIntro = (props) => {
       </h3>
       <h4>
         Instructions: Watch the introduction video first, then click the start
-        button to begin the meaning testing part. 
-        This is the knowledge or awareness of morphemes (smallest
-        meaningful unit). For example, there are 2 morphemes in the word: beautiful (beauty+ful)
+        button. Read the words as fast as possible. When you finish click the
+        finish button.
       </h4>
       <iframe
         width="740"
         height="430"
-        src="https://www.youtube.com/embed/o4HXapRlr1A"
+        src="https://www.youtube.com/embed/rDg4S6jxLJI"
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
@@ -43,4 +42,4 @@ const MeaningTestIntro = (props) => {
   );
 };
 
-export default MeaningTestIntro;
+export default PrintTestIntro;

@@ -87,7 +87,7 @@ const Main = ({ currentUser }) => {
             />
             <MainCard
               title={"Meaning Training"}
-              page={"/"}
+              page={"/tutor/meaning"}
               image={imagePath + images[3]}
               description={
                 "Modify meaning testing, training, and assignment questions."
