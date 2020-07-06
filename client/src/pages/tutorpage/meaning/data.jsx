@@ -3,14 +3,14 @@ import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { TextField, Button, Container } from "@material-ui/core";
-import Q1Table from "../../../components/tutor/print/data-table/q1-table";
-import Q2Table from "../../../components/tutor/print/data-table/q2-table";
-import Q3Table from "../../../components/tutor/print/data-table/q3-table";
+import Q1Table from "../../../components/tutor/meaning/data-table/q1-table";
+import Q2Table from "../../../components/tutor/meaning/data-table/q2-table";
+import Q3Table from "../../../components/tutor/meaning/data-table/q3-table";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class PrintData extends React.Component {
+class MeaningData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -130,7 +130,7 @@ class PrintData extends React.Component {
         <div className="jumbotron">
           <h2>Modify the Print training data</h2>
           <hr />
-          <Button variant="contained" color="default" href="/tutor/print">
+          <Button variant="contained" color="default" href="/tutor/meaning">
             Go back
           </Button>
         </div>
@@ -312,4 +312,4 @@ class PrintData extends React.Component {
   }
 }
 
-export default PrintData;
+export default MeaningData;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Container } from "@material-ui/core";
 import TrainCard from "../../../assets/cards/tutorallassigncard";
 
-class PrintTutorAllPerformance extends React.Component {
+class MeaningTutorAllPerformance extends React.Component {
   constructor() {
     super();
     this.state = { students: [] };
@@ -21,7 +21,7 @@ class PrintTutorAllPerformance extends React.Component {
         <div className="jumbotron">
           <h2>Review Students' Print Performance</h2>
           <hr />
-          <Button variant="contained" color="default" href="/tutor/print">
+          <Button variant="contained" color="default" href="/tutor/meaning">
             Go back
           </Button>
         </div>
@@ -33,7 +33,7 @@ class PrintTutorAllPerformance extends React.Component {
                 title={student.displayName}
                 description={student.email}
                 handleClick={() =>
-                  (window.location = "/tutor/print/performance/" + student._id)
+                  (window.location = "/tutor/meaning/performance/" + student._id)
                 }
               />
             );
@@ -44,4 +44,4 @@ class PrintTutorAllPerformance extends React.Component {
   }
 }
 
-export default PrintTutorAllPerformance;
+export default MeaningTutorAllPerformance;

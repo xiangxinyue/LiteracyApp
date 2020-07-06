@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { TextField, Button, Container } from "@material-ui/core";
-import Q1Table from "../../../components/tutor/print/data-table/q1-table";
-import Q2Table from "../../../components/tutor/print/data-table/q2-table";
-import Q3Table from "../../../components/tutor/print/data-table/q3-table";
+import Q1Table from "../../../components/tutor/meaning/data-table/q1-table";
+import Q2Table from "../../../components/tutor/meaning/data-table/q2-table";
+import Q3Table from "../../../components/tutor/meaning/data-table/q3-table";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -11,7 +11,7 @@ import {
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 
-class PrintData extends React.Component {
+class MeaningData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -181,7 +181,7 @@ class PrintData extends React.Component {
         <div className="jumbotron">
           <h2>Create new Print Evaluation Assignment</h2>
           <hr />
-          <Button variant="contained" color="default" href="/tutor/print">
+          <Button variant="contained" color="default" href="/tutor/meaning">
             Go back
           </Button>
         </div>
@@ -416,4 +416,4 @@ class PrintData extends React.Component {
   }
 }
 
-export default PrintData;
+export default MeaningData;

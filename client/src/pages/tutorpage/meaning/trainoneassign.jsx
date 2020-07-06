@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Button, Container, TextField } from "@material-ui/core";
-import Q1Table from "../../../components/tutor/print/assign-table/q1-table";
-import Q2Table from "../../../components/tutor/print/assign-table/q2-table";
-import Q3Table from "../../../components/tutor/print/assign-table/q3-table";
+import Q1Table from "../../../components/tutor/meaning/assign-table/q1-table";
+import Q2Table from "../../../components/tutor/meaning/assign-table/q2-table";
+import Q3Table from "../../../components/tutor/meaning/assign-table/q3-table";
 
-class PrintTutorTrainOneAssign extends React.Component {
+class MeaningTutorTrainOneAssign extends React.Component {
   constructor(props) {
     super(props);
     this.state = { assignment: null };
@@ -32,7 +32,7 @@ class PrintTutorTrainOneAssign extends React.Component {
               <Button
                 variant="contained"
                 color="default"
-                href="/tutor/print/trainassign"
+                href="/tutor/meaning/trainassign"
               >
                 Go back
               </Button>
@@ -58,4 +58,4 @@ class PrintTutorTrainOneAssign extends React.Component {
   }
 }
 
-export default PrintTutorTrainOneAssign;
+export default MeaningTutorTrainOneAssign;

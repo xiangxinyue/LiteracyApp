@@ -20,22 +20,22 @@ class MeaningTutorMain extends React.Component {
           <div className="row">
             <TrainCard
               title="Students' Testing Assignment"
-              page="/tutor/print/testassign"
+              page="/tutor/meaning/testassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
               title="Students' Practice Assignment"
-              page="/tutor/print/trainassign"
+              page="/tutor/meaning/trainassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
               title="Students' Evaluation Assignment"
-              page="/tutor/print/evalassign"
+              page="/tutor/meaning/evalassign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
               title="Students' Performance"
-              page="/tutor/print/performance"
+              page="/tutor/meaning/performance"
               description="In this part, you can check students' performance"
             />
           </div>
@@ -47,17 +47,17 @@ class MeaningTutorMain extends React.Component {
           <div className="row">
             <TrainCard
               title="Create Weekly Assignment"
-              page="/tutor/print/assignment"
+              page="/tutor/meaning/assignment"
               description="In this part, you can create new weekly assignment"
             />
             <TrainCard
               title="Modify Learning Materials"
-              page="/tutor/print/materials"
+              page="/tutor/meaning/materials"
               description="In this part, you can modify the lastest meaning training materials"
             />
             <TrainCard
               title="Modify Meaning Training data"
-              page="/tutor/print/data"
+              page="/tutor/meaning/data"
               description="In this part, you can modify meaning training data"
             />
           </div>

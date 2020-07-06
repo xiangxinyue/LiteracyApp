@@ -1,10 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Button, Container, TextField } from "@material-ui/core";
-import AssignTable from "../../../components/tutor/fluency/testassigntable";
 import LineChart from "../../../assets/assignchart";
 
-class PrintTutorOnePerformance extends React.Component {
+class MeaningTutorOnePerformance extends React.Component {
   constructor(props) {
     super(props);
     this.state = { trainScore: null, evalScore: null };
@@ -30,7 +29,7 @@ class PrintTutorOnePerformance extends React.Component {
           <Button
             variant="contained"
             color="default"
-            href="/tutor/print/performance"
+            href="/tutor/meaning/performance"
           >
             Go back
           </Button>
@@ -39,7 +38,7 @@ class PrintTutorOnePerformance extends React.Component {
         {trainScore ? (
           <LineChart
             data={trainScore}
-            title="Training Reading Speed Performance"
+            title="Training Meaning Part Performance"
             color="#3E517A"
           />
         ) : null}
@@ -47,7 +46,7 @@ class PrintTutorOnePerformance extends React.Component {
         {evalScore ? (
           <LineChart
             data={evalScore}
-            title="Training Reading Speed Performance"
+            title="Training Meaning Part Performance"
             color="#3E517A"
           />
         ) : null}
@@ -56,4 +55,4 @@ class PrintTutorOnePerformance extends React.Component {
   }
 }
 
-export default PrintTutorOnePerformance;
+export default MeaningTutorOnePerformance;
