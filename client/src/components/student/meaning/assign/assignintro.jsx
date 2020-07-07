@@ -3,7 +3,7 @@ import { Button, Container } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
 
-class PrintAssignIntro extends React.Component {
+class MeaningAssignIntro extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,4 +93,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(PrintAssignIntro);
+export default connect(mapStateToProps)(MeaningAssignIntro);

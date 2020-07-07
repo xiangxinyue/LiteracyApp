@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../../../header/signinheader";
 
-const PrintHeader = (props) => {
+const MeaningHeader = (props) => {
   const { currentUser } = props;
   const renderPage = () => {
     switch (currentUser) {
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(PrintHeader);
+export default connect(mapStateToProps)(MeaningHeader);

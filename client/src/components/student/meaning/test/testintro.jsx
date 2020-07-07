@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
-const PrintTestIntro = (props) => {
+const MeaningTestIntro = (props) => {
   return (
     <Container>
       <h3 className="text-primary">
@@ -42,4 +42,4 @@ const PrintTestIntro = (props) => {
   );
 };
 
-export default PrintTestIntro;
+export default MeaningTestIntro;

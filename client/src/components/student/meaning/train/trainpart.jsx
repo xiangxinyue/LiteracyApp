@@ -4,7 +4,7 @@ import Q1Table from "../assets/q1-table";
 import Q2Table from "../assets/q2-table";
 import Q3Table from "../assets/q3-table";
 
-class PrintTrainPart extends React.Component {
+class MeaningTrainPart extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -81,4 +81,4 @@ class PrintTrainPart extends React.Component {
   }
 }
 
-export default PrintTrainPart;
+export default MeaningTrainPart;
