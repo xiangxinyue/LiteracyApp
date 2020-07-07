@@ -22,17 +22,16 @@ class MeaningData extends React.Component {
       q1_question: "",
       q1_answer: [],
       q1_curr_answer: "",
+
       q2_level: "",
       q2_question: "",
-      q2_choices: [],
-      q2_curr_choice: "",
-      q2_answer: "",
+      q2_answer: [],
+      q2_curr_answer: "",
+
       q3_level: "",
       q3_question: "",
-      q3_choice1: "",
-      q3_choice2: "",
-      q3_answer: "",
-      q3_choices: [],
+      q3_answer: [],
+      q3_curr_answer: "",
       alert: false,
       schedule: null,
       q1_num: 0,
@@ -43,21 +42,21 @@ class MeaningData extends React.Component {
 
   generateQ1Date = async () => {
     const { q1_num } = this.state;
-    const doc = await axios.get("/api/print/q1/alldata");
+    const doc = await axios.get("/api/meaning/q1/alldata");
     const q1 = doc.data.filter((question, index) => index < q1_num);
     this.setState({ q1 });
   };
 
   generateQ2Date = async () => {
     const { q2_num } = this.state;
-    const doc = await axios.get("/api/print/q2/alldata");
+    const doc = await axios.get("/api/meaning/q2/alldata");
     const q2 = doc.data.filter((question, index) => index < q2_num);
     this.setState({ q2 });
   };
 
   generateQ3Date = async () => {
     const { q3_num } = this.state;
-    const doc = await axios.get("/api/print/q3/alldata");
+    const doc = await axios.get("/api/meaning/q3/alldata");
     const q3 = doc.data.filter((question, index) => index < q3_num);
     this.setState({ q3 });
   };
@@ -87,15 +86,13 @@ class MeaningData extends React.Component {
         level: state.q2_level,
         question: state.q2_question,
         answer: state.q2_answer,
-        choices: state.q2_choices,
       });
       return {
         ...state,
         q2: newQ2,
         q2_level: "",
         q2_question: "",
-        q2_answer: "",
-        q2_choices: [],
+        q2_answer: [],
       };
     });
   };
@@ -106,14 +103,14 @@ class MeaningData extends React.Component {
       newQ3.push({
         level: state.q3_level,
         question: state.q3_question,
-        choices: state.q3_choices,
+        answer: state.q3_answer,
       });
       return {
         ...state,
         q3: newQ3,
         q3_level: "",
         q3_question: "",
-        q3_choices: [],
+        q3_answer: [],
       };
     });
   };
@@ -141,13 +138,13 @@ class MeaningData extends React.Component {
 
   handleCreate = async () => {
     const { q1, q2, q3, schedule } = this.state;
-    await axios.post("/api/print/eval", {
+    await axios.post("/api/meaning/eval", {
       q1Assign: q1,
       q2Assign: q2,
       q3Assign: q3,
       schedule,
     });
-    window.location = "/tutor/print";
+    window.location = "/tutor/meaning";
   };
 
   render() {
@@ -162,14 +159,11 @@ class MeaningData extends React.Component {
       q2_level,
       q2_question,
       q2_answer,
-      q2_choices,
-      q2_curr_choice,
+      q2_curr_answer,
       q3_level,
       q3_question,
-      q3_choice1,
-      q3_choice2,
       q3_answer,
-      q3_choices,
+      q3_curr_answer,
       schedule,
       q1_num,
       q2_num,
@@ -179,7 +173,7 @@ class MeaningData extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Create new Print Evaluation Assignment</h2>
+          <h2>Create new Meaning Evaluation Assignment</h2>
           <hr />
           <Button variant="contained" color="default" href="/tutor/meaning">
             Go back
@@ -241,6 +235,7 @@ class MeaningData extends React.Component {
           <Q1Table data={q1} handleDelete={this.deleteQ1} />
         </Container>
         <hr />
+
         <Container>
           <h3>Question 2 data</h3>
           <TextField
@@ -262,31 +257,28 @@ class MeaningData extends React.Component {
           <br />
           <TextField
             label="answer"
-            value={q2_answer}
-            onChange={(e) => this.setState({ q2_answer: e.target.value })}
-          />
-          <TextField
-            label="choices"
-            value={q2_curr_choice}
-            onChange={(e) => this.setState({ q2_curr_choice: e.target.value })}
+            value={q2_curr_answer}
+            onChange={(e) => this.setState({ q2_curr_answer: e.target.value })}
           />
           <Button
             variant="outlined"
             color="default"
             onClick={() =>
               this.setState((state) => {
-                const q2_choices = state.q2_choices;
-                q2_choices.push(q2_curr_choice);
-                this.setState({ q2_curr_choice: "" });
-                return { ...state, q2_choices };
+                const q2_answer = state.q2_answer;
+                q1_answer.push(q2_curr_answer);
+                this.setState({ q2_curr_answer: "" });
+                return { ...state, q2_answer };
               })
             }
           >
-            Add a Choice
+            Add an answer
           </Button>
+          <br />
           <h4>
-            Choices you entered: {q2_choices.map((choice) => choice + ",")}
+            Answers you entered: {q2_answer.map((answer) => answer + ",")}
           </h4>
+
           <Button variant="outlined" color="primary" onClick={this.addQ2Data}>
             Add an Entry
           </Button>
@@ -314,64 +306,35 @@ class MeaningData extends React.Component {
           />
           <TextField
             label="question"
-            value={q3_question}
             style={{ width: 500 }}
+            value={q3_question}
             onChange={(e) => this.setState({ q3_question: e.target.value })}
           />
           <br />
           <TextField
-            label="choice1"
-            value={q3_choice1}
-            onChange={(e) => this.setState({ q3_choice1: e.target.value })}
-          />
-          <TextField
-            label="choice2"
-            value={q3_choice2}
-            onChange={(e) => this.setState({ q3_choice2: e.target.value })}
-          />
-          <TextField
             label="answer"
-            value={q3_answer}
-            onChange={(e) => this.setState({ q3_answer: e.target.value })}
+            value={q3_curr_answer}
+            onChange={(e) => this.setState({ q3_curr_answer: e.target.value })}
           />
           <Button
             variant="outlined"
             color="default"
-            onClick={() => {
+            onClick={() =>
               this.setState((state) => {
-                const { q3_choice1, q3_choice2, q3_answer, q3_choices } = state;
-                const newChoice = {
-                  choice1: q3_choice1,
-                  choice2: q3_choice2,
-                  answer: q3_answer,
-                };
-                q3_choices.push(newChoice);
-                this.setState({
-                  q3_choice1: "",
-                  q3_choice2: "",
-                  q3_answer: "",
-                });
-                return {
-                  ...state,
-                  q3_choices,
-                };
-              });
-            }}
+                const q3_answer = state.q3_answer;
+                q3_answer.push(q3_curr_answer);
+                this.setState({ q3_curr_answer: "" });
+                return { ...state, q3_answer };
+              })
+            }
           >
-            Add a choice
+            Add an answer
           </Button>
+          <br />
           <h4>
-            Choices you entered:{" "}
-            {q3_choices.map(
-              (choice) =>
-                choice.choice1 +
-                "/" +
-                choice.choice2 +
-                "/" +
-                choice.answer +
-                ","
-            )}
+            Answers you entered: {q1_answer.map((answer) => answer + ",")}
           </h4>
+
           <Button variant="outlined" color="primary" onClick={this.addQ3Data}>
             Add an Entry
           </Button>

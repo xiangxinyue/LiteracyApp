@@ -12,7 +12,7 @@ class MeaningAssignIntro extends React.Component {
     };
   }
   componentDidMount = async () => {
-    const latestAssign = await axios.get("/api/print/eval");
+    const latestAssign = await axios.get("/api/meaning/eval");
     if (latestAssign.data.createAt === undefined) {
       this.setState({ newAssign: false });
     } else {
@@ -80,7 +80,7 @@ class MeaningAssignIntro extends React.Component {
           variant="contained"
           color="inherit"
           size="large"
-          onClick={() => (window.location = "/student/print")}
+          onClick={() => (window.location = "/student/meaning")}
         >
           Go Back
         </Button>
