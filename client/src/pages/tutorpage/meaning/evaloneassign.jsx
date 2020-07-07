@@ -13,7 +13,7 @@ class MeaningTutorEvalOneAssign extends React.Component {
 
   componentDidMount = async () => {
     const doc = await axios.get(
-      "/api/print/evalassign/" + this.props.match.params.id
+      "/api/meaning/evalassign/" + this.props.match.params.id
     );
     this.setState({ assignment: doc.data });
   };

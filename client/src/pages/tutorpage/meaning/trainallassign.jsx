@@ -10,7 +10,7 @@ class MeaningTutorTrainAllAssign extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/print/trainassign");
+    const doc = await axios.get("/api/meaning/trainassign");
     this.setState({ assignments: doc.data });
   };
 

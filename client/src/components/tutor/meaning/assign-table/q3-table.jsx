@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -25,7 +24,6 @@ export default function SimpleTable(props) {
           <TableRow>
             <TableCell align="left">Level</TableCell>
             <TableCell align="left">Question</TableCell>
-            <TableCell align="left">Choices</TableCell>
             <TableCell align="left">Real Answer</TableCell>
             <TableCell align="left">Student Answer</TableCell>
           </TableRow>
@@ -36,28 +34,10 @@ export default function SimpleTable(props) {
               <TableCell align="left">{row.level}</TableCell>
               <TableCell align="left">{row.question}</TableCell>
               <TableCell align="left">
-                {row.choices.map((dataset) => (
-                  <div>
-                    {dataset.choice1 + " / " + dataset.choice2}
-                    <br />
-                  </div>
-                ))}
+                {row.realAnswer.map((answer) => answer + ",")}
               </TableCell>
               <TableCell align="left">
-                {row.choices.map((dataset) => (
-                  <div>
-                    {dataset.answer}
-                    <br />
-                  </div>
-                ))}
-              </TableCell>
-              <TableCell align="left">
-                {row.choices.map((dataset, i) => (
-                  <div>
-                    {row.studentAnswer[i]}
-                    <br />
-                  </div>
-                ))}
+                {row.realAnswer.map((answer, i) => row.studentAnswer[i] + ",")}
               </TableCell>
             </TableRow>
           ))}

@@ -25,7 +25,6 @@ export default function SimpleTable(props) {
           <TableRow>
             <TableCell align="left">Level</TableCell>
             <TableCell align="left">Question</TableCell>
-            <TableCell align="left">Choices</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">Operation</TableCell>
           </TableRow>
@@ -36,20 +35,7 @@ export default function SimpleTable(props) {
               <TableCell align="left">{row.level}</TableCell>
               <TableCell align="left">{row.question}</TableCell>
               <TableCell align="left">
-                {row.choices.map((dataset) => (
-                  <div>
-                    {dataset.choice1 + " / " + dataset.choice2}
-                    <br />
-                  </div>
-                ))}
-              </TableCell>
-              <TableCell align="left">
-                {row.choices.map((dataset) => (
-                  <div>
-                    {dataset.answer}
-                    <br />
-                  </div>
-                ))}
+                {row.answer.map((answer) => answer + ",")}
               </TableCell>
               <TableCell align="left">
                 <Button

@@ -11,7 +11,7 @@ class MeaningTutorOnePerformance extends React.Component {
 
   componentDidMount = async () => {
     const doc = await axios.get(
-      "/api/print/historyscore/" + this.props.match.params.id
+      "/api/meaning/historyscore/" + this.props.match.params.id
     );
     this.setState({
       trainScore: doc.data.trainScore,
