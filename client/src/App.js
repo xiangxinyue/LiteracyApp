@@ -8,6 +8,7 @@ import axios from "axios";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
+// Student pages
 // Fluency pages
 const FluencyMain = lazy(() => import("./pages/studentpage/fluency/main"));
 const FluencyPractise = lazy(() =>
@@ -40,8 +41,23 @@ const PrintAssignment = lazy(() =>
   import("./pages/studentpage/print/assignment")
 );
 
+// Meaning pages
+const MeaningMain = lazy(() => import("./pages/studentpage/meaning/main"));
+const MeaningPractise = lazy(() =>
+  import("./pages/studentpage/meaning/practise")
+);
+const MeaningMaterials = lazy(() =>
+  import("./pages/studentpage/meaning/materials")
+);
+const MeaningAssignment = lazy(() =>
+  import("./pages/studentpage/meaning/assignment")
+);
+
+
+
 // Tutor pages
-// Fluency Page
+
+// Fluency pages
 const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
 const FluencyTutorTrain = lazy(() =>
   import("./pages/tutorpage/fluency/traindata")
@@ -117,7 +133,8 @@ const PhonemeTutorAllPerformance = lazy(() =>
 const PhonemeTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/phoneme/oneperformance")
 );
-// print page
+
+// Print Page
 const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
 const PrintTutorData = lazy(() => import("./pages/tutorpage/print/data"));
 const PrintTutorAssign = lazy(() =>
@@ -146,6 +163,37 @@ const PrintTutorAllPerform = lazy(() =>
 );
 const PrintTutorOnePerform = lazy(() =>
   import("./pages/tutorpage/print/oneperformance")
+);
+
+// Meaning Page
+const MeaningTutorMain = lazy(() => import("./pages/tutorpage/meaning/main"));
+const MeaningTutorData = lazy(() => import("./pages/tutorpage/meaning/data"));
+const MeaningTutorAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/assignment")
+);
+const MeaningTutorTestAllAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/testallassign")
+);
+const MeaningTutorTestOneAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/testoneassign")
+);
+const MeaningTutorTrainAllAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/trainallassign")
+);
+const MeaningTutorTrainOneAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/trainoneassign")
+);
+const MeaningTutorEvalAllAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/evalallassign")
+);
+const MeaningTutorEvalOneAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/evaloneassign")
+);
+const MeaningTutorAllPerform = lazy(() =>
+  import("./pages/tutorpage/meaning/allperformance")
+);
+const MeaningTutorOnePerform = lazy(() =>
+  import("./pages/tutorpage/meaning/oneperformance")
 );
 
 class App extends React.Component {
@@ -195,6 +243,25 @@ class App extends React.Component {
                 path="/student/phoneme/assignment"
                 component={PhonemeAssignment}
               />
+
+              <Route exact path="/student/meaning" component={MeaningMain} />
+              <Route
+                exact
+                path="/student/meaning/practise"
+                component={MeaningPractise}
+              />
+              <Route
+                exact
+                path="/student/meaning/materials"
+                component={MeaningMaterials}
+              />
+              <Route
+                exact
+                path="/student/meaning/assignment"
+                component={MeaningAssignment}
+              />
+
+
               <Route exact path="/student/print" component={PrintMain} />
               <Route
                 exact
@@ -361,6 +428,54 @@ class App extends React.Component {
               <Route
                 path="/tutor/print/performance/:id"
                 component={PrintTutorOnePerform}
+              />
+
+              <Route exact path="/tutor/meaning/" component={MeaningTutorMain} />
+              <Route
+                exact
+                path="/tutor/meaning/data"
+                component={MeaningTutorData}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/assignment"
+                component={MeaningTutorAssign}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/testassign"
+                component={MeaningTutorTestAllAssign}
+              />
+              <Route
+                path="/tutor/meaning/testassign/:id"
+                component={MeaningTutorTestOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/trainassign"
+                component={MeaningTutorTrainAllAssign}
+              />
+              <Route
+                path="/tutor/meaning/trainassign/:id"
+                component={MeaningTutorTrainOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/evalassign"
+                component={MeaningTutorEvalAllAssign}
+              />
+              <Route
+                path="/tutor/meaning/evalassign/:id"
+                component={MeaningTutorEvalOneAssign}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/performance"
+                component={MeaningTutorAllPerform}
+              />
+              <Route
+                path="/tutor/meaning/performance/:id"
+                component={MeaningTutorOnePerform}
               />
             </Suspense>
           </ErrorBoundary>
