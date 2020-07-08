@@ -19,7 +19,7 @@ class MeaningTutorAllPerformance extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Review Students' Print Performance</h2>
+          <h2>Review Students' Meaning Performance</h2>
           <hr />
           <Button variant="contained" color="default" href="/tutor/meaning">
             Go back
