@@ -49,7 +49,7 @@ class PhonemeTrain extends Component {
                   description="In this part, you will learn about different kinds of sounds in English"
                 />
                 <TrainCard
-                  title="Practise"
+                  title="Practice"
                   page="/student/phoneme/practise"
                   description="Here, you will practice your awareness of sounds "
                 />
