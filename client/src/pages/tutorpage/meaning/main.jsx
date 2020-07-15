@@ -51,11 +51,6 @@ class MeaningTutorMain extends React.Component {
               description="In this part, you can create new weekly assignment"
             />
             <TrainCard
-              title="Modify Learning Materials"
-              page="/tutor/meaning/materials"
-              description="In this part, you can modify the lastest meaning training materials"
-            />
-            <TrainCard
               title="Modify Meaning Training data"
               page="/tutor/meaning/data"
               description="In this part, you can modify meaning training data"
