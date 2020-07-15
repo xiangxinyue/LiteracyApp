@@ -163,7 +163,7 @@ class FluencyTestPart extends Component {
       currPara,
     } = this.state;
     return (
-      <div>
+      <Container>
         {readDone ? (
           answerred ? (
             currentParaNum < maxNumOfQues ? (
@@ -233,13 +233,13 @@ class FluencyTestPart extends Component {
             </Button>
           </div>
         )}
-        <hr />
+        {/* <hr />
         <h5>Your score is: {this.state.score}</h5>
         <h5>
           The process: {this.state.currentParaNum + 1} /{" "}
           {this.state.maxNumOfQues + 1}
-        </h5>
-      </div>
+        </h5> */}
+      </Container>
     );
   }
 }

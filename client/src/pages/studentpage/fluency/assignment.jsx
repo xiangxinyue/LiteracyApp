@@ -3,6 +3,7 @@ import FluencyIntro from "../../../components/student/fluency/assign/assignintro
 import FluencyMain from "../../../components/student/fluency/assign/assignpart";
 import FluencyHeader from "../../../components/student/fluency/assets/header";
 import Paper from "../../../assets/paper";
+import { Container } from "@material-ui/core";
 
 class FluencyAssignment extends React.Component {
   state = {
@@ -13,13 +14,17 @@ class FluencyAssignment extends React.Component {
     const { understand } = this.state;
     return (
       <div>
-        <FluencyHeader part="Training Weekly Assignment" />
         {understand ? (
-          <Paper component={FluencyMain} />
+          <Container style={{ marginTop: "15%" }}>
+            <Paper component={FluencyMain} />
+          </Container>
         ) : (
-          <FluencyIntro
-            handleClick={() => this.setState({ understand: !understand })}
-          />
+          <div>
+            <FluencyHeader part="Training Weekly Assignment" />
+            <FluencyIntro
+              handleClick={() => this.setState({ understand: !understand })}
+            />
+          </div>
         )}
       </div>
     );

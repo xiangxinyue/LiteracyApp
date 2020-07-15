@@ -44,6 +44,7 @@ module.exports = (app) => {
     await new PrintQ3({ level, question, choices }).save();
     res.send({});
   });
+
   // delete one data
   app.delete("/api/print/q1/onedata/:id", async (req, res) => {
     await PrintQ1.findByIdAndDelete(req.params.id);
