@@ -31,6 +31,8 @@ require("./models/tutor");
 require("./models/fluency");
 require("./models/phoneme");
 require("./models/print");
+require("./models/meaning");
+
 
 require("./services/passport");
 require("./routes/authRoutes")(app);
@@ -38,6 +40,7 @@ require("./routes/userRoutes")(app);
 require("./routes/phonemeRoutes")(app);
 require("./routes/fluencyRoutes")(app);
 require("./routes/printRoutes")(app);
+require("./routes/meaningRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

@@ -256,7 +256,7 @@ class MeaningData extends React.Component {
           </Button>
           <br />
           <h4>
-            Answers you entered: {q1_answer.map((answer) => answer + ",")}
+            Answers you entered: {q3_answer.map((answer) => answer + ",")}
           </h4>
 
           <Button variant="outlined" color="primary" onClick={this.addQ3Data}>
@@ -267,7 +267,7 @@ class MeaningData extends React.Component {
         </Container>
 
         <hr />
-        
+
         <Snackbar
           open={alert}
           autoHideDuration={2000}
