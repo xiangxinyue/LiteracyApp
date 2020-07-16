@@ -51,11 +51,6 @@ class PrintTutorMain extends React.Component {
               description="In this part, you can create new weekly assignment"
             />
             <TrainCard
-              title="Modify Learning Materials"
-              page="/tutor/print/materials"
-              description="In this part, you can modify the lastest Speed training materials"
-            />
-            <TrainCard
               title="Modify Print Training data"
               page="/tutor/print/data"
               description="In this part, you can modify speed training data"

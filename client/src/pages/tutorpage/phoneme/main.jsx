@@ -47,11 +47,6 @@ class PhonemeTutorMain extends React.Component {
               description="In this part, you can create new weekly assignment"
             />
             <TrainCard
-              title="Modify Learning Materials"
-              page="/tutor/phoneme/materials"
-              description="In this part, you can modify the lastest Speed training materials"
-            />
-            <TrainCard
               title="Modify Training data"
               page="/tutor/phoneme/traindata"
               description="In this part, you can modify speed training data"
