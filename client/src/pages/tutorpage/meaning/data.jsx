@@ -172,7 +172,9 @@ class MeaningData extends React.Component {
 
           <Q1Table data={q1} handleDelete={this.deleteQ1} />
         </Container>
+
         <hr />
+
         <Container>
           <h3>Modify Question 2 data</h3>
           <TextField
@@ -216,6 +218,7 @@ class MeaningData extends React.Component {
           </Button>
           <Q2Table data={q2} handleDelete={this.deleteQ2} />
         </Container>
+
         <hr />
 
         <Container>
@@ -262,7 +265,9 @@ class MeaningData extends React.Component {
 
           <Q3Table data={q3} handleDelete={this.deleteQ3} />
         </Container>
+
         <hr />
+        
         <Snackbar
           open={alert}
           autoHideDuration={2000}
