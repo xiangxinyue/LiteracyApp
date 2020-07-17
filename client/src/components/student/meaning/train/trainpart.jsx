@@ -13,10 +13,8 @@ class MeaningTrainPart extends React.Component {
       q3: [],
       q1_score: 0,
       q2_score: 0,
-      q3_score: 0,
       q1Assign: [],
       q2Assign: [],
-      q3Assign: [],
       q_show: 0,
     };
   }
