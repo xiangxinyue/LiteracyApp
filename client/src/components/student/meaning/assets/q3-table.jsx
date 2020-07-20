@@ -37,7 +37,7 @@ export default class Table extends React.Component {
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: "", 1: "", 2: "", 3: "" },
+      curr_answer: { 0: ""},
     });
   };
 
@@ -49,7 +49,7 @@ export default class Table extends React.Component {
           <div>
             <h3 className="font-weight-light">{questions[index].question}</h3>
             <div className="row">
-              {[0, 1, 2, 3].map((num) => (
+              {[0].map((num) => (
                 <TextField
                   value={curr_answer[num]}
                   label={"Answer " + Number(num + 1)}
