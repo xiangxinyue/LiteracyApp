@@ -24,19 +24,21 @@ export default function SimpleTable(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Question</TableCell>
-            <TableCell align="right">Audio</TableCell>
-            <TableCell align="right">Operation</TableCell>
+            <TableCell align="left">Question</TableCell>
+            <TableCell align="left">Audios</TableCell>
+            <TableCell align="left">Operation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell align="right">{row.question}</TableCell>
-              <TableCell align="right">
-                <audio src={keys.AWS + row.audio} controls="controls" />
+              <TableCell align="left">{row.question}</TableCell>
+              <TableCell align="left">
+                {row.audios.map((audio) => {
+                  return <audio src={keys.AWS + audio} controls="controls" />;
+                })}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="left">
                 <Button
                   color="secondary"
                   key={row.id}

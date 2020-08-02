@@ -53,23 +53,12 @@ class PhonemeAssignIntro extends React.Component {
     const { currentUser } = this.props;
     return (
       <Container>
-        <h3 className="text-primary">
-          This is the introduction of Sound Assignment.
-        </h3>
-        <h4>
-          Instructions: Watch the introduction video first, then click the start
-          button. Read the words as fast as possible. When you finish click the
-          finish button.
+        <h4 className="text-primary">
+          Now, you will get to practice your knowledge about sound patterns by
+          completing exercises. There are different types of exercises, like
+          fill in the blanks, multiple choice questions. Please read carefully
+          and answer as best as you can.
         </h4>
-        <iframe
-          width="740"
-          height="430"
-          src="https://www.youtube.com/embed/rDg4S6jxLJI"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style={{ marginTop: 20 }}
-        ></iframe>
         <hr />
         {currentUser ? this.renderAssignButton() : null}
         <Button

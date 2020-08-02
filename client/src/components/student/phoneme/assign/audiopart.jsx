@@ -23,7 +23,7 @@ class PhonemeAudioAssign extends React.Component {
     let audios = [];
     let question = [];
     for (let i = 0; i < assignment.length; i++) {
-      audios.push(assignment[i].audio);
+      audios.push(assignment[i].audios);
       question.push(assignment[i].question);
     }
     this.setState({
@@ -74,13 +74,7 @@ class PhonemeAudioAssign extends React.Component {
 
   // handleAudioAssign
   render() {
-    const {
-      audioDone,
-      originalAudios,
-      index,
-      audioAssign,
-      questions,
-    } = this.state;
+    const { audioDone, originalAudios, index, questions } = this.state;
     return (
       <div>
         <Container>
@@ -100,14 +94,16 @@ class PhonemeAudioAssign extends React.Component {
                 <Container>
                   <h3>{questions[index]}</h3>
                   <br />
-                  <audio
-                    src={keys.AWS + originalAudios[index]}
-                    controls="controls"
-                  />
+                  {originalAudios[index].map((audio) => {
+                    console.log(audio);
+                    return <audio src={keys.AWS + audio} controls="controls" />;
+                  })}
+
                   <hr />
                   <AudioRecord
                     handleUpload={(file) => this.handleUpload(file)}
                   />
+                  <br />
                 </Container>
               )
             ) : (

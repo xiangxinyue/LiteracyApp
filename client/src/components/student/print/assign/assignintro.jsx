@@ -57,13 +57,11 @@ class PrintAssignIntro extends React.Component {
     const { currentUser } = this.props;
     return (
       <Container>
-        <h3 className="text-primary">
-          This is the introduction of Print Assignment.
-        </h3>
-        <h4>
-          Instructions: Watch the introduction video first, then click the start
-          button. Read the words as fast as possible. When you finish click the
-          finish button.
+        <h4 className="text-primary">
+          Now, you will get to practice your knowledge about letter patterns by
+          completing exercises. There are different types of exercises, like
+          fill in the blanks, multiple choice questions. Please read carefully
+          and answer as best as you can.
         </h4>
         <iframe
           width="740"
