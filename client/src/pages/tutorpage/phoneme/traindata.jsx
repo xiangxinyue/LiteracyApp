@@ -151,18 +151,21 @@ class PhonemeTutorTrain extends React.Component {
             id="standard-basic"
             label="Word"
             value={trainAddWord}
+            autoComplete="off"
             onChange={(e) => this.setState({ trainAddWord: e.target.value })}
           />
           <TextField
             id="standard-basic"
             label="Phoneme"
             value={trainAddPhoneme}
+            autoComplete="off"
             onChange={(e) => this.setState({ trainAddPhoneme: e.target.value })}
           />
           <TextField
             id="standard-basic"
             label="Level"
             value={trainAddLevel}
+            autoComplete="off"
             onChange={(e) => this.setState({ trainAddLevel: e.target.value })}
           />
           <Button

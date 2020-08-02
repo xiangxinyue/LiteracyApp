@@ -106,6 +106,7 @@ class FluencyTutorTrainPage extends React.Component {
             style={{ width: 600 }}
             rowsMax={20}
             value={trainAddParagraph}
+            autoComplete="off"
             onChange={(e) =>
               this.setState({ trainAddParagraph: e.target.value })
             }
@@ -118,6 +119,7 @@ class FluencyTutorTrainPage extends React.Component {
             style={{ width: 600 }}
             rowsMax={20}
             value={trainAddQuestion}
+            autoComplete="off"
             onChange={(e) =>
               this.setState({ trainAddQuestion: e.target.value })
             }
@@ -127,12 +129,14 @@ class FluencyTutorTrainPage extends React.Component {
             id="standard-basic"
             label="Choice1"
             value={trainAddChoice1}
+            autoComplete="off"
             style={{ width: 300 }}
             onChange={(e) => this.setState({ trainAddChoice1: e.target.value })}
           />
           <TextField
             id="standard-basic"
             label="Choice2"
+            autoComplete="off"
             value={trainAddChoice2}
             style={{ width: 300 }}
             onChange={(e) => this.setState({ trainAddChoice2: e.target.value })}
@@ -141,6 +145,7 @@ class FluencyTutorTrainPage extends React.Component {
           <TextField
             id="standard-basic"
             label="Choice3"
+            autoComplete="off"
             value={trainAddChoice3}
             style={{ width: 300 }}
             onChange={(e) => this.setState({ trainAddChoice3: e.target.value })}
@@ -148,6 +153,7 @@ class FluencyTutorTrainPage extends React.Component {
           <TextField
             id="standard-basic"
             label="Choice4"
+            autoComplete="off"
             value={trainAddChoice4}
             style={{ width: 300 }}
             onChange={(e) => this.setState({ trainAddChoice4: e.target.value })}
@@ -156,6 +162,7 @@ class FluencyTutorTrainPage extends React.Component {
           <TextField
             id="standard-basic"
             label="Answer"
+            autoComplete="off"
             value={trainAddAnswer}
             style={{ width: 300 }}
             onChange={(e) => this.setState({ trainAddAnswer: e.target.value })}

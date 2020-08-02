@@ -190,23 +190,27 @@ class PrintData extends React.Component {
           <TextField
             label="Number"
             value={q1_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q1_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
             value={q1_question}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
             value={q1_curr_answer}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_curr_answer: e.target.value })}
           />
           <Button
@@ -246,27 +250,32 @@ class PrintData extends React.Component {
           <TextField
             label="Number"
             value={q2_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q2_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
             value={q2_question}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
             value={q2_answer}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_answer: e.target.value })}
           />
           <TextField
             label="choices"
+            autoComplete="off"
             value={q2_curr_choice}
             onChange={(e) => this.setState({ q2_curr_choice: e.target.value })}
           />
@@ -305,32 +314,38 @@ class PrintData extends React.Component {
           <TextField
             label="Number"
             value={q3_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_num: e.target.value })}
           />
           <TextField
             label="level"
+            autoComplete="off"
             value={q3_level}
             onChange={(e) => this.setState({ q3_level: e.target.value })}
           />
           <TextField
             label="question"
             value={q3_question}
+            autoComplete="off"
             style={{ width: 500 }}
             onChange={(e) => this.setState({ q3_question: e.target.value })}
           />
           <br />
           <TextField
             label="choice1"
+            autoComplete="off"
             value={q3_choice1}
             onChange={(e) => this.setState({ q3_choice1: e.target.value })}
           />
           <TextField
             label="choice2"
             value={q3_choice2}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_choice2: e.target.value })}
           />
           <TextField
             label="answer"
+            autoComplete="off"
             value={q3_answer}
             onChange={(e) => this.setState({ q3_answer: e.target.value })}
           />

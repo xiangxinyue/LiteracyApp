@@ -66,6 +66,7 @@ class PhonemeTutorAudioAssign extends React.Component {
           <TextField
             label="Num of Questions"
             value={number}
+            autoComplete="off"
             onChange={(e) => this.setState({ number: e.target.value })}
           />
           <br />
@@ -75,6 +76,7 @@ class PhonemeTutorAudioAssign extends React.Component {
                 label="Question Content"
                 value={currQuestion}
                 style={{ width: 400 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ currQuestion: e.target.value })
                 }

@@ -40,6 +40,7 @@ export default function WordCard(props) {
             label="Phoneme"
             variant="outlined"
             value={props.input}
+            autoComplete="off"
             onChange={(e) => props.handleInput(e.target.value)}
           />
         </Grid>

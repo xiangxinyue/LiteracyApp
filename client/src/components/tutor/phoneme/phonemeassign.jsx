@@ -84,12 +84,14 @@ class PhonemeTutorAssign extends React.Component {
                 id="standard-basic"
                 label="Number of questions"
                 value={assignNum}
+                autoComplete="off"
                 onChange={(e) => this.setState({ assignNum: e.target.value })}
               />
               <TextField
                 id="standard-basic"
                 label="Word"
                 value={assignAddWord}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddWord: e.target.value })
                 }
@@ -98,6 +100,7 @@ class PhonemeTutorAssign extends React.Component {
                 id="standard-basic"
                 label="Phoneme"
                 value={assignAddPhoneme}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddPhoneme: e.target.value })
                 }
@@ -106,6 +109,7 @@ class PhonemeTutorAssign extends React.Component {
                 id="standard-basic"
                 label="Level"
                 value={assignAddLevel}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddLevel: e.target.value })
                 }

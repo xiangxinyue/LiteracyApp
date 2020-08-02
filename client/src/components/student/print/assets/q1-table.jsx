@@ -53,6 +53,7 @@ export default class Table extends React.Component {
                 <TextField
                   value={curr_answer[num]}
                   label={"Answer " + Number(num + 1)}
+                  autoComplete="off"
                   onChange={(e) => this.handleChange(num, e.target.value)}
                 />
               ))}
