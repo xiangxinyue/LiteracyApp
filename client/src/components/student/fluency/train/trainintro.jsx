@@ -10,8 +10,7 @@ const Fluencytrainintro = (props) => {
       </h3>
       <h4>
         Instructions: Watch the introduction video first, then click the start
-        button. Read the words as fast as possible. When you finish click the
-        finish button.
+        button.
       </h4>
       <iframe
         width="740"

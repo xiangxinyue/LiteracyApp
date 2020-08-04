@@ -233,12 +233,6 @@ class FluencyTestPart extends Component {
             </Button>
           </div>
         )}
-        {/* <hr />
-        <h5>Your score is: {this.state.score}</h5>
-        <h5>
-          The process: {this.state.currentParaNum + 1} /{" "}
-          {this.state.maxNumOfQues + 1}
-        </h5> */}
       </Container>
     );
   }

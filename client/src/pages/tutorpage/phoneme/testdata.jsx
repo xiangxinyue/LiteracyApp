@@ -152,18 +152,21 @@ class PhonemeTutorTest extends React.Component {
             id="standard-basic"
             label="Word"
             value={testAddWord}
+            autoComplete="off"
             onChange={(e) => this.setState({ testAddWord: e.target.value })}
           />
           <TextField
             id="standard-basic"
             label="Phoneme"
             value={testAddPhoneme}
+            autoComplete="off"
             onChange={(e) => this.setState({ testAddPhoneme: e.target.value })}
           />
           <TextField
             id="standard-basic"
             label="Level"
             value={testAddLevel}
+            autoComplete="off"
             onChange={(e) => this.setState({ testAddLevel: e.target.value })}
           />
           <Button variant="contained" color="primary" onClick={this.addNewtest}>

@@ -8,7 +8,7 @@ const PhonemeIntroPart = (props) => {
         This is the introduction of sound training.
       </h3>
       <h4>
-        In this exercise,, you will see a made-up word on the screen. You will
+        In this exercise, you will see a made-up word on the screen. You will
         break down the word into different sounds that it is made of. You will
         do so by inserting space between different sounds. For example, there
         are 3 sounds in the made-up word 'bint'. So, you will write "b i nt" as

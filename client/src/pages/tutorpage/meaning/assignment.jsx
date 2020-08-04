@@ -184,28 +184,33 @@ class MeaningData extends React.Component {
           <TextField
             label="Number"
             value={q1_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q1_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
             value={q1_question}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
             value={q1_curr_answer}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_curr_answer: e.target.value })}
           />
           <Button
             variant="outlined"
             color="default"
+            autoComplete="off"
             onClick={() =>
               this.setState((state) => {
                 const q1_answer = state.q1_answer;
@@ -241,23 +246,27 @@ class MeaningData extends React.Component {
           <TextField
             label="Number"
             value={q2_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q2_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
             value={q2_question}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
             value={q2_curr_answer}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_curr_answer: e.target.value })}
           />
           <Button
@@ -297,23 +306,27 @@ class MeaningData extends React.Component {
           <TextField
             label="Number"
             value={q3_num}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q3_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
             value={q3_question}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
             value={q3_curr_answer}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_curr_answer: e.target.value })}
           />
           <Button

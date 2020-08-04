@@ -139,17 +139,20 @@ class PrintData extends React.Component {
           <TextField
             label="level"
             value={q1_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q1_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
+            autoComplete="off"
             value={q1_question}
             onChange={(e) => this.setState({ q1_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
+            autoComplete="off"
             value={q1_curr_answer}
             onChange={(e) => this.setState({ q1_curr_answer: e.target.value })}
           />
@@ -184,22 +187,26 @@ class PrintData extends React.Component {
           <TextField
             label="level"
             value={q2_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q2_level: e.target.value })}
           />
           <TextField
             label="question"
             style={{ width: 500 }}
+            autoComplete="off"
             value={q2_question}
             onChange={(e) => this.setState({ q2_question: e.target.value })}
           />
           <br />
           <TextField
             label="answer"
+            autoComplete="off"
             value={q2_answer}
             onChange={(e) => this.setState({ q2_answer: e.target.value })}
           />
           <TextField
             label="choices"
+            autoComplete="off"
             value={q2_curr_choice}
             onChange={(e) => this.setState({ q2_curr_choice: e.target.value })}
           />
@@ -231,27 +238,32 @@ class PrintData extends React.Component {
           <TextField
             label="level"
             value={q3_level}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_level: e.target.value })}
           />
           <TextField
             label="question"
             value={q3_question}
             style={{ width: 500 }}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_question: e.target.value })}
           />
           <br />
           <TextField
             label="choice1"
             value={q3_choice1}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_choice1: e.target.value })}
           />
           <TextField
             label="choice2"
             value={q3_choice2}
+            autoComplete="off"
             onChange={(e) => this.setState({ q3_choice2: e.target.value })}
           />
           <TextField
             label="answer"
+            autoComplete="off"
             value={q3_answer}
             onChange={(e) => this.setState({ q3_answer: e.target.value })}
           />

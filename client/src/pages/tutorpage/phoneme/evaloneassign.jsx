@@ -54,6 +54,7 @@ class PhonemeTutorAllAssign extends React.Component {
               <div className="row">
                 <h3>Mark new score: </h3>
                 <TextField
+                  autoComplete="off"
                   onChange={(e) =>
                     this.setState({ newScore: parseInt(e.target.value) })
                   }

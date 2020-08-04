@@ -167,6 +167,24 @@ class FluencyTrainingPart extends Component {
     window.location = "/student/fluency";
   };
 
+  renderLetters = (letter) => {
+    const { fontSize } = this.props;
+    switch (fontSize) {
+      case 1:
+        return <h1>{letter}</h1>;
+      case 2:
+        return <h2>{letter}</h2>;
+      case 3:
+        return <h3>{letter}</h3>;
+      case 4:
+        return <h4>{letter}</h4>;
+      case 5:
+        return <h5>{letter}</h5>;
+      case 6:
+        return <h6>{letter}</h6>;
+    }
+  };
+
   render() {
     const {
       readDone,
@@ -250,7 +268,7 @@ class FluencyTrainingPart extends Component {
                   } else {
                     return (
                       <div className={index} key={index}>
-                        <h4>{letter}</h4>
+                        {this.renderLetters(letter)}
                       </div>
                     );
                   }
@@ -261,11 +279,6 @@ class FluencyTrainingPart extends Component {
             )}
           </div>
         )}
-        {/* <hr />
-        <h5>Your score is: {score}</h5>
-        <h5>
-          The process: {currentParaNum + 1} / {maxNumOfQues + 1}
-        </h5> */}
       </Container>
     );
   }

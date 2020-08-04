@@ -150,6 +150,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Number of questions"
                 rowsMax={20}
                 value={assignNum}
+                autoComplete="off"
                 onChange={(e) => this.setState({ assignNum: e.target.value })}
               />
               <br />
@@ -160,6 +161,7 @@ class FluencyTutorAssignPage extends React.Component {
                 style={{ width: 600 }}
                 rowsMax={20}
                 value={assignAddParagraph}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddParagraph: e.target.value })
                 }
@@ -172,6 +174,7 @@ class FluencyTutorAssignPage extends React.Component {
                 style={{ width: 600 }}
                 rowsMax={20}
                 value={assignAddQuestion}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddQuestion: e.target.value })
                 }
@@ -182,6 +185,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Choice1"
                 value={assignAddChoice1}
                 style={{ width: 300 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddChoice1: e.target.value })
                 }
@@ -191,6 +195,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Choice2"
                 value={assignAddChoice2}
                 style={{ width: 300 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddChoice2: e.target.value })
                 }
@@ -201,6 +206,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Choice3"
                 value={assignAddChoice3}
                 style={{ width: 300 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddChoice3: e.target.value })
                 }
@@ -210,6 +216,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Choice4"
                 value={assignAddChoice4}
                 style={{ width: 300 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddChoice4: e.target.value })
                 }
@@ -220,6 +227,7 @@ class FluencyTutorAssignPage extends React.Component {
                 label="Answer"
                 value={assignAddAnswer}
                 style={{ width: 300 }}
+                autoComplete="off"
                 onChange={(e) =>
                   this.setState({ assignAddAnswer: e.target.value })
                 }

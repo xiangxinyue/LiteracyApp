@@ -37,7 +37,7 @@ export default class Table extends React.Component {
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: ""},
+      curr_answer: { 0: "" },
     });
   };
 
@@ -51,6 +51,7 @@ export default class Table extends React.Component {
             <div className="row">
               {[0].map((num) => (
                 <TextField
+                  autoComplete="off"
                   value={curr_answer[num]}
                   label={"Answer " + Number(num + 1)}
                   onChange={(e) => this.handleChange(num, e.target.value)}

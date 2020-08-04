@@ -10,8 +10,7 @@ class PhonemeTutorAudioAssign extends React.Component {
       assigndata: [],
       number: 10,
       currQuestion: "",
-      currAudio: "",
-      audios: [],
+      currAudios: [],
     };
   }
 
@@ -23,21 +22,36 @@ class PhonemeTutorAudioAssign extends React.Component {
   };
 
   handleAddEntry = async () => {
-    const { currAudio, currQuestion, assigndata } = this.state;
+    const { currAudios, currQuestion, assigndata } = this.state;
     // upload audio
-    const file = currAudio;
-    if (file) {
-      const uploadConfig = await axios.get("/api/phoneme/audio/");
-      await axios
-        .put(uploadConfig.data.url, file, {
-          headers: {
-            "Content-type": file.type,
-          },
-        })
-        .catch((err) => console.log(err));
-      // update state assignment data
+    const length = currAudios.length;
+    if (length !== 0) {
+      console.log(currAudios);
+      // apply urls
+      const promises1 = await currAudios.map(async () => {
+        const doc = await axios.get("/api/phoneme/audio/");
+        return doc.data;
+      });
+      const uploadConfigs = await Promise.all(promises1);
+      console.log(uploadConfigs);
+      // upload audios
+      const promises2 = await currAudios.map(async (file, index) => {
+        await axios
+          .put(uploadConfigs[index].url, file, {
+            headers: {
+              "Content-type": file.type,
+            },
+          })
+          .catch((err) => console.log(err));
+      });
+      await Promise.all(promises2);
+      // add entry
+      const audios = [];
+      uploadConfigs.forEach((audio) => {
+        audios.push(audio.key);
+      });
       const newAssignData = {
-        audio: uploadConfig.data.key,
+        audios,
         question: currQuestion,
       };
       let newAssignDataArray = assigndata;
@@ -66,6 +80,7 @@ class PhonemeTutorAudioAssign extends React.Component {
           <TextField
             label="Num of Questions"
             value={number}
+            autoComplete="off"
             onChange={(e) => this.setState({ number: e.target.value })}
           />
           <br />
@@ -75,6 +90,8 @@ class PhonemeTutorAudioAssign extends React.Component {
                 label="Question Content"
                 value={currQuestion}
                 style={{ width: 400 }}
+                autoComplete="off"
+                multiline
                 onChange={(e) =>
                   this.setState({ currQuestion: e.target.value })
                 }
@@ -82,9 +99,10 @@ class PhonemeTutorAudioAssign extends React.Component {
               <input
                 type="file"
                 accept="audio/*"
-                onChange={(e) =>
-                  this.setState({ currAudio: e.target.files[0] })
-                }
+                multiple={true}
+                onChange={(e) => {
+                  this.setState({ currAudios: Array.from(e.target.files) });
+                }}
               />
               <Button
                 variant="outlined"
