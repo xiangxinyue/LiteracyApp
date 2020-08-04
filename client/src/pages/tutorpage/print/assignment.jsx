@@ -187,16 +187,21 @@ class PrintData extends React.Component {
         </div>
         <Container>
           <h3>Question 1 data</h3>
+          <h5>
+            Example: List at least 4 ways that the sound /k/ can be spelled?
+          </h5>
           <TextField
             label="Number"
             value={q1_num}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q1_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q1_level}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q1_level: e.target.value })}
           />
           <TextField
@@ -211,11 +216,13 @@ class PrintData extends React.Component {
             label="answer"
             value={q1_curr_answer}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q1_curr_answer: e.target.value })}
           />
           <Button
             variant="outlined"
             color="default"
+            style={{ marginTop: 10, marginRight: 5 }}
             onClick={() =>
               this.setState((state) => {
                 const q1_answer = state.q1_answer;
@@ -227,13 +234,29 @@ class PrintData extends React.Component {
           >
             Add an answer
           </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginTop: 10 }}
+            onClick={() => this.setState({ q1_answer: [] })}
+          >
+            empty answers
+          </Button>
           <br />
-          <h4>
-            Answers you entered: {q1_answer.map((answer) => answer + ",")}
-          </h4>
-
-          <Button variant="outlined" color="primary" onClick={this.addQ1Data}>
-            Add an Entry
+          <div className="row" style={{ marginTop: 10, marginLeft: 10 }}>
+            <h5>Answers you entered:</h5>
+            <h4>{q1_answer.map((answer) => answer + ",")}</h4>
+          </div>
+          <h5>
+            (You can provide multiple correct answers, but do not include / )
+          </h5>
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{ marginRight: 5 }}
+            onClick={this.addQ1Data}
+          >
+            Add a question
           </Button>
           <Button
             variant="outlined"
@@ -241,22 +264,33 @@ class PrintData extends React.Component {
             onClick={this.generateQ1Date}
           >
             Generate Automatically
-          </Button>
+          </Button>{" "}
+          <br />
+          <br />
           <Q1Table data={q1} handleDelete={this.deleteQ1} />
         </Container>
         <hr />
         <Container>
           <h3>Question 2 data</h3>
+          <h5>
+            Example: From the list of options below, choose all the correct ways
+            that the sound /f/ can be spelled?
+          </h5>
+          <li>/ff/</li>
+          <li>/fg/</li>
+          <li>/ft/</li>
           <TextField
             label="Number"
             value={q2_num}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q2_num: e.target.value })}
           />
           <TextField
             label="level"
             value={q2_level}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q2_level: e.target.value })}
           />
           <TextField
@@ -271,6 +305,7 @@ class PrintData extends React.Component {
             label="answer"
             value={q2_answer}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q2_answer: e.target.value })}
           />
           <TextField
@@ -282,6 +317,7 @@ class PrintData extends React.Component {
           <Button
             variant="outlined"
             color="default"
+            style={{ marginTop: 10, marginRight: 5 }}
             onClick={() =>
               this.setState((state) => {
                 const q2_choices = state.q2_choices;
@@ -293,11 +329,26 @@ class PrintData extends React.Component {
           >
             Add a Choice
           </Button>
-          <h4>
-            Choices you entered: {q2_choices.map((choice) => choice + ",")}
-          </h4>
-          <Button variant="outlined" color="primary" onClick={this.addQ2Data}>
-            Add an Entry
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginTop: 10 }}
+            onClick={() => this.setState({ q2_choices: [] })}
+          >
+            empty Choices
+          </Button>
+          <div className="row" style={{ marginTop: 10, marginLeft: 10 }}>
+            <h5>Answers you entered:</h5>
+            <h4>{q2_choices.map((choice) => choice + ",")}</h4>
+          </div>
+          <h5>(You can provide multiple choices, but do not include / )</h5>
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{ marginRight: 5 }}
+            onClick={this.addQ2Data}
+          >
+            Add a question
           </Button>
           <Button
             variant="outlined"
@@ -305,22 +356,35 @@ class PrintData extends React.Component {
             onClick={this.generateQ2Date}
           >
             Generate Automatically
-          </Button>
+          </Button>{" "}
+          <br />
+          <br />
           <Q2Table data={q2} handleDelete={this.deleteQ2} />
         </Container>
         <hr />
         <Container>
           <h3>Question 3 data</h3>
+          <h5>
+            Example: Out of word pairs below, select the one word that looks
+            most like it could be a real word in English. For example, out of
+            beff-ffeb, the correct answer is beff as the ff letter pattern is
+            always present at the end of a word.
+          </h5>
+          <li>vadd-vaad</li>
+          <li>dau-daw</li>
+          <li>dau-daw</li>
           <TextField
             label="Number"
             value={q3_num}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q3_num: e.target.value })}
           />
           <TextField
             label="level"
             autoComplete="off"
             value={q3_level}
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q3_level: e.target.value })}
           />
           <TextField
@@ -335,23 +399,27 @@ class PrintData extends React.Component {
             label="choice1"
             autoComplete="off"
             value={q3_choice1}
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q3_choice1: e.target.value })}
           />
           <TextField
             label="choice2"
             value={q3_choice2}
             autoComplete="off"
+            style={{ marginRight: 5 }}
             onChange={(e) => this.setState({ q3_choice2: e.target.value })}
           />
           <TextField
             label="answer"
             autoComplete="off"
+            style={{ marginRight: 5 }}
             value={q3_answer}
             onChange={(e) => this.setState({ q3_answer: e.target.value })}
           />
           <Button
             variant="outlined"
             color="default"
+            style={{ marginTop: 10, marginRight: 5 }}
             onClick={() => {
               this.setState((state) => {
                 const { q3_choice1, q3_choice2, q3_answer, q3_choices } = state;
@@ -373,22 +441,42 @@ class PrintData extends React.Component {
               });
             }}
           >
-            Add a choice
+            Add an entry
           </Button>
-          <h4>
-            Choices you entered:{" "}
-            {q3_choices.map(
-              (choice) =>
-                choice.choice1 +
-                "/" +
-                choice.choice2 +
-                "/" +
-                choice.answer +
-                ","
-            )}
-          </h4>
-          <Button variant="outlined" color="primary" onClick={this.addQ3Data}>
-            Add an Entry
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginTop: 10 }}
+            onClick={() => this.setState({ q3_choices: [] })}
+          >
+            empty entries
+          </Button>
+          <div className="row" style={{ marginTop: 10, marginLeft: 10 }}>
+            <h5>Choices you entered:</h5>
+            <h4>
+              {q3_choices.map(
+                (choice) =>
+                  choice.choice1 +
+                  "/" +
+                  choice.choice2 +
+                  "/" +
+                  choice.answer +
+                  ","
+              )}
+            </h4>
+          </div>
+          <h5>
+            (Each entry contains one choice1, one choice2 and one answer, but do
+            not include - or / )
+          </h5>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{ marginRight: 5 }}
+            onClick={this.addQ3Data}
+          >
+            Add a question
           </Button>
           <Button
             variant="outlined"
@@ -397,6 +485,8 @@ class PrintData extends React.Component {
           >
             Generate Automatically
           </Button>
+          <br />
+          <br />
           <Q3Table data={q3} handleDelete={this.deleteQ3} />
         </Container>
         <hr />

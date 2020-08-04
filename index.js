@@ -18,7 +18,7 @@ mongoose.set("useFindAndModify", false);
 app.use(
   cookieSession({
     name: "session",
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    maxAge: 12 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
   })
 );
@@ -32,7 +32,6 @@ require("./models/fluency");
 require("./models/phoneme");
 require("./models/print");
 require("./models/meaning");
-
 
 require("./services/passport");
 require("./routes/authRoutes")(app);
