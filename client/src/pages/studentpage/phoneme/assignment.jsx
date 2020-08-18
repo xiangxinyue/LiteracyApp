@@ -13,18 +13,11 @@ class PhonemeAssign extends React.Component {
     phonemeAssign: [],
   };
 
-  handleAudioAssign = async (data) => {
+  handleAudioAssign = async (audioAssign) => {
     const { phonemeAssign } = this.state;
-    // get assign date
-    const doc = await axios.get("/api/phoneme/student/evalassign");
-    const date = doc.data.createAt;
-    // placehold student history score
-    await axios.post("/api/phoneme/eval/historyscore", { assignDate: date });
-    // generate student assignment
-    await axios.post("/api/phoneme/student/evalassign", {
+    await axios.post("/api/phoneme/student/assign", {
       phonemeAssign,
-      audioAssign: data,
-      assignDate: date,
+      audioAssign,
     });
     window.location = "/student/phoneme";
   };

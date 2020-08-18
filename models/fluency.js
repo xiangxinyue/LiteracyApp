@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const fluencyTestSchema = new Schema({
+const fluencyDataSchema = new Schema({
   paragraph: String,
   question: String,
   choices: Array,
   answer: String,
 });
 
-mongoose.model("fluency_tests", fluencyTestSchema);
+mongoose.model("fluency_datas", fluencyDataSchema);
 
 const fluencyTestAssignSchema = new Schema({
   studentId: String,
@@ -21,15 +21,7 @@ const fluencyTestAssignSchema = new Schema({
 
 mongoose.model("fluency_test_assigns", fluencyTestAssignSchema);
 
-const fluencyTrainSchema = new Schema({
-  paragraph: String,
-  question: String,
-  choices: Array,
-  answer: String,
-});
-mongoose.model("fluency_trains", fluencyTrainSchema);
-
-const fluencyTrainAssignSchema = new Schema({
+const fluencyAssignAssignsSchema = new Schema({
   studentId: String,
   studentName: String,
   studentEmail: String,
@@ -38,34 +30,4 @@ const fluencyTrainAssignSchema = new Schema({
   oldSpeed: Number,
   newSpeed: Number,
 });
-mongoose.model("fluency_train_assigns", fluencyTrainAssignSchema);
-
-const fluencyUserSchema = new Schema({
-  userId: String,
-  rightId: Array,
-  wrongId: Array,
-});
-
-mongoose.model("fluency_user", fluencyUserSchema);
-
-const fluencyAssignSchema = new Schema({
-  tutor: String,
-  createAt: Date,
-  assignment: Array,
-  status: String,
-});
-
-mongoose.model("fluency_assigns", fluencyAssignSchema);
-
-const fluencyEvalAssignSchema = new Schema({
-  studentId: String,
-  studentName: String,
-  studentEmail: String,
-  assignment: Array,
-  createAt: Date,
-  score: Number,
-  newSpeed: Number,
-  oldSpeed: Number,
-});
-
-mongoose.model("fluency_eval_assigns", fluencyEvalAssignSchema);
+mongoose.model("fluency_assign_assigns", fluencyAssignAssignsSchema);

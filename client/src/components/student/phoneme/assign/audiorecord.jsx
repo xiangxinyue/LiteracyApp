@@ -12,12 +12,9 @@ class FluencyAudioRecord extends React.Component {
     file: null,
     isBlocked: false,
     alert: false,
-    oldAudios: [],
   };
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/audio/get");
-    this.setState({ oldAudios: doc.data });
     navigator.getUserMedia(
       { audio: true },
       () => {

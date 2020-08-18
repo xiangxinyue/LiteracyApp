@@ -1,28 +1,30 @@
 import React from "react";
-import MeaningIntro from "../../../components/student/meaning/assign/assignintro";
-import MeaningMain from "../../../components/student/meaning/assign/assignpart";
+import MeaningIntro from "../../../components/student/meaning/assign/trainintro";
+import MeaningTrain from "../../../components/student/meaning/assign/trainpart";
 import MeaningHeader from "../../../components/student/meaning/assets/header";
-import Paper from "../../../assets/paper";
+import { Container } from "@material-ui/core";
 
-class MeaningAssignment extends React.Component {
+class MeaningPractise extends React.Component {
   state = {
-    understand: false,
+    start: false,
   };
 
   render() {
-    const { understand } = this.state;
+    const { start } = this.state;
     return (
       <div>
-        <MeaningHeader part="Weekly Assignment" />
-        {understand ? (
-          <Paper component={MeaningMain} />
-        ) : (
-          <MeaningIntro
-            handleClick={() => this.setState({ understand: !understand })}
-          />
-        )}
+        <MeaningHeader part="Training" />
+        <Container>
+          {start ? (
+            <MeaningTrain />
+          ) : (
+            <MeaningIntro
+              handleClick={() => this.setState({ start: !start })}
+            />
+          )}
+        </Container>
       </div>
     );
   }
 }
-export default MeaningAssignment;
+export default MeaningPractise;

@@ -8,12 +8,9 @@ const Alert = (props) => {
 
 export default () => {
   return (
-    <div>
-      <Alert severity="warning">
-        You have not Signed In yet. Please Sign In by clicking the red top right
-        button.
-      </Alert>
-      {/* <CallMadeIcon style={{ fontSize: 70 }} color="secondary" /> */}
-    </div>
+    <h2 className="text-danger">
+      You have not Signed In yet. Please Sign In by clicking the red top right
+      button.
+    </h2>
   );
 };

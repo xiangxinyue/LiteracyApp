@@ -17,17 +17,9 @@ class PhonemeTrain extends Component {
     };
   }
 
-  componentDidUpdate = async () => {
-    const { currentUser } = this.props;
-    // const done = await checkLatestPhonemeDone(currentUser);
-    // if (!done) {
-    //   this.setState({ evaluationDone: false });
-    // }
-  };
-
   render() {
     const { currentUser } = this.props;
-    const { understand, startTrain, evaluationDone } = this.state;
+    const { understand } = this.state;
     return (
       <div>
         <PhonemeHeader part="Training Main Page" />
@@ -44,17 +36,12 @@ class PhonemeTrain extends Component {
             ) : (
               <div className="row">
                 <TrainCard
-                  title="Learning Materials"
-                  page="/student/phoneme/materials"
+                  title="Learning"
+                  page="/student/phoneme/learning"
                   description="In this part, you will learn about different kinds of sounds in English"
                 />
                 <TrainCard
-                  title="Practice"
-                  page="/student/phoneme/practise"
-                  description="Here, you will practice your awareness of sounds "
-                />
-                <TrainCard
-                  title="Weekly Assignment"
+                  title="Assignment"
                   page="/student/phoneme/assignment"
                   description="In this part, we will test your awareness of sounds"
                 />

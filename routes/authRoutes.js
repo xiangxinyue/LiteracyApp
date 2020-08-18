@@ -4,32 +4,27 @@ const Student = mongoose.model("students");
 
 module.exports = (app) => {
   app.get(
-    "/auth/google_student",
-    passport.authenticate("google-student", {
+    "/auth/student",
+    passport.authenticate("google", {
       scope: ["profile", "email"],
     })
   );
 
   app.get(
-    "/auth/google_student/callback",
-    passport.authenticate("google-student"),
+    "/auth/student/callback",
+    passport.authenticate("google"),
     (req, res) => {
       res.redirect("/");
     }
   );
 
-  app.get(
-    "/auth/google_tutor",
-    passport.authenticate("google-tutor", {
-      scope: ["profile", "email"],
-    })
-  );
-
-  app.get(
-    "/auth/google_tutor/callback",
-    passport.authenticate("google-tutor"),
+  app.post(
+    "/auth/tutor",
+    passport.authenticate("local", {
+      failureRedirect: "/tutor/signin",
+    }),
     (req, res) => {
-      res.redirect("/");
+      res.status(200).send({ msg: true });
     }
   );
 
@@ -42,7 +37,7 @@ module.exports = (app) => {
     res.send(req.user);
   });
 
-  app.get("/api/student/getall", async (req, res) => {
+  app.get("/api/student", async (req, res) => {
     const students = await Student.find();
     res.send(students);
   });

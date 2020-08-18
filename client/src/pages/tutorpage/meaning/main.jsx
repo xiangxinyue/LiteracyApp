@@ -19,18 +19,13 @@ class MeaningTutorMain extends React.Component {
           <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
-              title="Students' Testing Assignment"
-              page="/tutor/meaning/testassign"
+              title="Students' Access Assignment"
+              page="/tutor/meaning/test"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
-              title="Students' Practice Assignment"
-              page="/tutor/meaning/trainassign"
-              description="In this part, you can review students' testing assignment"
-            />
-            <TrainCard
-              title="Students' Evaluation Assignment"
-              page="/tutor/meaning/evalassign"
+              title="Students' Assignment"
+              page="/tutor/meaning/assign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
@@ -43,17 +38,22 @@ class MeaningTutorMain extends React.Component {
         <hr />
 
         <Container>
-          <h3>Modify Meaning Database</h3>
+          <h3>Modify Print Database</h3>
           <div className="row">
             <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/meaning/assignment"
-              description="In this part, you can create new weekly assignment"
+              title="Modify Meaning Question 1 Data"
+              page="/tutor/meaning/q1data"
+              description="You can modify question 1 data here"
             />
             <TrainCard
-              title="Modify Meaning Training data"
-              page="/tutor/meaning/data"
-              description="In this part, you can modify meaning training data"
+              title="Modify Meaning Question 2 Data"
+              page="/tutor/meaning/q2data"
+              description="You can modify question 2 data here"
+            />
+            <TrainCard
+              title="Modify Meaning Question 3 Data"
+              page="/tutor/meaning/q3data"
+              description="You can modify question 3 data here"
             />
           </div>
         </Container>

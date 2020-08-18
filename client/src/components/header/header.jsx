@@ -34,7 +34,7 @@ export const Header = ({ currentUser }) => {
               role="button"
               aria-pressed="true"
               className="btn btn-info btn-lg active"
-              href="/auth/google_student"
+              href="/auth/student"
               style={{ marginRight: 10 }}
             >
               Student Sign In
@@ -43,7 +43,7 @@ export const Header = ({ currentUser }) => {
               role="button"
               aria-pressed="true"
               className="btn btn-info btn-lg active"
-              href="/auth/google_tutor"
+              href="/tutor/signin"
             >
               Tutor Sign In
             </a>

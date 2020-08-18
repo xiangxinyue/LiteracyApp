@@ -19,18 +19,13 @@ class PrintTutorMain extends React.Component {
           <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
-              title="Students' Testing Assignment"
-              page="/tutor/print/testassign"
+              title="Students' Access Assignment"
+              page="/tutor/print/test"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
-              title="Students' Practice Assignment"
-              page="/tutor/print/trainassign"
-              description="In this part, you can review students' testing assignment"
-            />
-            <TrainCard
-              title="Students' Evaluation Assignment"
-              page="/tutor/print/evalassign"
+              title="Students' Assignment"
+              page="/tutor/print/assign"
               description="In this part, you can review students' testing assignment"
             />
             <TrainCard
@@ -43,17 +38,22 @@ class PrintTutorMain extends React.Component {
         <hr />
 
         <Container>
-          <h3>Modify print Database</h3>
+          <h3>Modify Print Database</h3>
           <div className="row">
             <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/print/assignment"
-              description="In this part, you can create new weekly assignment"
+              title="Modify Print Question 1 Data"
+              page="/tutor/print/q1data"
+              description="You can modify question 1 data here"
             />
             <TrainCard
-              title="Modify Print Training data"
-              page="/tutor/print/data"
-              description="In this part, you can modify speed training data"
+              title="Modify Print Question 2 Data"
+              page="/tutor/print/q2data"
+              description="You can modify question 2 data here"
+            />
+            <TrainCard
+              title="Modify Print Question 3 Data"
+              page="/tutor/print/q3data"
+              description="You can modify question 3 data here"
             />
           </div>
         </Container>

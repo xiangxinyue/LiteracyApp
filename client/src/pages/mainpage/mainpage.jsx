@@ -22,7 +22,10 @@ const Main = ({ currentUser }) => {
           <div>
             <h2>Welcome to Literacy Training</h2>
             <hr />
-            <h4>Hello, {currentUser.displayName}</h4>
+            <h4>
+              Hello,{" "}
+              {currentUser.displayName ? currentUser.displayName : "tutor"}
+            </h4>
           </div>
         );
     }

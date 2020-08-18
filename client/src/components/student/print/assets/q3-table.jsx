@@ -57,11 +57,13 @@ export default class Table extends React.Component {
                     value={choice.choice1}
                     control={<Radio />}
                     label={choice.choice1}
+                    style={{ marginLeft: 10 }}
                   />
                   <FormControlLabel
                     value={choice.choice2}
                     control={<Radio />}
                     label={choice.choice2}
+                    style={{ marginLeft: 10 }}
                   />
                 </div>
               </RadioGroup>

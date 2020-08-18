@@ -21,7 +21,7 @@ class PrintTestPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/print/testdata");
+    const doc = await axios.get("/api/print/student/test");
     await this.setState({ q1: doc.data.q1, q2: doc.data.q2, q3: doc.data.q3 });
     console.log(this.state);
   };
@@ -30,7 +30,7 @@ class PrintTestPart extends React.Component {
     const { q1_score, q2_score, q1Assign, q2Assign } = this.state;
     const newScore = q1_score + q2_score + q3_score;
     console.log(q1_score, q2_score, q3_score, q1Assign, q2Assign, q3Assign);
-    await axios.post("/api/print/testassign", {
+    await axios.post("/api/print/test", {
       newScore,
       q1Assign,
       q2Assign,

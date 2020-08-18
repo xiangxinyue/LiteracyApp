@@ -14,11 +14,14 @@ export default class Table extends React.Component {
   }
 
   handleChange = (num, value) => {
-    this.setState((state) => {
-      const curr_answer = state.curr_answer;
-      curr_answer[num] = value;
-      return { ...state, curr_answer };
-    });
+    this.setState(
+      (state) => {
+        const curr_answer = state.curr_answer;
+        curr_answer[num] = value;
+        return { ...state, curr_answer };
+      },
+      () => console.log(this.state)
+    );
   };
 
   handleNext = () => {
@@ -37,7 +40,7 @@ export default class Table extends React.Component {
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: "", 1: "" },
+      curr_answer: {},
     });
   };
 
@@ -49,17 +52,19 @@ export default class Table extends React.Component {
           <div>
             <h3 className="font-weight-light">{questions[index].question}</h3>
             <div className="row">
-              {[0, 1].map((num) => (
+              {questions[index].answer.map((_, index) => (
                 <TextField
                   autoComplete="off"
-                  value={curr_answer[num]}
-                  label={"Answer " + Number(num + 1)}
-                  onChange={(e) => this.handleChange(num, e.target.value)}
+                  value={curr_answer[index] ? curr_answer[index] : ""}
+                  style={{ marginLeft: 20 }}
+                  label={"Answer " + Number(index + 1)}
+                  onChange={(e) => this.handleChange(index, e.target.value)}
                 />
               ))}
               <Button
                 variant="contained"
                 color="primary"
+                style={{ marginLeft: 20 }}
                 onClick={this.handleNext}
               >
                 Next

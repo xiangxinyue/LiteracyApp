@@ -66,12 +66,19 @@ finish tutpr-side Speed training assignment train, test data operations
 1. Speed: change reading speed by each question
 2. Speed: automatically marked by right answers
 
-## TODD - list:
+## 2020.08.15 \_\_V 3.0
 
-1. student assignment aviability check
-2. Students' Score Chart
-3. Tutor-side score chart
-4. Training Timer
-5. training session 2 30 min a week
-6. Fluency train needs a summary board
-7. Fluency student performance board.
+Changing the practise and weekly assignment into one section.
+
+Before,
+at the student-side, students can do practise as much as they want, and one assignment per week.
+at the tutor-side, tutors can check students' practise and assignments, and create one assignment per week.
+
+Now,
+at the student-side, students only can do 2 assignments, each is about 30 minutes.
+at the tutor-side, tutors just need to check and review students' assignments and modify database questions.
+
+## 2020.08.17 updates \_V 3.0
+
+1. Combined practise and weekly assignment into one part.
+2. Finished Meaning part.

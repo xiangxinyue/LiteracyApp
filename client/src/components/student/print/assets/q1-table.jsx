@@ -54,12 +54,14 @@ export default class Table extends React.Component {
                   value={curr_answer[num]}
                   label={"Answer " + Number(num + 1)}
                   autoComplete="off"
+                  style={{ marginLeft: 10 }}
                   onChange={(e) => this.handleChange(num, e.target.value)}
                 />
               ))}
               <Button
                 variant="contained"
                 color="primary"
+                style={{ marginLeft: 10 }}
                 onClick={this.handleNext}
               >
                 Next

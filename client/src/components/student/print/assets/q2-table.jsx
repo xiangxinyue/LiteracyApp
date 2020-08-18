@@ -48,6 +48,7 @@ export default class Table extends React.Component {
                     value={choice}
                     control={<Radio />}
                     label={choice}
+                    style={{ marginLeft: 10 }}
                   />
                 ))}
               </div>

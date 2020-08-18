@@ -10,31 +10,19 @@ const meaningQ1Schema = new Schema({
 mongoose.model("meaning_q1", meaningQ1Schema);
 
 const meaningQ2Schema = new Schema({
-    level: Number,
-    question: String,
-    answer: [String],
-  });
-  mongoose.model("meaning_q2", meaningQ2Schema);
-  
-
-  const meaningQ3Schema = new Schema({
-    level: Number,
-    question: String,
-    answer: [String],
-  });
-  mongoose.model("meaning_q3", meaningQ3Schema);
-  
-
-// evaluation creation
-const meaningEvalSchema = new Schema({
-  q1Assign: Array,
-  q2Assign: Array,
-  q3Assign: Array,
-  createAt: Date,
-  status: String,
-  tutor: String,
+  level: Number,
+  question: String,
+  answer: [String],
 });
-mongoose.model("meaning_evals", meaningEvalSchema);
+mongoose.model("meaning_q2", meaningQ2Schema);
+
+const meaningQ3Schema = new Schema({
+  level: Number,
+  question: String,
+  choices: [String],
+  answer: String,
+});
+mongoose.model("meaning_q3", meaningQ3Schema);
 
 // student assignment
 const meaningTestAssign = new Schema({
@@ -49,7 +37,7 @@ const meaningTestAssign = new Schema({
 });
 mongoose.model("meaning_test_assigns", meaningTestAssign);
 
-const meaningTrainAssign = new Schema({
+const meaningAssignAssign = new Schema({
   studentId: String,
   studentName: String,
   studentEmail: String,
@@ -60,17 +48,4 @@ const meaningTrainAssign = new Schema({
   oldScore: Number,
   newScore: Number,
 });
-mongoose.model("meaning_train_assigns", meaningTrainAssign);
-
-const meaningEvalAssign = new Schema({
-  studentId: String,
-  studentName: String,
-  studentEmail: String,
-  createAt: Date,
-  q1Assign: Array,
-  q2Assign: Array,
-  q3Assign: Array,
-  oldScore: Number,
-  newScore: Number,
-});
-mongoose.model("meaning_eval_assigns", meaningEvalAssign);
+mongoose.model("meaning_assign_assigns", meaningAssignAssign);

@@ -1,30 +1,28 @@
 const requireLogin = require("../middlewares/requireLogin");
 const requireTutor = require("../middlewares/requireTutor");
 const mongoose = require("mongoose");
-const FluencyTest = mongoose.model("fluency_tests");
-const FluencyTrain = mongoose.model("fluency_trains");
-const FluencyAssign = mongoose.model("fluency_assigns");
 const Student = mongoose.model("students");
-const Tutor = mongoose.model("tutors");
+const FluencyData = mongoose.model("fluency_datas");
 const FluencyTestAssign = mongoose.model("fluency_test_assigns");
-const FluencyTrainAssign = mongoose.model("fluency_train_assigns");
-const FluencyEvalAssign = mongoose.model("fluency_eval_assigns");
+const FluencyAssignAssign = mongoose.model("fluency_assign_assigns");
 
 module.exports = (app) => {
   // student
   // testing
-  app.post("/api/fluency/score/update", async (req, res) => {
+  app.put("/api/fluency/score", async (req, res) => {
     const infor = await Student.findByIdAndUpdate(req.user.id, {
       fluency_curr_score: req.body.newSpeed,
     });
     res.send(infor);
   });
-  app.post("/api/fluency/student/testassign", async (req, res) => {
+  app.post("/api/fluency/student/test", async (req, res) => {
     const assign = await new FluencyTestAssign({
       studentId: req.user.id,
       studentName: req.user.displayName,
       studentEmail: req.user.email,
-      createAt: new Date(),
+      createAt: new Date().toLocaleString("en-US", {
+        timeZone: "America/Denver",
+      }),
       averageSpeed: req.body.averageSpeed,
       assignment: req.body.assignment,
     }).save();
@@ -32,13 +30,13 @@ module.exports = (app) => {
     res.send(assign);
   });
 
-  app.get("/api/fluency/student/testassign", requireLogin, async (req, res) => {
-    const testData = await FluencyTest.find();
+  app.get("/api/fluency/student/test", requireLogin, async (req, res) => {
+    const testData = await FluencyData.find();
     let paragraphs = [];
     let questions = [];
     let choices = [];
     let answers = [];
-    await testData.forEach((dataset) => {
+    testData.forEach((dataset) => {
       paragraphs.push(dataset.paragraph);
       questions.push(dataset.question);
       choices.push(dataset.choices);
@@ -47,32 +45,30 @@ module.exports = (app) => {
     res.send({ paragraphs, questions, choices, answers });
   });
 
-  // train
-  app.get(
-    "/api/fluency/student/trainassign",
-    requireLogin,
-    async (req, res) => {
-      const trainData = await FluencyTrain.find();
-      let paragraphs = [];
-      let questions = [];
-      let choices = [];
-      let answers = [];
-      await trainData.forEach((dataset) => {
-        paragraphs.push(dataset.paragraph);
-        questions.push(dataset.question);
-        choices.push(dataset.choices);
-        answers.push(dataset.answer);
-      });
-      res.send({ paragraphs, questions, choices, answers });
-    }
-  );
+  // assign
+  app.get("/api/fluency/student/assign", requireLogin, async (req, res) => {
+    const assignData = await FluencyData.find();
+    let paragraphs = [];
+    let questions = [];
+    let choices = [];
+    let answers = [];
+    await assignData.forEach((dataset) => {
+      paragraphs.push(dataset.paragraph);
+      questions.push(dataset.question);
+      choices.push(dataset.choices);
+      answers.push(dataset.answer);
+    });
+    res.send({ paragraphs, questions, choices, answers });
+  });
 
-  app.post("/api/fluency/student/trainassign", async (req, res) => {
-    const assign = await new FluencyTrainAssign({
+  app.post("/api/fluency/student/assign", async (req, res) => {
+    const assign = await new FluencyAssignAssign({
       studentId: req.user.id,
       studentName: req.user.displayName,
       studentEmail: req.user.email,
-      createAt: new Date(),
+      createAt: new Date().toLocaleString("en-US", {
+        timeZone: "America/Denver",
+      }),
       oldSpeed: req.user.fluency_curr_score,
       newSpeed: req.body.newSpeed,
       assignment: req.body.assignment,
@@ -80,56 +76,16 @@ module.exports = (app) => {
     res.send(assign);
   });
 
-  app.post("/api/fluency/train/historyscore", async (req, res) => {
+  app.post("/api/fluency/assign/historyscore", async (req, res) => {
     const user = await Student.findById(req.user.id);
-    const newArray = user.fluency_train_score;
+    const newArray = user.fluency_assign_score;
     newArray.push({
-      label: new Date(),
+      label: new Date().toLocaleString("en-US", { timeZone: "America/Denver" }),
       value: req.body.newSpeed,
     });
     await Student.findByIdAndUpdate(req.user.id, {
-      fluency_train_score: newArray,
+      fluency_assign_score: newArray,
     });
-    res.send({});
-  });
-
-  // assignment
-  app.get("/api/fluency/evalassign", async (req, res) => {
-    const assignments = await FluencyAssign.find();
-    while (assignments.length > 0) {
-      const currAssign = assignments.pop();
-      if (currAssign.status === "done") {
-        return res.send(currAssign);
-      }
-    }
-    res.send({});
-  });
-
-  app.post("/api/fluency/eval/historyscore", async (req, res) => {
-    const user = await Student.findById(req.user.id);
-    const newArray = user.fluency_eval_score;
-    newArray.push({
-      label: req.body.assignDate,
-      value: req.body.newSpeed,
-    });
-    await Student.findByIdAndUpdate(req.user.id, {
-      fluency_eval_score: newArray,
-    });
-    res.send({});
-  });
-
-  app.post("/api/fluency/evalassign", async (req, res) => {
-    const { score, newSpeed, oldSpeed } = req.body;
-    await new FluencyEvalAssign({
-      studentId: req.user.id,
-      studentName: req.user.displayName,
-      studentEmail: req.user.email,
-      assignment: req.body.assignment,
-      createAt: new Date(),
-      score,
-      newSpeed,
-      oldSpeed,
-    }).save();
     res.send({});
   });
 
@@ -137,7 +93,7 @@ module.exports = (app) => {
   // tutor side
 
   // test
-  app.post("/api/fluency/score/create", async (req, res) => {
+  app.post("/api/fluency/score", async (req, res) => {
     const infor = await Student.findByIdAndUpdate(
       req.body.assignment.studentId,
       {
@@ -147,19 +103,20 @@ module.exports = (app) => {
     res.send(infor);
   });
 
-  app.get("/api/fluency/testassign", async (req, res) => {
+  app.get("/api/fluency/test", async (req, res) => {
     const assignments = await FluencyTestAssign.find();
     res.send(assignments);
   });
 
-  app.get("/api/fluency/testassign/:id", async (req, res) => {
+  app.get("/api/fluency/test/:id", async (req, res) => {
     const assignment = await FluencyTestAssign.findById(req.params.id);
     res.send(assignment);
   });
 
-  app.get("/api/fluency/test/gettable", requireTutor, async (req, res) => {
-    let data = [];
-    const testdata = await FluencyTest.find();
+  app.get("/api/fluency/data/table", requireTutor, async (req, res) => {
+    const data = [];
+    const testdata = await FluencyData.find();
+    console.log(testdata);
     testdata.forEach((test) => {
       const dict = {
         paragraph: test.paragraph,
@@ -173,88 +130,58 @@ module.exports = (app) => {
     res.send(data);
   });
 
-  app.post("/api/fluency/test/add", requireTutor, async (req, res) => {
-    const data = await new FluencyTest(req.body.data).save();
+  app.post("/api/fluency/test/", requireTutor, async (req, res) => {
+    const data = await new FluencyData(req.body.data).save();
     res.send(data);
   });
 
-  app.post("/api/fluency/test/delete", requireTutor, async (req, res) => {
-    const data = await FluencyTest.findByIdAndDelete(req.body.id);
+  app.delete("/api/fluency/test", requireTutor, async (req, res) => {
+    const data = await FluencyData.findByIdAndDelete(req.body.id);
     res.send(data);
   });
 
-  // train
-  app.get("/api/fluency/train/gettable", requireTutor, async (req, res) => {
+  // assign
+  app.get("/api/fluency/assign/table", requireTutor, async (req, res) => {
     let data = [];
-    const traindata = await FluencyTrain.find();
-    traindata.forEach((train) => {
+    const assigndata = await FluencyData.find();
+    console.log(assigndata);
+    assigndata.forEach((assign) => {
       const dict = {
-        paragraph: train.paragraph,
-        question: train.question,
-        choices: train.choices,
-        answer: train.answer,
-        id: train._id,
+        paragraph: assign.paragraph,
+        question: assign.question,
+        choices: assign.choices,
+        answer: assign.answer,
+        id: assign._id,
       };
       data.push(dict);
     });
     res.send(data);
   });
 
-  app.post("/api/fluency/train/add", requireTutor, async (req, res) => {
-    const data = await new FluencyTrain(req.body.data).save();
+  app.post("/api/fluency/assign", requireTutor, async (req, res) => {
+    const data = await new FluencyData(req.body.data).save();
     res.send(data);
   });
 
-  app.post("/api/fluency/train/delete", requireTutor, async (req, res) => {
-    const data = await FluencyTrain.findByIdAndDelete(req.body.id);
+  app.delete("/api/fluency/assign", requireTutor, async (req, res) => {
+    const data = await FluencyData.findByIdAndDelete(req.body.id);
     res.send(data);
   });
 
-  app.get("/api/fluency/trainassign", async (req, res) => {
-    const assignments = await FluencyTrainAssign.find();
+  app.get("/api/fluency/assign", async (req, res) => {
+    const assignments = await FluencyAssignAssign.find();
     res.send(assignments);
   });
 
-  app.get("/api/fluency/trainassign/:id", async (req, res) => {
-    const assignment = await FluencyTrainAssign.findById(req.params.id);
-    res.send(assignment);
-  });
-
-  // assign
-  app.post("/api/fluency/evalassign/add", requireTutor, async (req, res) => {
-    const data = await new FluencyAssign({
-      tutor: req.user.displayName,
-      createAt: req.body.schedule,
-      status: "pending",
-      assignment: req.body.data,
-    }).save();
-    res.send(data);
-  });
-
-  setInterval(async () => {
-    console.log("Running Fluency Assign check daily!");
-    const doc = await FluencyAssign.find();
-    const latest = doc.pop();
-    if (latest && latest.createAt < new Date()) {
-      await FluencyAssign.findByIdAndUpdate(latest._id, { status: "done" });
-    }
-  }, 43200000);
-
-  app.get("/api/fluency/assign/getall", async (req, res) => {
-    const assignments = await FluencyEvalAssign.find();
-    res.send(assignments);
-  });
-
-  app.get("/api/fluency/assign/getone/:id", async (req, res) => {
-    const assignment = await FluencyEvalAssign.findById(req.params.id);
+  app.get("/api/fluency/assign/:id", async (req, res) => {
+    const assignment = await FluencyAssignAssign.findById(req.params.id);
     res.send(assignment);
   });
 
   app.get("/api/fluency/historyscore/:id", async (req, res) => {
     const student = await Student.findById(req.params.id);
     res.send({
-      trainScore: student.fluency_train_score,
-      evalScore: student.fluency_eval_score,
+      assignScore: student.fluency_assign_score,
     });
   });
 };

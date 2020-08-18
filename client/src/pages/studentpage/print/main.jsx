@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PrintHeader from "../../../components/student/print/assets/header";
 import PrintTestIntro from "../../../components/student/print/test/testintro";
 import PrintTestPart from "../../../components/student/print/test/testpart";
-import { Container, Button } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import Paper from "../../../assets/paper";
 import TrainCard from "../../../assets/cards/trainpagecard";
 
@@ -34,24 +34,19 @@ class PrintTrain extends Component {
                     }
                   />
                 ) : (
-                  <Paper component={PrintTestPart} />
+                  <PrintTestPart />
                 )
               ) : (
                 <div className="row">
                   <TrainCard
-                    title="Learning Materials"
-                    page="/student/print/materials"
-                    description="Here, ......"
+                    title="Learning"
+                    page="/student/print/learning"
+                    description="Here, you can look at the print learning materials"
                   />
                   <TrainCard
-                    title="Practise"
-                    page="/student/print/practise"
-                    description="In this part, ......"
-                  />
-                  <TrainCard
-                    title="Weekly Assignment"
+                    title="Assignment"
                     page="/student/print/assignment"
-                    description="Here, ......"
+                    description="Here, you can do the assignment for the print part"
                   />
                 </div>
               )}

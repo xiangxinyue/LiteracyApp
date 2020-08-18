@@ -41,8 +41,7 @@ export default function SimpleTable(props) {
               <TableCell align="left">
                 <Button
                   color="secondary"
-                  key={row.id}
-                  onClick={() => props.handleDelete(row.audio)}
+                  onClick={() => props.handleDelete(row._id)}
                 >
                   Delete
                 </Button>

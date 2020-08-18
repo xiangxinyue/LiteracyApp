@@ -1,28 +1,27 @@
 import React from "react";
-import PrintIntro from "../../../components/student/print/assign/assignintro";
-import PrintMain from "../../../components/student/print/assign/assignpart";
+import PrintIntro from "../../../components/student/print/assign/trainintro";
+import PrintTrain from "../../../components/student/print/assign/trainpart";
 import PrintHeader from "../../../components/student/print/assets/header";
-import Paper from "../../../assets/paper";
-
-class PrintAssignment extends React.Component {
+import { Container } from "@material-ui/core";
+class PhonemePractise extends React.Component {
   state = {
-    understand: false,
+    start: false,
   };
 
   render() {
-    const { understand } = this.state;
+    const { start } = this.state;
     return (
       <div>
-        <PrintHeader part="Weekly Assignment" />
-        {understand ? (
-          <Paper component={PrintMain} />
-        ) : (
-          <PrintIntro
-            handleClick={() => this.setState({ understand: !understand })}
-          />
-        )}
+        <PrintHeader part="Assignment" />
+        <Container>
+          {start ? (
+            <PrintTrain />
+          ) : (
+            <PrintIntro handleClick={() => this.setState({ start: !start })} />
+          )}
+        </Container>
       </div>
     );
   }
 }
-export default PrintAssignment;
+export default PhonemePractise;
