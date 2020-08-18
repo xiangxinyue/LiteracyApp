@@ -16,6 +16,7 @@ export default (props) => {
           variant="contained"
           color="primary"
           size="large"
+          style={{ marginLeft: 10, marginRight: 10 }}
           onClick={props.handleClick}
         >
           Start

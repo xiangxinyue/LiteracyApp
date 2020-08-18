@@ -1,7 +1,6 @@
 import React from "react";
-import { Container, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import MicRecorder from "mic-recorder-to-mp3";
-import axios from "axios";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 

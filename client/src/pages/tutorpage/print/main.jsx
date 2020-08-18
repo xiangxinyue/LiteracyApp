@@ -12,7 +12,7 @@ class PrintTutorMain extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Welcome to Print Training Tutor main page</h2>
+          <h2>Welcome to Print Session Tutor Main Page</h2>
           <hr />
         </div>
         <Container>

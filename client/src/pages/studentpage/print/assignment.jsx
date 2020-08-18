@@ -12,7 +12,7 @@ class PhonemePractise extends React.Component {
     const { start } = this.state;
     return (
       <div>
-        <PrintHeader part="Assignment" />
+        <PrintHeader part="Training Assignment" />
         <Container>
           {start ? (
             <PrintTrain />

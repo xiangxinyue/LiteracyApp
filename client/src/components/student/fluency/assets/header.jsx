@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../../../header/signinheader";
-import { Button } from "@material-ui/core";
 
 const FluencyHeader = (props) => {
   const { currentUser } = props;

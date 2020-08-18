@@ -53,7 +53,7 @@ class PhonemeTutorAllAssign extends React.Component {
               <hr />
               <h3>Old score: {assignment.oldScore}</h3>
               <div className="row">
-                <h3>Mark new score: </h3>
+                <h3 style={{ marginLeft: 10 }}>Mark new score: </h3>
                 <TextField
                   autoComplete="off"
                   onChange={(e) =>

@@ -149,7 +149,7 @@ class MeaningData extends React.Component {
           />
           <br />
           <br />
-          <Button variant="outlined" color="primary" onClick={this.addData}>
+          <Button variant="contained" color="primary" onClick={this.addData}>
             Add a question
           </Button>
           <br />

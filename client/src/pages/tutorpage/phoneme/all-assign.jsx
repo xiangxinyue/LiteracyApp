@@ -55,7 +55,7 @@ class PhonemeTutorAllAssign extends React.Component {
                       description={assign.createAt}
                       handleClick={() =>
                         (window.location =
-                          "/tutor/phoneme/evalassign/" + assign._id)
+                          "/tutor/phoneme/assign/" + assign._id)
                       }
                     />
                   );

@@ -26,7 +26,7 @@ class PhonemeAssign extends React.Component {
     const { start, phonemeDone } = this.state;
     return (
       <div>
-        <PhonemeHeader part="Assignment" />
+        <PhonemeHeader part="Training Assignment" />
         <Container>
           {start ? (
             !phonemeDone ? (

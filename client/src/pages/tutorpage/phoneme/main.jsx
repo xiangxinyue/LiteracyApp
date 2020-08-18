@@ -37,14 +37,14 @@ class PhonemeTutorMain extends React.Component {
           <h3>Modify Phoneme Database</h3>
           <div className="row">
             <TrainCard
-              title="Modify Audio data"
-              page="/tutor/phoneme/audiodata"
-              description="In this part, you can modify speed audio data"
-            />
-            <TrainCard
               title="Modify Phoneme Data"
               page="/tutor/phoneme/phonemedata"
               description="In this part, you can modify speed phoneme data"
+            />
+            <TrainCard
+              title="Modify Audio data"
+              page="/tutor/phoneme/audiodata"
+              description="In this part, you can modify speed audio data"
             />
           </div>
         </Container>

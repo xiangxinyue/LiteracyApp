@@ -81,8 +81,8 @@ class MeaningData extends React.Component {
             onChange={(e) => this.setState({ curr_answer: e.target.value })}
           />
           <Button
-            variant="outlined"
-            color="default"
+            variant="contained"
+            color="primary"
             style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}
             onClick={() =>
               this.setState((state) => {
@@ -112,7 +112,7 @@ class MeaningData extends React.Component {
             (You can provide multiple correct answers, but do not include / )
           </h5>
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             style={{ marginRight: 5 }}
             onClick={this.addData}

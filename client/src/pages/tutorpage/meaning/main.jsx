@@ -12,7 +12,7 @@ class MeaningTutorMain extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Welcome to Meaning Training Tutor main page</h2>
+          <h2>Welcome to Meaning Session Tutor Main Page</h2>
           <hr />
         </div>
         <Container>
@@ -38,7 +38,7 @@ class MeaningTutorMain extends React.Component {
         <hr />
 
         <Container>
-          <h3>Modify Print Database</h3>
+          <h3>Modify Meaning Database</h3>
           <div className="row">
             <TrainCard
               title="Modify Meaning Question 1 Data"

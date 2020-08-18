@@ -2,10 +2,10 @@ import FluencyHeader from "../../../components/student/fluency/assets/header";
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
-const FluencyMaterials = (props) => {
+const FluencyMaterials = () => {
   return (
     <div>
-      <FluencyHeader part="Training Materials page" />
+      <FluencyHeader part="Training Materials" />
 
       <Container>
         <h3 className="text-primary">

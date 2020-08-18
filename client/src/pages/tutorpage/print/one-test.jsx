@@ -25,7 +25,7 @@ class PrintTutorTestOneAssign extends React.Component {
         {assignment ? (
           <div>
             <div className="jumbotron">
-              <h2>Review Student' Testing Assignment</h2>
+              <h2>Review Student' Access Assignment</h2>
               <h3>Student: {assignment.studentName}</h3>
               <h3>Email: {assignment.studentEmail}</h3>
               <hr />

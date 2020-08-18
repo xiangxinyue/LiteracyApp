@@ -2,10 +2,10 @@ import PhonemeHeader from "../../../components/student/phoneme/assets/header";
 import React from "react";
 import { Button, Container } from "@material-ui/core";
 
-const PrintMaterials = (props) => {
+const PrintMaterials = () => {
   return (
     <div>
-      <PhonemeHeader part="Training Materials Page" />
+      <PhonemeHeader part="Training Materials" />
 
       <Container>
         <h3 className="text-primary">

@@ -33,7 +33,6 @@ class FluencyTutorTestAllAssign extends React.Component {
             Go back
           </Button>
         </div>
-        <h3>Assignment Performance</h3>
         {assignScore ? (
           <LineChart
             data={assignScore}

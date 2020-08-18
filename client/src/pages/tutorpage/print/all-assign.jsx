@@ -19,7 +19,7 @@ class PrintTutorTrainAllAssign extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Review Students' Practice Assignment</h2>
+          <h2>Review Students' Assignment</h2>
           <hr />
           <Button variant="contained" color="default" href="/tutor/print">
             Go back

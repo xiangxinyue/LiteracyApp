@@ -92,7 +92,7 @@ class FluencyTutorTrainPage extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Modify Assignment Data</h2>
+          <h2>Modify Fluency Session Data</h2>
           <Button variant="contained" color="default" href="/tutor/fluency">
             Go Back
           </Button>
@@ -129,7 +129,7 @@ class FluencyTutorTrainPage extends React.Component {
             label="Choice1"
             value={trainAddChoice1}
             autoComplete="off"
-            style={{ width: 300 }}
+            style={{ width: 300, marginRight: 10 }}
             onChange={(e) => this.setState({ trainAddChoice1: e.target.value })}
           />
           <TextField
@@ -146,7 +146,7 @@ class FluencyTutorTrainPage extends React.Component {
             label="Choice3"
             autoComplete="off"
             value={trainAddChoice3}
-            style={{ width: 300 }}
+            style={{ width: 300, marginRight: 10 }}
             onChange={(e) => this.setState({ trainAddChoice3: e.target.value })}
           />
           <TextField
@@ -174,6 +174,8 @@ class FluencyTutorTrainPage extends React.Component {
           >
             Add
           </Button>
+          <br />
+          <br />
           <Table
             rows={traindata}
             handleDelete={(id) => this.deleteTrainData(id)}

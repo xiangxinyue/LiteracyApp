@@ -12,7 +12,7 @@ class FluencyTutorMain extends React.Component {
     return (
       <div>
         <div className="jumbotron">
-          <h2>Welcome to Speed Training Tutor main page</h2>
+          <h2>Welcome to Fluency Session Tutor Main Page</h2>
           <hr />
         </div>
         <Container>

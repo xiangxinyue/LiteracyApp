@@ -13,7 +13,7 @@ class MeaningPractise extends React.Component {
     const { start } = this.state;
     return (
       <div>
-        <MeaningHeader part="Training" />
+        <MeaningHeader part="Training Assignment" />
         <Container>
           {start ? (
             <MeaningTrain />
