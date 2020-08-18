@@ -9,13 +9,8 @@ const PhonemeMaterials = () => {
 
       <Container>
         <h3 className="text-primary">
-          This is the learning materials of Sound Training.
+          Please watch the introduction video before your training.
         </h3>
-        <h4>
-          Instructions: Watch the introduction video first, then click the start
-          button. Read the words as fast as possible. When you finish click the
-          finish button.
-        </h4>
         <iframe
           width="740"
           height="430"

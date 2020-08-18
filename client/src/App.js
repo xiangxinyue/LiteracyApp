@@ -5,7 +5,6 @@ import { setCurrentUser } from "./redux/user/useractions";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import axios from "axios";
 import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 // Student pages
 // Fluency pages
@@ -371,7 +370,6 @@ class App extends React.Component {
             </Suspense>
           </ErrorBoundary>
         </Switch>
-        <Footer />
       </div>
     );
   }
