@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../../../header/signinheader";
-import { Button } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 const FluencyHeader = (props) => {
   const { currentUser } = props;
@@ -14,13 +16,13 @@ const FluencyHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Speed {props.part}</h2>
+            <P1>Welcome to Speed {props.part}</P1>
             <hr />
             {currentUser.fluency_curr_score == -1 ? null : (
-              <h3 className="text-success">
+              <P3 className="text-success">
                 Your current reading speed is {currentUser.fluency_curr_score}{" "}
                 (ms / letter)
-              </h3>
+              </P3>
             )}
           </p>
         );

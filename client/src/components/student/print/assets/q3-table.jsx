@@ -1,5 +1,8 @@
 import React from "react";
 import { Button, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -47,7 +50,7 @@ export default class Table extends React.Component {
       <div>
         {index !== questions.length ? (
           <div>
-            <h3 className="font-weight-light">{questions[index].question}</h3>
+            <P1 className="font-weight-light">{questions[index].question}</P1>
             {questions[index].choices.map((choice, i) => (
               <RadioGroup
                 onChange={(e) => this.handleChange(i, e.target.value)}
@@ -57,11 +60,13 @@ export default class Table extends React.Component {
                     value={choice.choice1}
                     control={<Radio />}
                     label={choice.choice1}
+                    style={{ marginLeft: 10 }}
                   />
                   <FormControlLabel
                     value={choice.choice2}
                     control={<Radio />}
                     label={choice.choice2}
+                    style={{ marginLeft: 10 }}
                   />
                 </div>
               </RadioGroup>

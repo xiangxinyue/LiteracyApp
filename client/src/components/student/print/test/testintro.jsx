@@ -1,16 +1,19 @@
 import React from "react";
 import { Button, Container } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 const PrintTestIntro = (props) => {
   return (
     <Container>
-      <h3 className="text-primary">
+      <P1 className="text-primary">
         This is the introduction of Print Testing.
-      </h3>
-      <h4>
+      </P1>
+      <P2>
         Instructions: Watch the introduction video first, then click the start
         button.
-      </h4>
+      </P2>
       <iframe
         width="740"
         height="430"

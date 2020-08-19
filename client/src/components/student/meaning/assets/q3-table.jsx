@@ -1,5 +1,8 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import { Button, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -7,64 +10,77 @@ export default class Table extends React.Component {
     this.state = {
       questions: this.props.rows,
       index: 0,
-      curr_answer: {},
+      curr_answer: "",
       assign: [],
       score: 0,
     };
   }
 
-  handleChange = (num, value) => {
-    this.setState((state) => {
-      const curr_answer = state.curr_answer;
-      curr_answer[num] = value;
-      return { ...state, curr_answer };
-    });
+  handleChange = (value) => {
+    this.setState({ curr_answer: value });
   };
 
   handleNext = () => {
     const { curr_answer, index, questions, assign, score } = this.state;
     let addScore = 0;
-    for (const key in curr_answer) {
-      if (questions[index].answer.includes(curr_answer[key])) addScore += 1;
-    }
+    if (questions[index].answer === curr_answer) addScore += 1;
     assign.push({
       level: questions[index].level,
       question: questions[index].question,
-      realAnswer: questions[index].answer,
+      choices: questions[index].choices,
+      answer: questions[index].answer,
       studentAnswer: curr_answer,
     });
     this.setState({
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: "" },
+      curr_answer: "",
     });
   };
 
   render() {
-    const { questions, index, assign, score, curr_answer } = this.state;
+    const { questions, index, assign, score } = this.state;
     return (
       <div>
         {index !== questions.length ? (
           <div>
-            <h3 className="font-weight-light">{questions[index].question}</h3>
-            <div className="row">
-              {[0].map((num) => (
-                <TextField
-                  autoComplete="off"
-                  value={curr_answer[num]}
-                  label={"Answer " + Number(num + 1)}
-                  onChange={(e) => this.handleChange(num, e.target.value)}
+            <P2 className="font-weight-light">{questions[index].question}</P2>
+            <RadioGroup onChange={(e) => this.handleChange(e.target.value)}>
+              <div className="row">
+                <FormControlLabel
+                  value={questions[index].choices[0]}
+                  control={<Radio />}
+                  label={questions[index].choices[0]}
+                  style={{ marginLeft: 10 }}
                 />
-              ))}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleNext}
-              >
-                Next
-              </Button>
-            </div>
+                <FormControlLabel
+                  value={questions[index].choices[1]}
+                  control={<Radio />}
+                  label={questions[index].choices[1]}
+                  style={{ marginLeft: 10 }}
+                />
+                <FormControlLabel
+                  value={questions[index].choices[2]}
+                  control={<Radio />}
+                  label={questions[index].choices[2]}
+                  style={{ marginLeft: 10 }}
+                />
+                <FormControlLabel
+                  value={questions[index].choices[3]}
+                  control={<Radio />}
+                  label={questions[index].choices[3]}
+                  style={{ marginLeft: 10 }}
+                />
+              </div>
+            </RadioGroup>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleNext}
+            >
+              Next
+            </Button>
           </div>
         ) : (
           <Button
@@ -72,7 +88,7 @@ export default class Table extends React.Component {
             color="primary"
             onClick={() => this.props.handleNext(score, assign)}
           >
-            Finish
+            Submit
           </Button>
         )}
       </div>

@@ -25,6 +25,7 @@ const MeaningTestIntro = (props) => {
         variant="contained"
         color="primary"
         size="large"
+        style={{ marginRight: 10 }}
         onClick={() => props.handleClick()}
       >
         Start

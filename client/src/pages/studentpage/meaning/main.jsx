@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import MeaningHeader from "../../../components/student/meaning/assets/header";
 import MeaningTestIntro from "../../../components/student/meaning/test/testintro";
 import MeaningTestPart from "../../../components/student/meaning/test/testpart";
-import { Container, Button } from "@material-ui/core";
-import Paper from "../../../assets/paper";
+import { Container } from "@material-ui/core";
 import TrainCard from "../../../assets/cards/trainpagecard";
 
 class MeaningTrain extends Component {
@@ -26,7 +25,7 @@ class MeaningTrain extends Component {
         <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>
-              {currentUser.print_curr_score == -1 ? (
+              {currentUser.meaning_curr_score == -1 ? (
                 !understand ? (
                   <MeaningTestIntro
                     handleClick={() =>
@@ -34,24 +33,19 @@ class MeaningTrain extends Component {
                     }
                   />
                 ) : (
-                  <Paper component={MeaningTestPart} />
+                  <MeaningTestPart />
                 )
               ) : (
                 <div className="row">
                   <TrainCard
-                    title="Learning Materials"
-                    page="/student/meaning/materials"
+                    title="Learning"
+                    page="/student/meaning/learning"
                     description="Here, you can look at the meaning learning materials"
                   />
                   <TrainCard
-                    title="Practice"
-                    page="/student/meaning/practise"
-                    description="In this part, you can practice as many time you want"
-                  />
-                  <TrainCard
-                    title="Weekly Assignment"
+                    title="Assignment"
                     page="/student/meaning/assignment"
-                    description="Here, you can do the weekly assignment for the meaning part"
+                    description="Here, you can do the assignment for the meaning part"
                   />
                 </div>
               )}

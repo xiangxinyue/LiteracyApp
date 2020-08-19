@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
 let timer;
 let newTime = 0;
@@ -31,7 +34,7 @@ class FluencyTestPart extends Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/fluency/student/testassign");
+    const doc = await axios.get("/api/fluency/student/test");
     const data = doc.data;
     await this.setState({
       paragraphs: data.paragraphs,
@@ -142,10 +145,10 @@ class FluencyTestPart extends Component {
     const newSpeed = Number((speedSum / num).toFixed(3));
     if (newSpeed !== 0) {
       console.log(newSpeed);
-      await axios.post("/api/fluency/score/update", { newSpeed });
+      await axios.put("/api/fluency/score", { newSpeed });
     }
     // update the assignment
-    await axios.post("/api/fluency/student/testassign", {
+    await axios.post("/api/fluency/student/test", {
       assignment,
       averageSpeed: newSpeed,
     });
@@ -177,7 +180,7 @@ class FluencyTestPart extends Component {
               </Button>
             ) : (
               <div>
-                <h2>You have finish all the testing questions!</h2>
+                <P1>You have finish all the testing questions!</P1>
                 <Button
                   variant="contained"
                   color="primary"
@@ -190,7 +193,7 @@ class FluencyTestPart extends Component {
             )
           ) : (
             <div>
-              <h3>{questions[currentParaNum]}</h3>
+              <P1>{questions[currentParaNum]}</P1>
               <FormControlLabel
                 value={choices[currentParaNum][0]}
                 label={choices[currentParaNum][0]}
@@ -222,7 +225,7 @@ class FluencyTestPart extends Component {
           )
         ) : (
           <div>
-            <h3>{currPara}</h3>
+            <P2>{currPara}</P2>
             <Button
               size="large"
               color="primary"

@@ -3,9 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { setCurrentFont } from "../../redux/font/fontactions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +22,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Header = ({ currentUser }) => {
+export const Header = ({ currentUser, setCurrentFont }) => {
   const classes = useStyles();
+  let fontSize = 4;
+
+  const handleDecrease = () => {
+    if (fontSize < 6) {
+      fontSize++;
+      setCurrentFont(fontSize);
+    }
+  };
+
+  const handleIncrease = () => {
+    if (fontSize > 1) {
+      fontSize--;
+      setCurrentFont(fontSize);
+    }
+  };
 
   const getHeader = () => {
     switch (currentUser) {
@@ -34,7 +52,7 @@ export const Header = ({ currentUser }) => {
               role="button"
               aria-pressed="true"
               className="btn btn-info btn-lg active"
-              href="/auth/google_student"
+              href="/auth/student"
               style={{ marginRight: 10 }}
             >
               Student Sign In
@@ -43,7 +61,7 @@ export const Header = ({ currentUser }) => {
               role="button"
               aria-pressed="true"
               className="btn btn-info btn-lg active"
-              href="/auth/google_tutor"
+              href="/tutor/signin"
             >
               Tutor Sign In
             </a>
@@ -78,10 +96,28 @@ export const Header = ({ currentUser }) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             Literacy Training
           </Typography>
-
+          <div style={{ marginRight: 10 }} className="row">
+            <Typography variant="h6">FontSize</Typography>
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              onClick={handleIncrease}
+            >
+              <AddIcon />
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              onClick={handleDecrease}
+            >
+              <RemoveIcon />
+            </Button>
+          </div>
           {getHeader()}
         </Toolbar>
       </AppBar>
@@ -94,4 +130,8 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentFont: (font) => dispatch(setCurrentFont(font)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

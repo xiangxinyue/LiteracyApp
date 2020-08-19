@@ -1,19 +1,14 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/useractions";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import axios from "axios";
 import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
 const Main = lazy(() => import("./pages/mainpage/mainpage"));
 // Student pages
 // Fluency pages
 const FluencyMain = lazy(() => import("./pages/studentpage/fluency/main"));
-const FluencyPractise = lazy(() =>
-  import("./pages/studentpage/fluency/practise")
-);
 const FluencyMaterials = lazy(() =>
   import("./pages/studentpage/fluency/materials")
 );
@@ -22,9 +17,6 @@ const FluencyAssignment = lazy(() =>
 );
 // Phoneme pages
 const PhonemeMain = lazy(() => import("./pages/studentpage/phoneme/main"));
-const PhonemePractise = lazy(() =>
-  import("./pages/studentpage/phoneme/practise")
-);
 const PhonemeMaterials = lazy(() =>
   import("./pages/studentpage/phoneme/materials")
 );
@@ -33,7 +25,6 @@ const PhonemeAssignment = lazy(() =>
 );
 // Print pages
 const PrintMain = lazy(() => import("./pages/studentpage/print/main"));
-const PrintPractise = lazy(() => import("./pages/studentpage/print/practise"));
 const PrintMaterials = lazy(() =>
   import("./pages/studentpage/print/materials")
 );
@@ -43,9 +34,6 @@ const PrintAssignment = lazy(() =>
 
 // Meaning pages
 const MeaningMain = lazy(() => import("./pages/studentpage/meaning/main"));
-const MeaningPractise = lazy(() =>
-  import("./pages/studentpage/meaning/practise")
-);
 const MeaningMaterials = lazy(() =>
   import("./pages/studentpage/meaning/materials")
 );
@@ -53,147 +41,110 @@ const MeaningAssignment = lazy(() =>
   import("./pages/studentpage/meaning/assignment")
 );
 
-
-
 // Tutor pages
+const TutorSignIn = lazy(() => import("./pages/tutorpage/tutor-signin-page"));
 
 // Fluency pages
 const FluencyTutorMain = lazy(() => import("./pages/tutorpage/fluency/main"));
-const FluencyTutorTrain = lazy(() =>
-  import("./pages/tutorpage/fluency/traindata")
-);
-const FluencyTutorTest = lazy(() =>
-  import("./pages/tutorpage/fluency/testdata")
-);
-const FluencyTutorAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/assignment")
-);
-
+const FluencyTutorData = lazy(() => import("./pages/tutorpage/fluency/data"));
 const FluencyTutorTestAllAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/testallassign")
+  import("./pages/tutorpage/fluency/all-test")
 );
 const FluencyTutorTestOneAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/testoneassign")
+  import("./pages/tutorpage/fluency/one-test")
 );
-const FluencyTutorEvalAllAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/evalallassign")
-);
-const FluencyTutorEvalOneAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/evaloneassign")
-);
-
 const FluencyTutorTrainAllAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/trainallassign")
+  import("./pages/tutorpage/fluency/all-assign")
 );
-
 const FluencyTutorTrainOneAssign = lazy(() =>
-  import("./pages/tutorpage/fluency/trainoneassign")
+  import("./pages/tutorpage/fluency/one-assign")
 );
 
 const FluencyTutorAllPerformance = lazy(() =>
-  import("./pages/tutorpage/fluency/allperformance")
+  import("./pages/tutorpage/fluency/all-performance")
 );
 const FluencyTutorOnePerformance = lazy(() =>
-  import("./pages/tutorpage/fluency/oneperformance")
+  import("./pages/tutorpage/fluency/one-performance")
 );
 // Phoneme Page
 const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
-const PhonemeTutorTrain = lazy(() =>
-  import("./pages/tutorpage/phoneme/traindata")
+const PhonemeTutorPhonemeData = lazy(() =>
+  import("./pages/tutorpage/phoneme/phoneme-data")
 );
-const PhonemeTutorTest = lazy(() =>
-  import("./pages/tutorpage/phoneme/testdata")
+const PhonemeTutorAudioData = lazy(() =>
+  import("./pages/tutorpage/phoneme/audio-data")
 );
-const PhonemeTutorAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/assignment")
+const PhonemeTutorAllAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/all-assign")
 );
-const PhonemeTutorEvalAllAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/evalallassign")
+const PhonemeTutorOneAssign = lazy(() =>
+  import("./pages/tutorpage/phoneme/one-assign")
 );
-const PhonemeTutorEvalOneAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/evaloneassign")
+const PhonemeTutorAllTest = lazy(() =>
+  import("./pages/tutorpage/phoneme/all-test")
 );
-
-const PhonemeTutorTestAllAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/testallassign")
-);
-const PhonemeTutorTestOneAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/testoneassign")
-);
-
-const PhonemeTutorTrainAllAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/trainallassign")
-);
-const PhonemeTutorTrainOneAssign = lazy(() =>
-  import("./pages/tutorpage/phoneme/trainoneassign")
+const PhonemeTutorOneTest = lazy(() =>
+  import("./pages/tutorpage/phoneme/one-test")
 );
 const PhonemeTutorAllPerformance = lazy(() =>
-  import("./pages/tutorpage/phoneme/allperformance")
+  import("./pages/tutorpage/phoneme/all-performance")
 );
 const PhonemeTutorOnePerformance = lazy(() =>
-  import("./pages/tutorpage/phoneme/oneperformance")
+  import("./pages/tutorpage/phoneme/one-performance")
 );
 
 // Print Page
 const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
-const PrintTutorData = lazy(() => import("./pages/tutorpage/print/data"));
-const PrintTutorAssign = lazy(() =>
-  import("./pages/tutorpage/print/assignment")
+const PrintTutorQ1Data = lazy(() => import("./pages/tutorpage/print/q1-data"));
+const PrintTutorQ2Data = lazy(() => import("./pages/tutorpage/print/q2-data"));
+const PrintTutorQ3Data = lazy(() => import("./pages/tutorpage/print/q3-data"));
+const PrintTutorAllTest = lazy(() =>
+  import("./pages/tutorpage/print/all-test")
 );
-const PrintTutorTestAllAssign = lazy(() =>
-  import("./pages/tutorpage/print/testallassign")
+const PrintTutorOneTest = lazy(() =>
+  import("./pages/tutorpage/print/one-test")
 );
-const PrintTutorTestOneAssign = lazy(() =>
-  import("./pages/tutorpage/print/testoneassign")
+const PrintTutorAllAssign = lazy(() =>
+  import("./pages/tutorpage/print/all-assign")
 );
-const PrintTutorTrainAllAssign = lazy(() =>
-  import("./pages/tutorpage/print/trainallassign")
-);
-const PrintTutorTrainOneAssign = lazy(() =>
-  import("./pages/tutorpage/print/trainoneassign")
-);
-const PrintTutorEvalAllAssign = lazy(() =>
-  import("./pages/tutorpage/print/evalallassign")
-);
-const PrintTutorEvalOneAssign = lazy(() =>
-  import("./pages/tutorpage/print/evaloneassign")
+const PrintTutorOneAssign = lazy(() =>
+  import("./pages/tutorpage/print/one-assign")
 );
 const PrintTutorAllPerform = lazy(() =>
-  import("./pages/tutorpage/print/allperformance")
+  import("./pages/tutorpage/print/all-performance")
 );
 const PrintTutorOnePerform = lazy(() =>
-  import("./pages/tutorpage/print/oneperformance")
+  import("./pages/tutorpage/print/one-performance")
 );
 
 // Meaning Page
 const MeaningTutorMain = lazy(() => import("./pages/tutorpage/meaning/main"));
-const MeaningTutorData = lazy(() => import("./pages/tutorpage/meaning/data"));
-const MeaningTutorAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/assignment")
+const MeaningTutorQ1Data = lazy(() =>
+  import("./pages/tutorpage/meaning/q1-data")
 );
-const MeaningTutorTestAllAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/testallassign")
+const MeaningTutorQ2Data = lazy(() =>
+  import("./pages/tutorpage/meaning/q2-data")
 );
-const MeaningTutorTestOneAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/testoneassign")
+const MeaningTutorQ3Data = lazy(() =>
+  import("./pages/tutorpage/meaning/q3-data")
 );
-const MeaningTutorTrainAllAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/trainallassign")
+const MeaningTutorAllTest = lazy(() =>
+  import("./pages/tutorpage/meaning/all-test")
 );
-const MeaningTutorTrainOneAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/trainoneassign")
+const MeaningTutorOneTest = lazy(() =>
+  import("./pages/tutorpage/meaning/one-test")
 );
-const MeaningTutorEvalAllAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/evalallassign")
+const MeaningTutorAllAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/all-assign")
 );
-const MeaningTutorEvalOneAssign = lazy(() =>
-  import("./pages/tutorpage/meaning/evaloneassign")
+const MeaningTutorOneAssign = lazy(() =>
+  import("./pages/tutorpage/meaning/one-assign")
 );
 const MeaningTutorAllPerform = lazy(() =>
-  import("./pages/tutorpage/meaning/allperformance")
+  import("./pages/tutorpage/meaning/all-performance")
 );
 const MeaningTutorOnePerform = lazy(() =>
-  import("./pages/tutorpage/meaning/oneperformance")
+  import("./pages/tutorpage/meaning/one-performance")
 );
 
 class App extends React.Component {
@@ -210,16 +161,11 @@ class App extends React.Component {
           <ErrorBoundary>
             <Suspense fallback={null}>
               <Route exact path="/" component={Main} />
-
+              <Route exact path="/tutor/signin" component={TutorSignIn} />
               <Route exact path="/student/fluency" component={FluencyMain} />
               <Route
                 exact
-                path="/student/fluency/practise"
-                component={FluencyPractise}
-              />
-              <Route
-                exact
-                path="/student/fluency/materials"
+                path="/student/fluency/learning"
                 component={FluencyMaterials}
               />
               <Route
@@ -230,12 +176,7 @@ class App extends React.Component {
               <Route exact path="/student/phoneme" component={PhonemeMain} />
               <Route
                 exact
-                path="/student/phoneme/practise"
-                component={PhonemePractise}
-              />
-              <Route
-                exact
-                path="/student/phoneme/materials"
+                path="/student/phoneme/learning"
                 component={PhonemeMaterials}
               />
               <Route
@@ -243,16 +184,10 @@ class App extends React.Component {
                 path="/student/phoneme/assignment"
                 component={PhonemeAssignment}
               />
-
               <Route exact path="/student/meaning" component={MeaningMain} />
               <Route
                 exact
-                path="/student/meaning/practise"
-                component={MeaningPractise}
-              />
-              <Route
-                exact
-                path="/student/meaning/materials"
+                path="/student/meaning/learning"
                 component={MeaningMaterials}
               />
               <Route
@@ -260,17 +195,10 @@ class App extends React.Component {
                 path="/student/meaning/assignment"
                 component={MeaningAssignment}
               />
-
-
               <Route exact path="/student/print" component={PrintMain} />
               <Route
                 exact
-                path="/student/print/practise"
-                component={PrintPractise}
-              />
-              <Route
-                exact
-                path="/student/print/materials"
+                path="/student/print/learning"
                 component={PrintMaterials}
               />
               <Route
@@ -281,45 +209,26 @@ class App extends React.Component {
               <Route exact path="/tutor/fluency" component={FluencyTutorMain} />
               <Route
                 exact
-                path="/tutor/fluency/traindata"
-                component={FluencyTutorTrain}
+                path="/tutor/fluency/data"
+                component={FluencyTutorData}
               />
               <Route
                 exact
-                path="/tutor/fluency/testdata"
-                component={FluencyTutorTest}
-              />
-              <Route
-                exact
-                path="/tutor/fluency/testassign"
+                path="/tutor/fluency/test"
                 component={FluencyTutorTestAllAssign}
               />
               <Route
-                path="/tutor/fluency/testassign/:id"
+                path="/tutor/fluency/test/:id"
                 component={FluencyTutorTestOneAssign}
               />
               <Route
                 exact
-                path="/tutor/fluency/trainassign"
+                path="/tutor/fluency/assign"
                 component={FluencyTutorTrainAllAssign}
               />
               <Route
-                path="/tutor/fluency/trainassign/:id"
+                path="/tutor/fluency/assign/:id"
                 component={FluencyTutorTrainOneAssign}
-              />
-              <Route
-                exact
-                path="/tutor/fluency/assignment"
-                component={FluencyTutorAssign}
-              />
-              <Route
-                exact
-                path="/tutor/fluency/evalassign"
-                component={FluencyTutorEvalAllAssign}
-              />
-              <Route
-                path="/tutor/fluency/evalassign/:id"
-                component={FluencyTutorEvalOneAssign}
               />
               <Route
                 exact
@@ -333,45 +242,31 @@ class App extends React.Component {
               <Route exact path="/tutor/phoneme" component={PhonemeTutorMain} />
               <Route
                 exact
-                path="/tutor/phoneme/traindata"
-                component={PhonemeTutorTrain}
+                path="/tutor/phoneme/audiodata"
+                component={PhonemeTutorAudioData}
               />
               <Route
                 exact
-                path="/tutor/phoneme/testdata"
-                component={PhonemeTutorTest}
+                path="/tutor/phoneme/phonemedata"
+                component={PhonemeTutorPhonemeData}
               />
               <Route
                 exact
-                path="/tutor/phoneme/assignment"
-                component={PhonemeTutorAssign}
+                path="/tutor/phoneme/assign"
+                component={PhonemeTutorAllAssign}
+              />
+              <Route
+                path="/tutor/phoneme/assign/:id"
+                component={PhonemeTutorOneAssign}
               />
               <Route
                 exact
-                path="/tutor/phoneme/evalassign"
-                component={PhonemeTutorEvalAllAssign}
+                path="/tutor/phoneme/test"
+                component={PhonemeTutorAllTest}
               />
               <Route
-                path="/tutor/phoneme/evalassign/:id"
-                component={PhonemeTutorEvalOneAssign}
-              />
-              <Route
-                exact
-                path="/tutor/phoneme/testassign"
-                component={PhonemeTutorTestAllAssign}
-              />
-              <Route
-                path="/tutor/phoneme/testassign/:id"
-                component={PhonemeTutorTestOneAssign}
-              />
-              <Route
-                exact
-                path="/tutor/phoneme/trainassign"
-                component={PhonemeTutorTrainAllAssign}
-              />
-              <Route
-                path="/tutor/phoneme/trainassign/:id"
-                component={PhonemeTutorTrainOneAssign}
+                path="/tutor/phoneme/test/:id"
+                component={PhonemeTutorOneTest}
               />
               <Route
                 exact
@@ -385,40 +280,36 @@ class App extends React.Component {
               <Route exact path="/tutor/print/" component={PrintTutorMain} />
               <Route
                 exact
-                path="/tutor/print/data"
-                component={PrintTutorData}
+                path="/tutor/print/q1data"
+                component={PrintTutorQ1Data}
               />
               <Route
                 exact
-                path="/tutor/print/assignment"
-                component={PrintTutorAssign}
+                path="/tutor/print/q2data"
+                component={PrintTutorQ2Data}
+              />{" "}
+              <Route
+                exact
+                path="/tutor/print/q3data"
+                component={PrintTutorQ3Data}
               />
               <Route
                 exact
-                path="/tutor/print/testassign"
-                component={PrintTutorTestAllAssign}
+                path="/tutor/print/test"
+                component={PrintTutorAllTest}
               />
               <Route
-                path="/tutor/print/testassign/:id"
-                component={PrintTutorTestOneAssign}
-              />
-              <Route
-                exact
-                path="/tutor/print/trainassign"
-                component={PrintTutorTrainAllAssign}
-              />
-              <Route
-                path="/tutor/print/trainassign/:id"
-                component={PrintTutorTrainOneAssign}
+                path="/tutor/print/test/:id"
+                component={PrintTutorOneTest}
               />
               <Route
                 exact
-                path="/tutor/print/evalassign"
-                component={PrintTutorEvalAllAssign}
+                path="/tutor/print/assign"
+                component={PrintTutorAllAssign}
               />
               <Route
-                path="/tutor/print/evalassign/:id"
-                component={PrintTutorEvalOneAssign}
+                path="/tutor/print/assign/:id"
+                component={PrintTutorOneAssign}
               />
               <Route
                 exact
@@ -429,44 +320,43 @@ class App extends React.Component {
                 path="/tutor/print/performance/:id"
                 component={PrintTutorOnePerform}
               />
-
-              <Route exact path="/tutor/meaning/" component={MeaningTutorMain} />
               <Route
                 exact
-                path="/tutor/meaning/data"
-                component={MeaningTutorData}
+                path="/tutor/meaning/"
+                component={MeaningTutorMain}
               />
               <Route
                 exact
-                path="/tutor/meaning/assignment"
-                component={MeaningTutorAssign}
+                path="/tutor/meaning/q1data"
+                component={MeaningTutorQ1Data}
               />
               <Route
                 exact
-                path="/tutor/meaning/testassign"
-                component={MeaningTutorTestAllAssign}
-              />
-              <Route
-                path="/tutor/meaning/testassign/:id"
-                component={MeaningTutorTestOneAssign}
+                path="/tutor/meaning/q2data"
+                component={MeaningTutorQ2Data}
               />
               <Route
                 exact
-                path="/tutor/meaning/trainassign"
-                component={MeaningTutorTrainAllAssign}
-              />
-              <Route
-                path="/tutor/meaning/trainassign/:id"
-                component={MeaningTutorTrainOneAssign}
+                path="/tutor/meaning/q3data"
+                component={MeaningTutorQ3Data}
               />
               <Route
                 exact
-                path="/tutor/meaning/evalassign"
-                component={MeaningTutorEvalAllAssign}
+                path="/tutor/meaning/test"
+                component={MeaningTutorAllTest}
               />
               <Route
-                path="/tutor/meaning/evalassign/:id"
-                component={MeaningTutorEvalOneAssign}
+                path="/tutor/meaning/test/:id"
+                component={MeaningTutorOneTest}
+              />
+              <Route
+                exact
+                path="/tutor/meaning/assign"
+                component={MeaningTutorAllAssign}
+              />
+              <Route
+                path="/tutor/meaning/assign/:id"
+                component={MeaningTutorOneAssign}
               />
               <Route
                 exact
@@ -480,7 +370,6 @@ class App extends React.Component {
             </Suspense>
           </ErrorBoundary>
         </Switch>
-        <Footer />
       </div>
     );
   }

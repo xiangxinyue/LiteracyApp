@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../../../header/signinheader";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 const MeaningHeader = (props) => {
   const { currentUser } = props;
@@ -12,15 +15,15 @@ const MeaningHeader = (props) => {
         return <SignInHeader />;
       default:
         return (
-          <p>
-            <h2>Welcome to Meaning {props.part}</h2>
+          <div>
+            <P1>Welcome to Meaning {props.part}</P1>
             <hr />
-            {currentUser.print_curr_score == -1 ? null : (
-              <h3 className="text-success">
-                Your current meaning score is {currentUser.print_curr_score}
-              </h3>
+            {currentUser.meaning_curr_score == -1 ? null : (
+              <P3 className="text-success">
+                Your current meaning score is {currentUser.meaning_curr_score}
+              </P3>
             )}
-          </p>
+          </div>
         );
     }
   };

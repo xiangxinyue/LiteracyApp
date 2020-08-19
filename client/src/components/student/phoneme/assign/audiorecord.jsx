@@ -1,7 +1,6 @@
 import React from "react";
-import { Container, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import MicRecorder from "mic-recorder-to-mp3";
-import axios from "axios";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -12,12 +11,9 @@ class FluencyAudioRecord extends React.Component {
     file: null,
     isBlocked: false,
     alert: false,
-    oldAudios: [],
   };
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/audio/get");
-    this.setState({ oldAudios: doc.data });
     navigator.getUserMedia(
       { audio: true },
       () => {

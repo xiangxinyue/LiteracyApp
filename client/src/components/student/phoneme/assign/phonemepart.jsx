@@ -4,15 +4,18 @@ import Process from "../../../../assets/process";
 import { LinearProgress, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 class PhonemeTrainPart extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: [],
-      word: [],
-      level: [],
-      phoneme: [],
+      ids: [],
+      words: [],
+      levels: [],
+      phonemes: [],
       answers: [],
       index: 0,
       correct: false,
@@ -27,39 +30,29 @@ class PhonemeTrainPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios("/api/phoneme/student/evalassign");
-    const data = doc.data.phonemeAssign;
-    let word = [];
-    let phoneme = [];
-    let level = [];
-    let id = [];
-    for (let i = 0; i < data.length; i++) {
-      word.push(data[i].word);
-      phoneme.push(data[i].phoneme);
-      level.push(data[i].level);
-      id.push(data[i]._id);
-    }
-    await this.setState({ word, phoneme, level, id });
+    const doc = await axios("/api/phoneme/phonemes");
+    const { words, phonemes, levels, ids } = doc.data;
+    await this.setState({ words, phonemes, levels, ids });
   };
 
   handleFlip = async () => {
     const {
-      phoneme,
+      phonemes,
       index,
       input,
       rightPhoneme,
       rightWord,
-      word,
+      words,
       answers,
     } = this.state;
     let newAnswers = answers;
     newAnswers.push(input);
-    if (phoneme[index] === input) {
+    if (phonemes[index] === input) {
       let newRightPhoneme = rightPhoneme;
       let newRightWord = rightWord;
 
-      await newRightPhoneme.push(phoneme[index]);
-      await newRightWord.push(word[index]);
+      await newRightPhoneme.push(phonemes[index]);
+      await newRightWord.push(words[index]);
       this.setState({
         correct: true,
         answer: true,
@@ -70,8 +63,8 @@ class PhonemeTrainPart extends React.Component {
     } else {
       let newWrongPhoneme = this.state.wrongPhoneme;
       let newWrongWord = this.state.wrongWord;
-      await newWrongPhoneme.push(this.state.phoneme[this.state.index]);
-      await newWrongWord.push(this.state.word[this.state.index]);
+      await newWrongPhoneme.push(this.state.phonemes[this.state.index]);
+      await newWrongWord.push(this.state.words[this.state.index]);
       this.setState({
         correct: false,
         answer: true,
@@ -91,25 +84,23 @@ class PhonemeTrainPart extends React.Component {
   };
 
   update = async () => {
-    const { word, phoneme, id, answers, level, rightWord } = this.state;
+    const { words, phonemes, ids, answers, levels, rightWord } = this.state;
     let rightId = [];
     let wrongId = [];
-    await word.forEach((word, index) => {
+    await words.forEach((word, index) => {
       if (rightWord.indexOf(word) !== -1) {
-        rightId.push(id[index]);
+        rightId.push(ids[index]);
       } else {
-        wrongId.push(id[index]);
+        wrongId.push(ids[index]);
       }
     });
-    await axios.post("/api/phoneme/rightwrong/update", { rightId, wrongId });
-    // const newScore = 20 * (rightId.length / this.state.word.length);
-    // axios.post("/api/phoneme/score/update", { newScore });
+
     let phonemeAssign = [];
-    for (let i = 0; i < word.length; i++) {
+    for (let i = 0; i < words.length; i++) {
       phonemeAssign.push({
-        word: word[i],
-        phoneme: phoneme[i],
-        level: level[i],
+        word: words[i],
+        phoneme: phonemes[i],
+        level: levels[i],
         answer: answers[i],
       });
     }
@@ -120,38 +111,38 @@ class PhonemeTrainPart extends React.Component {
     const {
       rightWord,
       index,
-      word,
+      words,
       correct,
       answer,
       input,
-      phoneme,
+      phonemes,
       phonemeAssign,
     } = this.state;
-    const progress = ((index + 1) / word.length) * 100;
-    const accuracy = (rightWord.length / word.length) * 100;
+    const progress = ((index + 1) / words.length) * 100;
+    const accuracy = (rightWord.length / words.length) * 100;
     return (
       <div>
-        {word.length !== 0 ? (
+        {words.length !== 0 ? (
           <div style={{ margin: "30px 25%" }}>
-            {index !== word.length ? (
+            {index !== words.length ? (
               <div>
                 <WordCard
-                  word={word[index]}
-                  phoneme={phoneme[index]}
+                  word={words[index]}
+                  phoneme={phonemes[index]}
                   input={input}
                   answered={answer}
                   correct={correct}
                   handleClick={() => this.handleFlip(index)}
-                  handleInput={(input) => this.setState({ input: input })}
+                  handleInput={(input) => this.setState({ input })}
                   next={() => this.changeQuestion()}
-                  last={index + 1 === word.length}
+                  last={index + 1 === words.length}
                   update={() => this.update()}
                 />
                 <LinearProgress variant="determinate" value={progress} />
               </div>
             ) : (
               <div>
-                <h3>Congratulations, you have finished the first part</h3>
+                <P1>Congratulations, you have finished the first part</P1>
                 <Button
                   color="primary"
                   size="large"

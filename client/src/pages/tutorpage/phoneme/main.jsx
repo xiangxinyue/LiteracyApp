@@ -19,19 +19,14 @@ class PhonemeTutorMain extends React.Component {
           <h3>Review Students' Assignments and Performance</h3>
           <div className="row">
             <TrainCard
-              title="Students' Testing Assignment"
-              page="/tutor/phoneme/testassign"
-              description="In this part, you can check students' practice assignment"
+              title="Students' Access Assignment"
+              page="/tutor/phoneme/test"
+              description="In this part, you can check students' access assignment"
             />
             <TrainCard
-              title="Students' Practice Assignment"
-              page="/tutor/phoneme/trainassign"
-              description="In this part, you can check students' practice assignment"
-            />
-            <TrainCard
-              title="Students' Weekly Assignment"
-              page="/tutor/phoneme/evalassign"
-              description="In this part, you can check students' weekly assignments"
+              title="Students' Assignment"
+              page="/tutor/phoneme/assign"
+              description="In this part, you can check students' assignments"
             />
             <TrainCard
               title="Students' Performance"
@@ -42,19 +37,14 @@ class PhonemeTutorMain extends React.Component {
           <h3>Modify Phoneme Database</h3>
           <div className="row">
             <TrainCard
-              title="Create Weekly Assignment"
-              page="/tutor/phoneme/assignment"
-              description="In this part, you can create new weekly assignment"
+              title="Modify Phoneme Data"
+              page="/tutor/phoneme/phonemedata"
+              description="In this part, you can modify speed phoneme data"
             />
             <TrainCard
-              title="Modify Training data"
-              page="/tutor/phoneme/traindata"
-              description="In this part, you can modify speed training data"
-            />
-            <TrainCard
-              title="Modify Testing data"
-              page="/tutor/phoneme/testdata"
-              description="In this part, you can modify speed tesing data"
+              title="Modify Audio data"
+              page="/tutor/phoneme/audiodata"
+              description="In this part, you can modify speed audio data"
             />
           </div>
         </Container>

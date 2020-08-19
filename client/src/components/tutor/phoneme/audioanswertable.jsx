@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -25,7 +24,7 @@ export default function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell align="left">Question</TableCell>
-            <TableCell align="left">Audio</TableCell>
+            <TableCell align="left">Audios</TableCell>
             <TableCell align="left">Answer</TableCell>
           </TableRow>
         </TableHead>
@@ -34,7 +33,9 @@ export default function SimpleTable(props) {
             <TableRow key={index}>
               <TableCell align="left">{row.question}</TableCell>
               <TableCell align="left">
-                <audio src={keys.AWS + row.audio} controls="controls" />
+                {row.audios.map((audio) => {
+                  return <audio src={keys.AWS + audio} controls="controls" />;
+                })}
               </TableCell>
               <TableCell align="left">
                 <audio src={keys.AWS + row.answer} controls="controls" />

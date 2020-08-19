@@ -1,5 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const keys = require("../config/keys");
 const mongoose = require("mongoose");
 const Tutor = mongoose.model("tutors");
@@ -10,24 +11,24 @@ passport.serializeUser((user, callback) => {
 });
 
 passport.deserializeUser(async (id, callback) => {
-  const tutor = await Tutor.findById(id);
-  if (tutor) {
-    return callback(null, tutor);
-  }
   const student = await Student.findById(id);
   if (student) {
     return callback(null, student);
+  }
+  const tutor = await Tutor.findById(id);
+  if (tutor) {
+    return callback(null, tutor);
   }
   callback(null, null);
 });
 
 passport.use(
-  "google-student",
+  "google",
   new GoogleStrategy(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google_student/callback",
+      callbackURL: "/auth/student/callback",
       proxy: true,
     },
     async (accessToken, refreshToken, profile, callback) => {
@@ -43,14 +44,10 @@ passport.use(
           displayName: profile.displayName,
           email: profile.emails[0].value,
           photo: profile.photos[0].value,
-          fluency_eval_score: [],
-          phoneme_eval_score: [],
-          print_eval_score: [],
-          meaning_eval_score: [],
-          fluency_train_score: [],
-          phoneme_train_score: [],
-          print_train_score: [],
-          meaning_train_score: [],
+          fluency_assign_score: [],
+          phoneme_assign_score: [],
+          print_assign_score: [],
+          meaning_assign_score: [],
           fluency_curr_score: -1,
           phoneme_curr_score: -1,
           print_curr_score: -1,
@@ -63,30 +60,14 @@ passport.use(
 );
 
 passport.use(
-  "google-tutor",
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google_tutor/callback",
-      proxy: true,
-    },
-    async (accessToken, refreshToken, profile, callback) => {
-      const doc = await Tutor.findOne({ googleId: profile.id });
-      if (doc) {
-        return callback(null, doc);
-      } else {
-        const createdAt = new Date();
-        const tutor = await new Tutor({
-          createdAt,
-          role: "tutor",
-          googleId: profile.id,
-          displayName: profile.displayName,
-          email: profile.emails[0].value,
-          photo: profile.photos[0].value,
-        }).save();
-        return callback(null, tutor);
-      }
+  "local",
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, callback) => {
+      const user = await Tutor.findOne({ email: email });
+      if (!user) return callback(null, false);
+      if (password === user.password) return callback(null, user);
+      else return callback(null, false);
     }
   )
 );

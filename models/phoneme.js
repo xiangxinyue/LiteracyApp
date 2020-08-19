@@ -1,67 +1,39 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const phonemeTestSchema = new Schema({
+const phonemePhonemesSchema = new Schema({
   word: String,
   phoneme: String,
   level: Number,
 });
-mongoose.model("phoneme_tests", phonemeTestSchema);
+mongoose.model("phoneme_phonemes", phonemePhonemesSchema);
 
-const phonemeTrainSchema = new Schema({
-  word: String,
-  phoneme: String,
+const phonemeAudiosSchema = new Schema({
+  question: String,
+  audios: [String],
   level: Number,
 });
-mongoose.model("phoneme_trains", phonemeTrainSchema);
+mongoose.model("phoneme_audios", phonemeAudiosSchema);
 
-const phonemeUserSchema = new Schema({
-  userId: String,
-  rightId: Array,
-  wrongId: Array,
-});
-mongoose.model("phoneme_user", phonemeUserSchema);
-
-const phonemeAssignSchema = new Schema({
-  tutor: String,
+const phonemeTestAssignsSchema = new Schema({
+  studentId: String,
+  studentName: String,
+  studentEmail: String,
   phonemeAssign: Array,
-  audioAssign: Array,
+  newScore: Number,
   createAt: Date,
   status: String,
 });
-mongoose.model("phoneme_assigns", phonemeAssignSchema);
+mongoose.model("phoneme_test_assigns", phonemeTestAssignsSchema);
 
-const phonemeEvalAssignSchema = new Schema({
+const phonemeAssignAssignsSchema = new Schema({
   studentId: String,
   studentName: String,
   studentEmail: String,
   phonemeAssign: Array,
   audioAssign: Array,
   createAt: Date,
-  assignDate: Date,
   oldScore: Number,
-  assignId: String,
   status: String,
 });
-mongoose.model("phoneme_eval_assigns", phonemeEvalAssignSchema);
-
-const phonemeTestAssignSchema = new Schema({
-  studentId: String,
-  studentName: String,
-  studentEmail: String,
-  phonemeAssign: Array,
-  createAt: Date,
-  newScore: Number,
-});
-mongoose.model("phoneme_test_assigns", phonemeTestAssignSchema);
-
-const phonemeTrainAssignSchema = new Schema({
-  studentId: String,
-  studentName: String,
-  studentEmail: String,
-  phonemeAssign: Array,
-  createAt: Date,
-  oldScore: Number,
-  newScore: Number,
-});
-mongoose.model("phoneme_train_assigns", phonemeTrainAssignSchema);
+mongoose.model("phoneme_assign_assigns", phonemeAssignAssignsSchema);

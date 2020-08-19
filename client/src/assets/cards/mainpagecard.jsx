@@ -31,12 +31,12 @@ export default function MainCard(props) {
           <Typography
             gutterBottom
             variant="h5"
-            component="h2"
+            component="h5"
             className="text-primary"
           >
             {props.title}
           </Typography>
-          <Typography variant="h6" color="textSecondary" component="h3">
+          <Typography variant="h6" color="textSecondary" component="h6">
             {props.description}
           </Typography>
         </CardContent>

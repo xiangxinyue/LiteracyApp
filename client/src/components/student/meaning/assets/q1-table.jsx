@@ -1,5 +1,8 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -14,11 +17,14 @@ export default class Table extends React.Component {
   }
 
   handleChange = (num, value) => {
-    this.setState((state) => {
-      const curr_answer = state.curr_answer;
-      curr_answer[num] = value;
-      return { ...state, curr_answer };
-    });
+    this.setState(
+      (state) => {
+        const curr_answer = state.curr_answer;
+        curr_answer[num] = value;
+        return { ...state, curr_answer };
+      },
+      () => console.log(this.state)
+    );
   };
 
   handleNext = () => {
@@ -37,7 +43,7 @@ export default class Table extends React.Component {
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: "", 1: "" },
+      curr_answer: {},
     });
   };
 
@@ -47,19 +53,21 @@ export default class Table extends React.Component {
       <div>
         {index !== questions.length ? (
           <div>
-            <h3 className="font-weight-light">{questions[index].question}</h3>
+            <P2 className="font-weight-light">{questions[index].question}</P2>
             <div className="row">
-              {[0, 1].map((num) => (
+              {questions[index].answer.map((_, index) => (
                 <TextField
                   autoComplete="off"
-                  value={curr_answer[num]}
-                  label={"Answer " + Number(num + 1)}
-                  onChange={(e) => this.handleChange(num, e.target.value)}
+                  value={curr_answer[index] ? curr_answer[index] : ""}
+                  label={"Answer " + Number(index + 1)}
+                  style={{ marginLeft: 20 }}
+                  onChange={(e) => this.handleChange(index, e.target.value)}
                 />
               ))}
               <Button
                 variant="contained"
                 color="primary"
+                style={{ marginLeft: 20 }}
                 onClick={this.handleNext}
               >
                 Next

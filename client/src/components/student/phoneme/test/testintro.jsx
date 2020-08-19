@@ -7,6 +7,9 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,27 +35,27 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return (
-        <h4>
+        <P2>
           Attention: This is your first time doing the sound training. So, we
           need to find your current level of skill.
-        </h4>
+        </P2>
       );
     case 1:
       return (
-        <h4>
+        <P2>
           In this exercise,, you will see a made-up word on the screen. You will
           break down the word into different sounds that it is made of. You will
           do so by inserting space between different sounds.
-        </h4>
+        </P2>
       );
     case 2:
       return (
-        <h4>
+        <P2>
           For example, there are 3 sounds in the made-up word 'bint'. So, you
           will write "b i nt" as your response and press 'Enter' After you
           respond, you will get feedback on whether you answered correctly or
           not.
-        </h4>
+        </P2>
       );
     default:
       return "Unknown step";
@@ -66,14 +69,6 @@ export default function VerticalLinearStepper(props) {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
   };
 
   return (
