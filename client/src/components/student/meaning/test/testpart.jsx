@@ -76,7 +76,7 @@ class MeaningTestPart extends React.Component {
 
   render() {
     const { q1 } = this.state;
-    return <div>{q1.length !== 0 ? this.renderQuestion() : null}</div>;
+    return q1.length !== 0 ? this.renderQuestion() : null;
   }
 }
 

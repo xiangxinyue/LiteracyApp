@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import SignInHeader from "../../../header/signinheader";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 const PhonemeHeader = (props) => {
   const { currentUser } = props;
@@ -13,13 +16,13 @@ const PhonemeHeader = (props) => {
       default:
         return (
           <p>
-            <h2>Welcome to Sound {props.part}</h2>
+            <P1>Welcome to Sound {props.part}</P1>
             <hr />
             {currentUser.phoneme_curr_score == -1 ? null : (
-              <h3 className="text-success">
+              <P3 className="text-success">
                 Your current Sound Training Score is{" "}
                 {currentUser.phoneme_curr_score} / 20
-              </h3>
+              </P3>
             )}
           </p>
         );

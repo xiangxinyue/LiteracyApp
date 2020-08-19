@@ -4,6 +4,9 @@ import Process from "../../../../assets/process";
 import { LinearProgress, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 class PhonemeTrainPart extends React.Component {
   constructor() {
@@ -139,7 +142,7 @@ class PhonemeTrainPart extends React.Component {
               </div>
             ) : (
               <div>
-                <h3>Congratulations, you have finished the first part</h3>
+                <P1>Congratulations, you have finished the first part</P1>
                 <Button
                   color="primary"
                   size="large"

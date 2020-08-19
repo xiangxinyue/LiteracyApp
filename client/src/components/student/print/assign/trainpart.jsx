@@ -3,6 +3,9 @@ import axios from "axios";
 import Q1Table from "../assets/q1-table";
 import Q2Table from "../assets/q2-table";
 import Q3Table from "../assets/q3-table";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 class PrintTrainPart extends React.Component {
   constructor() {
@@ -77,7 +80,7 @@ class PrintTrainPart extends React.Component {
 
   render() {
     const { q1 } = this.state;
-    return <div>{q1.length !== 0 ? this.renderQuestion() : null}</div>;
+    return q1.length !== 0 ? this.renderQuestion() : null;
   }
 }
 

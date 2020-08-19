@@ -3,6 +3,9 @@ import axios from "axios";
 import { Button, Container, Paper } from "@material-ui/core";
 import AudioRecord from "./audiorecord";
 import keys from "../../../../assets/keys";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 class PhonemeAudioAssign extends React.Component {
   constructor() {
@@ -83,7 +86,7 @@ class PhonemeAudioAssign extends React.Component {
                 </Button>
               ) : (
                 <Container>
-                  <h3>{questions[index]}</h3>
+                  <P2>{questions[index]}</P2>
                   <br />
                   {originalAudios[index].map((audio) => {
                     console.log(audio);

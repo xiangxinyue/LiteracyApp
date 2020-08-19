@@ -1,6 +1,9 @@
 import PhonemeHeader from "../../../components/student/phoneme/assets/header";
 import React from "react";
 import { Button, Container } from "@material-ui/core";
+import P1 from "../../../assets/fonts/p1";
+import P2 from "../../../assets/fonts/p2";
+import P3 from "../../../assets/fonts/p3";
 
 const PrintMaterials = () => {
   return (
@@ -8,9 +11,9 @@ const PrintMaterials = () => {
       <PhonemeHeader part="Training Materials" />
 
       <Container>
-        <h3 className="text-primary">
+        <P1 className="text-primary">
           Please watch the introduction video before your training.
-        </h3>
+        </P1>
         <iframe
           width="740"
           height="430"

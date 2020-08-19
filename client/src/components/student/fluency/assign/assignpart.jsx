@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 import Process from "../../../../assets/process";
 import $ from "jquery";
 let time;
@@ -140,24 +143,6 @@ class FluencyAssignPart extends Component {
     window.location = "/student/fluency";
   };
 
-  renderLetters = (letter) => {
-    const { fontSize } = this.props;
-    switch (fontSize) {
-      case 1:
-        return <h1>{letter}</h1>;
-      case 2:
-        return <h2>{letter}</h2>;
-      case 3:
-        return <h3>{letter}</h3>;
-      case 4:
-        return <h4>{letter}</h4>;
-      case 5:
-        return <h5>{letter}</h5>;
-      case 6:
-        return <h6>{letter}</h6>;
-    }
-  };
-
   render() {
     const {
       readDone,
@@ -184,7 +169,7 @@ class FluencyAssignPart extends Component {
               </Button>
             ) : (
               <div>
-                <h2>You have finish all the training questions!</h2>
+                <P1>You have finish all the training questions!</P1>
                 <Button
                   variant="contained"
                   color="primary"
@@ -197,7 +182,7 @@ class FluencyAssignPart extends Component {
             )
           ) : (
             <div>
-              <h3>{questions[currentParaNum]}</h3>
+              <P1>{questions[currentParaNum]}</P1>
               <FormControlLabel
                 value={choices[currentParaNum][0]}
                 label={choices[currentParaNum][0]}
@@ -241,7 +226,7 @@ class FluencyAssignPart extends Component {
                   } else {
                     return (
                       <div className={index} key={index}>
-                        {this.renderLetters(letter)}
+                        <P2>{letter}</P2>
                       </div>
                     );
                   }

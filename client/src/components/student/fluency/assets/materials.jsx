@@ -1,11 +1,14 @@
 import React from "react";
+import P1 from "../../../../assets/fonts/p1";
+import P2 from "../../../../assets/fonts/p2";
+import P3 from "../../../../assets/fonts/p3";
 
 export default () => {
   return (
     <>
-      <h3 className="text-primary">
+      <P2 className="text-primary">
         Please watch the introduction video before your training.
-      </h3>
+      </P2>
       <iframe
         width="740"
         height="430"

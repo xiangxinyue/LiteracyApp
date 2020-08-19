@@ -2,6 +2,10 @@ import React from "react";
 import MainCard from "../../assets/cards/mainpagecard";
 import { connect } from "react-redux";
 import SignInHeader from "../../components/header/signinheader";
+import P1 from "../../assets/fonts/p1";
+import P2 from "../../assets/fonts/p2";
+import P3 from "../../assets/fonts/p3";
+
 const imagePath = process.env.PUBLIC_URL;
 const images = [
   "images/soundmain.png",
@@ -10,7 +14,7 @@ const images = [
   "images/meaningmain.jpeg",
 ];
 
-const Main = ({ currentUser }) => {
+const Main = ({ currentUser, currentFont }) => {
   const getUserOrLogin = () => {
     switch (currentUser) {
       case null:
@@ -20,12 +24,12 @@ const Main = ({ currentUser }) => {
       default:
         return (
           <div>
-            <h2>Welcome to Literacy Training</h2>
+            <P1>Welcome to Literacy Training</P1>
             <hr />
-            <h4>
-              Hello,{" "}
+            <P3>
+              Hello,
               {currentUser.displayName ? currentUser.displayName : "tutor"}
-            </h4>
+            </P3>
           </div>
         );
     }
@@ -132,6 +136,7 @@ const Main = ({ currentUser }) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  currentFont: state.font.currentFont,
 });
 
 export default connect(mapStateToProps)(Main);
