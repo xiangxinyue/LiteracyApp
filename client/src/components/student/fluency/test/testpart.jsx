@@ -36,12 +36,13 @@ class FluencyTestPart extends Component {
   componentDidMount = async () => {
     const doc = await axios.get("/api/fluency/student/test");
     const data = doc.data;
+    const number = 10;
     await this.setState({
-      paragraphs: data.paragraphs,
-      questions: data.questions,
-      choices: data.choices,
-      answers: data.answers,
-      maxNumOfQues: data.paragraphs.length - 1,
+      paragraphs: data.paragraphs.slice(0, number),
+      questions: data.questions.slice(0, number),
+      choices: data.choices.slice(0, number),
+      answers: data.answers.slice(0, number),
+      maxNumOfQues: number - 1,
     });
     await this.setState({
       currPara: this.state.paragraphs[this.state.currentParaNum],

@@ -41,6 +41,11 @@ class PrintTutorMain extends React.Component {
           <h3>Modify Print Database</h3>
           <div className="row">
             <TrainCard
+              title="Modify Learning Materials"
+              page="/tutor/print/materials"
+              description="In this part, you can modify learning materials"
+            />
+            <TrainCard
               title="Modify Print Question 1 Data"
               page="/tutor/print/q1data"
               description="You can modify question 1 data here"

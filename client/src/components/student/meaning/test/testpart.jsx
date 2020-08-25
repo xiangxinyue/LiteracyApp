@@ -21,8 +21,30 @@ class MeaningTestPart extends React.Component {
 
   componentDidMount = async () => {
     const doc = await axios.get("/api/meaning/student/test");
-    await this.setState({ q1: doc.data.q1, q2: doc.data.q2, q3: doc.data.q3 });
+    const { q1, q2, q3 } = this.generateTest(doc.data);
+    await this.setState({
+      q1: q1.slice(0, 10),
+      q2: q2.slice(0, 10),
+      q3: q3.slice(0, 10),
+    });
     console.log(this.state);
+  };
+
+  generateTest = (data) => {
+    let q1 = data.q1;
+    let q2 = data.q2;
+    let q3 = data.q3;
+    console.log(q1, q2, q3);
+    while (q1.length < 10) {
+      q1 = q1.concat(q1);
+    }
+    while (q2.length < 10) {
+      q2 = q2.concat(q2);
+    }
+    while (q3.length < 10) {
+      q3 = q3.concat(q3);
+    }
+    return { q1, q2, q3 };
   };
 
   handleSubmit = async (q3_score, q3Assign) => {

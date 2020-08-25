@@ -59,13 +59,16 @@ const FluencyTutorTrainAllAssign = lazy(() =>
 const FluencyTutorTrainOneAssign = lazy(() =>
   import("./pages/tutorpage/fluency/one-assign")
 );
-
 const FluencyTutorAllPerformance = lazy(() =>
   import("./pages/tutorpage/fluency/all-performance")
 );
 const FluencyTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/fluency/one-performance")
 );
+const FluencyTutorMaterials = lazy(() =>
+  import("./pages/tutorpage/fluency/materials")
+);
+
 // Phoneme Page
 const PhonemeTutorMain = lazy(() => import("./pages/tutorpage/phoneme/main"));
 const PhonemeTutorPhonemeData = lazy(() =>
@@ -92,6 +95,9 @@ const PhonemeTutorAllPerformance = lazy(() =>
 const PhonemeTutorOnePerformance = lazy(() =>
   import("./pages/tutorpage/phoneme/one-performance")
 );
+const PhonemeTutorMaterials = lazy(() =>
+  import("./pages/tutorpage/phoneme/materials")
+);
 
 // Print Page
 const PrintTutorMain = lazy(() => import("./pages/tutorpage/print/main"));
@@ -115,6 +121,9 @@ const PrintTutorAllPerform = lazy(() =>
 );
 const PrintTutorOnePerform = lazy(() =>
   import("./pages/tutorpage/print/one-performance")
+);
+const PrintTutorMaterials = lazy(() =>
+  import("./pages/tutorpage/print/materials")
 );
 
 // Meaning Page
@@ -145,6 +154,9 @@ const MeaningTutorAllPerform = lazy(() =>
 );
 const MeaningTutorOnePerform = lazy(() =>
   import("./pages/tutorpage/meaning/one-performance")
+);
+const MeaningTutorMaterials = lazy(() =>
+  import("./pages/tutorpage/meaning/materials")
 );
 
 class App extends React.Component {
@@ -366,6 +378,22 @@ class App extends React.Component {
               <Route
                 path="/tutor/meaning/performance/:id"
                 component={MeaningTutorOnePerform}
+              />
+              <Route
+                path="/tutor/fluency/materials"
+                component={FluencyTutorMaterials}
+              />
+              <Route
+                path="/tutor/print/materials"
+                component={PrintTutorMaterials}
+              />
+              <Route
+                path="/tutor/meaning/materials"
+                component={MeaningTutorMaterials}
+              />
+              <Route
+                path="/tutor/phoneme/materials"
+                component={PhonemeTutorMaterials}
               />
             </Suspense>
           </ErrorBoundary>

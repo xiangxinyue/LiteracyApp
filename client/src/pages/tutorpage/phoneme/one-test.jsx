@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Container } from "@material-ui/core";
 import PhonemeTable from "../../../components/tutor/phoneme/phonemeanswertable";
 
-class PhonemeTutorAllAssign extends React.Component {
+class PhonemeTutorOneAssign extends React.Component {
   constructor() {
     super();
     this.state = { assignments: null, newScore: 0 };
@@ -47,4 +47,4 @@ class PhonemeTutorAllAssign extends React.Component {
   }
 }
 
-export default PhonemeTutorAllAssign;
+export default PhonemeTutorOneAssign;

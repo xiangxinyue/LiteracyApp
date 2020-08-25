@@ -41,6 +41,11 @@ class MeaningTutorMain extends React.Component {
           <h3>Modify Meaning Database</h3>
           <div className="row">
             <TrainCard
+              title="Modify Learning Materials"
+              page="/tutor/meaning/materials"
+              description="In this part, you can modify learning materials"
+            />
+            <TrainCard
               title="Modify Meaning Question 1 Data"
               page="/tutor/meaning/q1data"
               description="You can modify question 1 data here"

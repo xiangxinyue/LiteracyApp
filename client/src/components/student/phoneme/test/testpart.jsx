@@ -10,6 +10,7 @@ class PhonemeTestPart extends React.Component {
     super();
     this.state = {
       ids: [],
+      rightId: [],
       levels: [],
       words: [],
       phonemes: [],
@@ -18,46 +19,33 @@ class PhonemeTestPart extends React.Component {
       correct: false,
       answer: false,
       input: "",
-      rightWord: [],
-      rightPhoneme: [],
-      wrongWord: [],
-      wrongPhoneme: [],
     };
   }
 
   componentDidMount = async () => {
     const doc = await axios.get("/api/phoneme/phonemes");
-    const data = doc.data;
+    let data = doc.data;
     await this.setState({
-      words: data.words,
-      phonemes: data.phonemes,
-      levels: data.levels,
-      ids: data.ids,
+      words: data.words.slice(0, 10),
+      phonemes: data.phonemes.slice(0, 10),
+      levels: data.levels.slice(0, 10),
+      ids: data.ids.slice(0, 10),
     });
   };
 
   handleFlip = async () => {
     if (this.state.phonemes[this.state.index] === this.state.input) {
-      let newRightPhoneme = this.state.rightPhoneme;
-      let newRightWord = this.state.rightWord;
-      await newRightPhoneme.push(this.state.phonemes[this.state.index]);
-      await newRightWord.push(this.state.words[this.state.index]);
+      const newRightIds = this.state.rightId;
+      newRightIds.push(this.state.ids[this.state.index]);
       this.setState({
         correct: true,
         answer: true,
-        rightPhoneme: newRightPhoneme,
-        rightWord: newRightWord,
+        rightId: newRightIds,
       });
     } else {
-      let newWrongPhoneme = this.state.wrongPhoneme;
-      let newWrongWord = this.state.wrongWord;
-      await newWrongPhoneme.push(this.state.phonemes[this.state.index]);
-      await newWrongWord.push(this.state.words[this.state.index]);
       this.setState({
         correct: false,
         answer: true,
-        wrongPhoneme: newWrongPhoneme,
-        wrongWord: newWrongWord,
       });
     }
     const newAnswers = this.state.answers;
@@ -74,18 +62,8 @@ class PhonemeTestPart extends React.Component {
   };
 
   update = async () => {
-    const { rightWord, words, phonemes, answers, levels, ids } = this.state;
-    let rightId = [];
-    let wrongId = [];
-    await words.forEach((word, index) => {
-      if (this.state.rightWord.indexOf(word) !== -1) {
-        rightId.push(ids[index]);
-      } else {
-        wrongId.push(ids[index]);
-      }
-    });
-
-    const newScore = 20 * (rightWord.length / words.length);
+    const { rightId, words, phonemes, answers, levels } = this.state;
+    const newScore = 20 * (rightId.length / words.length);
     let phonemeAssign = [];
     for (let i = 0; i < words.length; i++) {
       phonemeAssign.push({
@@ -104,8 +82,6 @@ class PhonemeTestPart extends React.Component {
 
   render() {
     const progress = ((this.state.index + 1) / this.state.words.length) * 100;
-    const accuracy =
-      (this.state.rightWord.length / this.state.words.length) * 100;
     return (
       <div>
         {this.state.words.length !== 0 ? (

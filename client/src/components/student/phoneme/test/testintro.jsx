@@ -43,18 +43,18 @@ function getStepContent(step) {
     case 1:
       return (
         <P2>
-          In this exercise,, you will see a made-up word on the screen. You will
-          break down the word into different sounds that it is made of. You will
+          In this exercise, you will see a made-up word on the screen. You will
+          breakdown the word into different sounds that it is made of. You will
           do so by inserting space between different sounds.
         </P2>
       );
     case 2:
       return (
         <P2>
-          For example, there are 3 sounds in the made-up word 'bint'. So, you
-          will write "b i nt" as your response and press 'Enter' After you
-          respond, you will get feedback on whether you answered correctly or
-          not.
+          For example, there are three sounds in the made up word 'bint'. So,
+          you will write "b i nt" as your response and press then 'Enter'. After
+          you respond, you will get feedback on whether you answered correctly
+          or not.
         </P2>
       );
     default:

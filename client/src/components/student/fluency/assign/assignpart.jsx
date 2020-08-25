@@ -15,8 +15,7 @@ class FluencyAssignPart extends Component {
     this.state = {
       speed: [],
       score: 0,
-      currentParaNum: 0,
-      maxNumOfQues: 0,
+      index: 0,
       length: 0,
       currPara: null,
       currParaArray: [],
@@ -34,17 +33,19 @@ class FluencyAssignPart extends Component {
   componentDidMount = async () => {
     const { currentUser } = this.props;
     const doc = await axios.get("/api/fluency/student/assign");
-    const data = doc.data;
+    const { paragraphs, questions, choices, answers } = this.generateAssign(
+      doc.data
+    );
+    const number = 50;
     await this.setState({
-      paragraphs: data.paragraphs,
-      questions: data.questions,
-      choices: data.choices,
-      answers: data.answers,
-      maxNumOfQues: data.paragraphs.length - 1,
+      paragraphs: paragraphs.slice(0, number),
+      questions: questions.slice(0, number),
+      choices: choices.slice(0, number),
+      answers: answers.slice(0, number),
       speed: [currentUser.fluency_curr_score],
     });
     await this.setState({
-      currPara: this.state.paragraphs[this.state.currentParaNum],
+      currPara: this.state.paragraphs[this.state.index],
     });
     const sentenceArray = await this.state.currPara.split("");
     await this.setState({ currParaArray: sentenceArray });
@@ -52,16 +53,26 @@ class FluencyAssignPart extends Component {
     this.startReading();
   };
 
+  generateAssign = (data) => {
+    let { paragraphs, questions, choices, answers } = data;
+    while (paragraphs.length < 50) {
+      paragraphs = paragraphs.concat(paragraphs);
+      questions = questions.concat(questions);
+      choices = choices.concat(choices);
+      answers = answers.concat(answers);
+    }
+    return { paragraphs, questions, choices, answers };
+  };
+
   startReading = async () => {
-    let index = 0;
-    const { speed, length, currentParaNum } = this.state;
-    console.log(speed);
-    let currSpeed = speed[currentParaNum];
+    const { speed, length, index } = this.state;
+    let currSpeed = speed[index];
+    let pointer = 0;
     await setTimeout(() => {
       time = setInterval(async () => {
-        if (index < length) {
-          await $(`.${index}`).css("color", "white"); // "#e9ecef"
-          index += 1;
+        if (pointer < length) {
+          await $(`.${pointer}`).css("color", "white"); // "#e9ecef"
+          pointer += 1;
         } else {
           await this.setState({ readDone: true });
           clearInterval(time);
@@ -71,11 +82,19 @@ class FluencyAssignPart extends Component {
   };
 
   checkAnswer = async (e) => {
-    const { answers, currentParaNum, speed, studentAnswers } = this.state;
+    const {
+      answers,
+      index,
+      speed,
+      studentAnswers,
+      paragraphs,
+      questions,
+      choices,
+    } = this.state;
     const answer = e.target.value;
     const newSpeed = speed;
-    const oldSpeed = newSpeed[currentParaNum];
-    if (answer === answers[currentParaNum]) {
+    const oldSpeed = newSpeed[index];
+    if (answer === answers[index]) {
       const addNewSpeed = Number((oldSpeed * 0.98).toFixed(3));
       newSpeed.push(addNewSpeed);
       this.setState({
@@ -86,7 +105,16 @@ class FluencyAssignPart extends Component {
     } else {
       const addNewSpeed = Number((oldSpeed * 1.08).toFixed(3));
       newSpeed.push(addNewSpeed);
-      this.setState({ answerred: true, speed: newSpeed });
+      paragraphs.push(paragraphs[index]);
+      questions.push(questions[index]);
+      choices.push(choices[index]);
+      this.setState({
+        answerred: true,
+        speed: newSpeed,
+        paragraphs,
+        questions,
+        choices,
+      });
     }
     const newStudentAnsers = studentAnswers;
     newStudentAnsers.push(answer);
@@ -96,10 +124,10 @@ class FluencyAssignPart extends Component {
   };
 
   changeQuestion = async () => {
-    const { currentParaNum, paragraphs } = this.state;
-    await this.setState({ currentParaNum: currentParaNum + 1 });
+    const { index, paragraphs } = this.state;
+    await this.setState({ index: index + 1 });
     await this.setState({
-      currPara: paragraphs[this.state.currentParaNum],
+      currPara: paragraphs[this.state.index],
       readDone: false,
       answerred: false,
     });
@@ -148,8 +176,7 @@ class FluencyAssignPart extends Component {
       readDone,
       score,
       answerred,
-      currentParaNum,
-      maxNumOfQues,
+      index,
       questions,
       choices,
       currParaArray,
@@ -158,7 +185,7 @@ class FluencyAssignPart extends Component {
       <Container>
         {readDone ? (
           answerred ? (
-            currentParaNum < maxNumOfQues ? (
+            index < questions.length - 1 ? (
               <Button
                 variant="contained"
                 color="primary"
@@ -182,31 +209,31 @@ class FluencyAssignPart extends Component {
             )
           ) : (
             <div>
-              <P1>{questions[currentParaNum]}</P1>
+              <P1>{questions[index]}</P1>
               <FormControlLabel
-                value={choices[currentParaNum][0]}
-                label={choices[currentParaNum][0]}
+                value={choices[index][0]}
+                label={choices[index][0]}
                 control={<Radio />}
                 onChange={this.checkAnswer}
               />
               <br />
               <FormControlLabel
-                value={choices[currentParaNum][1]}
-                label={choices[currentParaNum][1]}
+                value={choices[index][1]}
+                label={choices[index][1]}
                 control={<Radio />}
                 onChange={this.checkAnswer}
               />
               <br />
               <FormControlLabel
-                value={choices[currentParaNum][2]}
-                label={choices[currentParaNum][2]}
+                value={choices[index][2]}
+                label={choices[index][2]}
                 control={<Radio />}
                 onChange={this.checkAnswer}
               />
               <br />
               <FormControlLabel
-                value={choices[currentParaNum][3]}
-                label={choices[currentParaNum][3]}
+                value={choices[index][3]}
+                label={choices[index][3]}
                 control={<Radio />}
                 onChange={this.checkAnswer}
               />
@@ -231,6 +258,7 @@ class FluencyAssignPart extends Component {
                     );
                   }
                 })}
+                {index + 1} / {questions.length}
               </div>
             ) : (
               <Process />

@@ -10,7 +10,7 @@ const PrintTestIntro = (props) => {
       <P2>
         Now, you will get to practice your knowledge about letter patterns by
         completing exercises. There are different types of exercises, like fill
-        in the blanks, multiple choice questions. Please read carefully and
+        in the blanks and multiple choice questions. Please read carefully and
         answer as best as you can.
       </P2>
 

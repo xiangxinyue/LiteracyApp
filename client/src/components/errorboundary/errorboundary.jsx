@@ -20,7 +20,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasErrored) {
       // here we can change the still about the error page!
-      return <div>Something is WRONG!</div>;
+      return <div>Loading ...</div>;
     }
     return this.props.children;
   }

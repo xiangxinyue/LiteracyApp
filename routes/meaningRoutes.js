@@ -5,9 +5,18 @@ const MeaningQ3 = mongoose.model("meaning_q3");
 const Student = mongoose.model("students");
 const MeaningTestAssign = mongoose.model("meaning_test_assigns");
 const MeaningAssignAssign = mongoose.model("meaning_assign_assigns");
+const MeaningMaterial = mongoose.model("meaning_materials");
 const requireLogin = require("../middlewares/requireLogin");
 const requireTutor = require("../middlewares/requireTutor");
+const AWS = require("aws-sdk");
+const keys = require("../config/keys");
+const uuid = require("uuid/v1");
 
+const s3 = new AWS.S3({
+  accessKeyId: keys.AWSKeyId,
+  secretAccessKey: keys.AWSSecretKey,
+  region: keys.Region,
+});
 module.exports = (app) => {
   // tutor side
   // get all data
@@ -157,5 +166,34 @@ module.exports = (app) => {
     res.send({
       assignScore: student.meaning_assign_score,
     });
+  });
+
+  // materials
+  app.get("/api/meaning/materials", async (req, res) => {
+    const data = await MeaningMaterial.find();
+    res.send(data[0]);
+  });
+
+  app.put("/api/meaning/materials/:id", async (req, res) => {
+    await MeaningMaterial.findByIdAndUpdate(req.params.id, req.body);
+    res.send({});
+  });
+
+  app.post("/api/meaning/masterials", async (req, res) => {
+    const data = await new MeaningMaterial(req.body).save();
+    res.send(data);
+  });
+
+  app.get("/api/meaning/video", requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.mp4`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: keys.Bucket,
+        ContentType: "video/*",
+        Key: key,
+      },
+      (err, url) => res.send({ err, key, url })
+    );
   });
 };
