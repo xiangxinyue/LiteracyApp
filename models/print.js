@@ -24,6 +24,12 @@ const printQ3Schema = new Schema({
 });
 mongoose.model("print_q3", printQ3Schema);
 
+const printMaterialsSchema = new Schema({
+  paragraphs: [String],
+  videos: [String],
+});
+mongoose.model("print_materials", printMaterialsSchema);
+
 // student assignment
 const printTestAssign = new Schema({
   studentId: String,

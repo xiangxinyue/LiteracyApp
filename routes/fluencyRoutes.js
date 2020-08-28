@@ -5,7 +5,16 @@ const Student = mongoose.model("students");
 const FluencyData = mongoose.model("fluency_datas");
 const FluencyTestAssign = mongoose.model("fluency_test_assigns");
 const FluencyAssignAssign = mongoose.model("fluency_assign_assigns");
+const FluencyMaterial = mongoose.model("fluency_materials");
+const AWS = require("aws-sdk");
+const keys = require("../config/keys");
+const uuid = require("uuid/v1");
 
+const s3 = new AWS.S3({
+  accessKeyId: keys.AWSKeyId,
+  secretAccessKey: keys.AWSSecretKey,
+  region: keys.Region,
+});
 module.exports = (app) => {
   // student
   // testing
@@ -87,6 +96,36 @@ module.exports = (app) => {
       fluency_assign_score: newArray,
     });
     res.send({});
+  });
+
+  // materials
+  app.get("/api/fluency/materials", async (req, res) => {
+    const data = await FluencyMaterial.find();
+    res.send(data[0]);
+  });
+
+  app.put("/api/fluency/materials/:id", async (req, res) => {
+    console.log(req.body);
+    await FluencyMaterial.findByIdAndUpdate(req.params.id, req.body);
+    res.send({});
+  });
+
+  app.post("/api/fluency/masterials", async (req, res) => {
+    const data = await new FluencyMaterial(req.body).save();
+    res.send(data);
+  });
+
+  app.get("/api/fluency/video", requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.mp4`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: keys.Bucket,
+        ContentType: "video/*",
+        Key: key,
+      },
+      (err, url) => res.send({ err, key, url })
+    );
   });
 
   //-------------------------------------------------------------

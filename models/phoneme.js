@@ -8,6 +8,12 @@ const phonemePhonemesSchema = new Schema({
 });
 mongoose.model("phoneme_phonemes", phonemePhonemesSchema);
 
+const phonemeMaterialsSchema = new Schema({
+  paragraphs: [String],
+  videos: [String],
+});
+mongoose.model("phoneme_materials", phonemeMaterialsSchema);
+
 const phonemeAudiosSchema = new Schema({
   question: String,
   audios: [String],

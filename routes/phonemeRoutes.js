@@ -5,6 +5,7 @@ const PhonemePhoneme = mongoose.model("phoneme_phonemes");
 const PhonemeAudio = mongoose.model("phoneme_audios");
 const PhonemeTestAssign = mongoose.model("phoneme_test_assigns");
 const PhonemeAssignAssign = mongoose.model("phoneme_assign_assigns");
+const PhonemeMaterial = mongoose.model("phoneme_materials");
 const Student = mongoose.model("students");
 const AWS = require("aws-sdk");
 const keys = require("../config/keys");
@@ -97,6 +98,34 @@ module.exports = (app) => {
       status: "pending",
     }).save();
     res.send({});
+  });
+
+  // materials
+  app.get("/api/phoneme/materials", async (req, res) => {
+    const data = await PhonemeMaterial.find();
+    res.send(data[0]);
+  });
+
+  app.put("/api/phoneme/materials/:id", async (req, res) => {
+    await PhonemeMaterial.findByIdAndUpdate(req.params.id, req.body);
+    res.send({});
+  });
+  app.post("/api/phoneme/masterials", async (req, res) => {
+    const data = await new PhonemeMaterial(req.body).save();
+    res.send(data);
+  });
+
+  app.get("/api/phoneme/video", requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.mp4`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: keys.Bucket,
+        ContentType: "video/*",
+        Key: key,
+      },
+      (err, url) => res.send({ err, key, url })
+    );
   });
 
   // ---------------------------------------------------------------------------

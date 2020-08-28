@@ -4,38 +4,53 @@ import { Button, Container } from "@material-ui/core";
 import P1 from "../../../assets/fonts/p1";
 import P2 from "../../../assets/fonts/p2";
 import P3 from "../../../assets/fonts/p3";
+import axios from "axios";
+import keys from "../../../assets/keys";
 
-const MeaningMaterials = () => {
-  return (
-    <div>
-      <PhonemeHeader part="Training Materials" />
+class MeaningMaterials extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      paragraphs: [],
+      videos: [],
+    };
+  }
 
-      <Container>
-        <P1 className="text-primary">
-          Please watch the introduction video before your training.
-        </P1>
-        <iframe
-          width="740"
-          height="430"
-          src="https://www.youtube.com/embed/rDg4S6jxLJI"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style={{ marginTop: 20 }}
-        ></iframe>
-        <hr />
+  componentDidMount = async () => {
+    const doc = await axios.get("/api/meaning/materials");
+    if (doc.data) {
+      this.setState({
+        paragraphs: doc.data.paragraphs,
+        videos: doc.data.videos,
+      });
+    }
+  };
 
-        <Button
-          variant="contained"
-          color="inherit"
-          size="large"
-          onClick={() => (window.location = "/student/meaning")}
-        >
-          Go Back
-        </Button>
-      </Container>
-    </div>
-  );
-};
+  render() {
+    const { paragraphs, videos } = this.state;
+    return (
+      <div>
+        <PhonemeHeader part="Learning Materials" />
+        <Container>
+          {paragraphs.map((paragraph) => {
+            return (
+              <div>
+                <P2>{paragraph}</P2>
+              </div>
+            );
+          })}
+          <hr />
+          {videos.map((video) => {
+            return (
+              <div>
+                <iframe width="40%" src={keys.AWS + video}></iframe>
+              </div>
+            );
+          })}
+        </Container>
+      </div>
+    );
+  }
+}
 
 export default MeaningMaterials;

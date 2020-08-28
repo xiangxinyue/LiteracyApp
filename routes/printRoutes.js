@@ -5,9 +5,18 @@ const PrintQ3 = mongoose.model("print_q3");
 const Student = mongoose.model("students");
 const PrintTestAssign = mongoose.model("print_test_assigns");
 const PrintAssignAssign = mongoose.model("print_assign_assigns");
+const PrintMaterial = mongoose.model("print_materials");
 const requireLogin = require("../middlewares/requireLogin");
 const requireTutor = require("../middlewares/requireTutor");
+const AWS = require("aws-sdk");
+const keys = require("../config/keys");
+const uuid = require("uuid/v1");
 
+const s3 = new AWS.S3({
+  accessKeyId: keys.AWSKeyId,
+  secretAccessKey: keys.AWSSecretKey,
+  region: keys.Region,
+});
 module.exports = (app) => {
   // tutor side
   // get all data
@@ -157,5 +166,34 @@ module.exports = (app) => {
     res.send({
       assignScore: student.print_assign_score,
     });
+  });
+
+  // materials
+  app.get("/api/print/materials", requireLogin, async (req, res) => {
+    const data = await PrintMaterial.find();
+    res.send(data[0]);
+  });
+
+  app.put("/api/print/materials/:id", requireLogin, async (req, res) => {
+    await PrintMaterial.findByIdAndUpdate(req.params.id, req.body);
+    res.send({});
+  });
+
+  app.post("/api/print/masterials", async (req, res) => {
+    const data = await new PrintMaterial(req.body).save();
+    res.send(data);
+  });
+
+  app.get("/api/print/video", requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.mp4`;
+    s3.getSignedUrl(
+      "putObject",
+      {
+        Bucket: keys.Bucket,
+        ContentType: "video/*",
+        Key: key,
+      },
+      (err, url) => res.send({ err, key, url })
+    );
   });
 };

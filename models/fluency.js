@@ -7,8 +7,13 @@ const fluencyDataSchema = new Schema({
   choices: Array,
   answer: String,
 });
-
 mongoose.model("fluency_datas", fluencyDataSchema);
+
+const fluencyMaterialsSchema = new Schema({
+  paragraphs: [String],
+  videos: [String],
+});
+mongoose.model("fluency_materials", fluencyMaterialsSchema);
 
 const fluencyTestAssignSchema = new Schema({
   studentId: String,

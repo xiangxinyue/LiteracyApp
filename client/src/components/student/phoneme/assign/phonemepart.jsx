@@ -13,6 +13,7 @@ class PhonemeTrainPart extends React.Component {
     super();
     this.state = {
       ids: [],
+      wrongIds: [],
       words: [],
       levels: [],
       phonemes: [],
@@ -21,56 +22,65 @@ class PhonemeTrainPart extends React.Component {
       correct: false,
       answer: false,
       input: "",
-      rightWord: [],
-      rightPhoneme: [],
-      wrongWord: [],
-      wrongPhoneme: [],
       phonemeAssign: [],
     };
   }
 
   componentDidMount = async () => {
     const doc = await axios("/api/phoneme/phonemes");
-    const { words, phonemes, levels, ids } = doc.data;
-    await this.setState({ words, phonemes, levels, ids });
+    const { words, phonemes, levels, ids } = this.generateAssign(doc.data);
+    const number = 50;
+    await this.setState({
+      words: words.slice(0, number),
+      phonemes: phonemes.slice(0, number),
+      levels: levels.slice(0, number),
+      ids: ids.slice(0, number),
+    });
+  };
+
+  generateAssign = (data) => {
+    let { words, phonemes, levels, ids } = data;
+    while (words.length < 50) {
+      words = words.concat(words);
+      phonemes = phonemes.concat(phonemes);
+      levels = levels.concat(levels);
+      ids = ids.concat(ids);
+    }
+    return { words, phonemes, levels, ids };
   };
 
   handleFlip = async () => {
     const {
       phonemes,
+      words,
+      levels,
       index,
       input,
-      rightPhoneme,
-      rightWord,
-      words,
       answers,
+      ids,
+      wrongIds,
     } = this.state;
     let newAnswers = answers;
     newAnswers.push(input);
     if (phonemes[index] === input) {
-      let newRightPhoneme = rightPhoneme;
-      let newRightWord = rightWord;
-
-      await newRightPhoneme.push(phonemes[index]);
-      await newRightWord.push(words[index]);
       this.setState({
         correct: true,
         answer: true,
-        rightPhoneme: newRightPhoneme,
-        rightWord: newRightWord,
         answers: newAnswers,
       });
     } else {
-      let newWrongPhoneme = this.state.wrongPhoneme;
-      let newWrongWord = this.state.wrongWord;
-      await newWrongPhoneme.push(this.state.phonemes[this.state.index]);
-      await newWrongWord.push(this.state.words[this.state.index]);
+      wrongIds.push(ids[index]);
+      phonemes.push(phonemes[index]);
+      words.push(words[index]);
+      levels.push(levels[index]);
       this.setState({
         correct: false,
         answer: true,
-        wrongPhoneme: newWrongPhoneme,
-        wrongWord: newWrongWord,
         answers: newAnswers,
+        wrongIds,
+        phonemes,
+        words,
+        levels,
       });
     }
   };
@@ -84,17 +94,7 @@ class PhonemeTrainPart extends React.Component {
   };
 
   update = async () => {
-    const { words, phonemes, ids, answers, levels, rightWord } = this.state;
-    let rightId = [];
-    let wrongId = [];
-    await words.forEach((word, index) => {
-      if (rightWord.indexOf(word) !== -1) {
-        rightId.push(ids[index]);
-      } else {
-        wrongId.push(ids[index]);
-      }
-    });
-
+    const { words, phonemes, answers, levels } = this.state;
     let phonemeAssign = [];
     for (let i = 0; i < words.length; i++) {
       phonemeAssign.push({
@@ -109,7 +109,6 @@ class PhonemeTrainPart extends React.Component {
 
   render() {
     const {
-      rightWord,
       index,
       words,
       correct,
@@ -119,7 +118,6 @@ class PhonemeTrainPart extends React.Component {
       phonemeAssign,
     } = this.state;
     const progress = ((index + 1) / words.length) * 100;
-    const accuracy = (rightWord.length / words.length) * 100;
     return (
       <div>
         {words.length !== 0 ? (
@@ -134,11 +132,12 @@ class PhonemeTrainPart extends React.Component {
                   correct={correct}
                   handleClick={() => this.handleFlip(index)}
                   handleInput={(input) => this.setState({ input })}
-                  next={() => this.changeQuestion()}
+                  next={this.changeQuestion}
                   last={index + 1 === words.length}
-                  update={() => this.update()}
+                  update={this.update}
                 />
                 <LinearProgress variant="determinate" value={progress} />
+                {/* {index + 1} / {words.length} */}
               </div>
             ) : (
               <div>

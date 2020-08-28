@@ -24,6 +24,12 @@ const meaningQ3Schema = new Schema({
 });
 mongoose.model("meaning_q3", meaningQ3Schema);
 
+const meaningMaterialsSchema = new Schema({
+  paragraphs: [String],
+  videos: [String],
+});
+mongoose.model("meaning_materials", meaningMaterialsSchema);
+
 // student assignment
 const meaningTestAssign = new Schema({
   studentId: String,
