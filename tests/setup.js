@@ -8,3 +8,5 @@ mongoose.connect(keys.mongoURI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
+
+console.log("=-=-=-=", process.env.NODE_ENV);
