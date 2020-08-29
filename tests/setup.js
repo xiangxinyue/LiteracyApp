@@ -4,7 +4,7 @@ const keys = require("../config/keys");
 const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, {
+mongoose.connect("mongodb://localhost:27017/literacy", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
