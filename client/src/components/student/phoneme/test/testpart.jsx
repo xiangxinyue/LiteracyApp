@@ -76,7 +76,7 @@ class PhonemeTestPart extends React.Component {
     // create practice student-side assignment
     await axios.post("/api/phoneme/test", { newScore, phonemeAssign });
     // update the first score
-    await axios.put("/api/phoneme/currscore", { newScore });
+    await axios.post("/api/phoneme/score", { newScore });
     window.location = "/student/phoneme";
   };
 

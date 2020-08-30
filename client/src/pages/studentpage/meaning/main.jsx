@@ -25,7 +25,7 @@ class MeaningTrain extends Component {
         <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>
-              {currentUser.meaning_curr_score == -1 ? (
+              {currentUser.meaning_score.length === 0 ? (
                 !understand ? (
                   <MeaningTestIntro
                     handleClick={() =>

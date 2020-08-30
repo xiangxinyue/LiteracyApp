@@ -18,10 +18,15 @@ const PhonemeHeader = (props) => {
           <p>
             <P1>Welcome to Sound {props.part}</P1>
             <hr />
-            {currentUser.phoneme_curr_score == -1 ? null : (
+            {currentUser.phoneme_score.length === 0 ? null : (
               <P3 className="text-success">
                 Your current Sound Training Score is{" "}
-                {currentUser.phoneme_curr_score} / 20
+                {
+                  currentUser.phoneme_score[
+                    currentUser.phoneme_score.length - 1
+                  ]["value"]
+                }
+                / 20
               </P3>
             )}
           </p>

@@ -10,6 +10,8 @@ class FluencyAssignIntro extends React.Component {
     };
   }
 
+  componentDidMount = async () => {};
+
   render() {
     return (
       <Container>

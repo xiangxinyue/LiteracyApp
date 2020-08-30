@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Container, Paper } from "@material-ui/core";
+import { Button, Container, Paper, LinearProgress } from "@material-ui/core";
 import AudioRecord from "./audiorecord";
 import keys from "../../../../assets/keys";
 import P1 from "../../../../assets/fonts/p1";
@@ -22,9 +22,10 @@ class PhonemeAudioAssign extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/api/phoneme/audios");
     const { questions, audios } = this.generateAssign(doc.data);
+    const number = 20;
     this.setState({
-      originalAudios: audios,
-      questions: questions,
+      originalAudios: audios.slice(0, number),
+      questions: questions.slice(0, number),
     });
   };
 
@@ -78,6 +79,7 @@ class PhonemeAudioAssign extends React.Component {
   // handleAudioAssign
   render() {
     const { audioDone, originalAudios, index, questions } = this.state;
+    const progress = Math.floor(((index + 1) / questions.length) * 100);
     return (
       <div>
         <Container>
@@ -107,6 +109,7 @@ class PhonemeAudioAssign extends React.Component {
                     handleUpload={(file) => this.handleUpload(file)}
                   />
                   <br />
+                  <LinearProgress variant="determinate" value={progress} />
                 </Container>
               )
             ) : (

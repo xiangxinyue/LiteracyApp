@@ -23,27 +23,27 @@ export default function SimpleTable(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Paragraph</TableCell>
-            <TableCell align="right">Question</TableCell>
-            <TableCell align="right">Choice1</TableCell>
-            <TableCell align="right">Choice2</TableCell>
-            <TableCell align="right">Choice3</TableCell>
-            <TableCell align="right">Choice4</TableCell>
-            <TableCell align="right">Answer</TableCell>
-            <TableCell align="right">Operation</TableCell>
+            <TableCell align="left">Paragraph</TableCell>
+            <TableCell align="left">Question</TableCell>
+            <TableCell align="left">Choice1</TableCell>
+            <TableCell align="left">Choice2</TableCell>
+            <TableCell align="left">Choice3</TableCell>
+            <TableCell align="left">Choice4</TableCell>
+            <TableCell align="left">Answer</TableCell>
+            <TableCell align="left">Operation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.rows.map((row, index) => (
             <TableRow key={index}>
-              <TableCell align="right">{row.paragraph}</TableCell>
-              <TableCell align="right">{row.question}</TableCell>
-              <TableCell align="right">{row.choices[0]}</TableCell>
-              <TableCell align="right">{row.choices[1]}</TableCell>
-              <TableCell align="right">{row.choices[2]}</TableCell>
-              <TableCell align="right">{row.choices[3]}</TableCell>
-              <TableCell align="right">{row.answer}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left">{row.paragraph}</TableCell>
+              <TableCell align="left">{row.question}</TableCell>
+              <TableCell align="left">{row.choices[0]}</TableCell>
+              <TableCell align="left">{row.choices[1]}</TableCell>
+              <TableCell align="left">{row.choices[2]}</TableCell>
+              <TableCell align="left">{row.choices[3]}</TableCell>
+              <TableCell align="left">{row.answer}</TableCell>
+              <TableCell align="left">
                 <Button
                   color="secondary"
                   key={row.id}

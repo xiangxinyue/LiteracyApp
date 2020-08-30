@@ -30,10 +30,6 @@ export default class Table extends React.Component {
     const { curr_answer, index, questions, assign, score } = this.state;
     let addScore = 0;
     if (questions[index].answer === curr_answer) addScore += 1;
-    if (addScore === 0) {
-      questions.push(questions[index]);
-      this.setState({ questions });
-    }
     assign.push({
       level: questions[index].level,
       question: questions[index].question,

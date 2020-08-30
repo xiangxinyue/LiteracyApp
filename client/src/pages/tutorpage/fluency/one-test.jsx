@@ -18,12 +18,6 @@ class FluencyTutorOneTest extends React.Component {
     console.log(doc.data);
   };
 
-  handleSubmit = async () => {
-    const { finalSpeed, assignment } = this.state;
-    await axios.post("/api/fluency/score", { finalSpeed, assignment });
-    window.location = "/tutor/fluency/test";
-  };
-
   renderChart = () => {
     const { assignment } = this.state;
     let data = [];

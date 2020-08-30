@@ -19,7 +19,7 @@ const fluencyTestAssignSchema = new Schema({
   studentId: String,
   studentName: String,
   studentEmail: String,
-  createAt: Date,
+  createAt: String,
   averageSpeed: Number,
   assignment: Array,
 });
@@ -30,7 +30,7 @@ const fluencyAssignAssignsSchema = new Schema({
   studentId: String,
   studentName: String,
   studentEmail: String,
-  createAt: Date,
+  createAt: String,
   assignment: Array,
   oldSpeed: Number,
   newSpeed: Number,

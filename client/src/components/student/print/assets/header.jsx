@@ -18,9 +18,14 @@ const PrintHeader = (props) => {
           <div>
             <P1>Welcome to Print {props.part}</P1>
             <hr />
-            {currentUser.print_curr_score == -1 ? null : (
+            {currentUser.print_score.length === 0 ? null : (
               <P3 className="text-success">
-                Your current print score is {currentUser.print_curr_score}
+                Your current print score is{" "}
+                {
+                  currentUser.print_score[currentUser.print_score.length - 1][
+                    "value"
+                  ]
+                }
               </P3>
             )}
           </div>

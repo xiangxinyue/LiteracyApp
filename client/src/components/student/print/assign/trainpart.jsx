@@ -6,6 +6,7 @@ import Q3Table from "../assets/q3-table";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
+import { LinearProgress } from "@material-ui/core";
 
 class PrintTrainPart extends React.Component {
   constructor() {
@@ -26,9 +27,9 @@ class PrintTrainPart extends React.Component {
     const doc = await axios.get("/api/print/student/assign");
     const { q1, q2, q3 } = this.generateAssign(doc.data);
     await this.setState({
-      q1: q1.slice(0, 50),
-      q2: q2.slice(0, 50),
-      q3: q3.slice(0, 50),
+      q1: q1.slice(0, 5),
+      q2: q2.slice(0, 5),
+      q3: q3.slice(0, 5),
     });
     console.log(this.state);
   };
@@ -38,13 +39,13 @@ class PrintTrainPart extends React.Component {
     let q2 = data.q2;
     let q3 = data.q3;
     console.log(q1, q2, q3);
-    while (q1.length < 50) {
+    while (q1.length < 20) {
       q1 = q1.concat(q1);
     }
-    while (q2.length < 50) {
+    while (q2.length < 20) {
       q2 = q2.concat(q2);
     }
-    while (q3.length < 50) {
+    while (q3.length < 20) {
       q3 = q3.concat(q3);
     }
     return { q1, q2, q3 };
@@ -61,7 +62,6 @@ class PrintTrainPart extends React.Component {
       q3Assign,
     });
     await axios.put("/api/print/score", { newScore });
-    await axios.put("/api/print/historyscore", { newScore });
     window.location = "/student/print";
   };
 
@@ -102,7 +102,7 @@ class PrintTrainPart extends React.Component {
 
   render() {
     const { q1 } = this.state;
-    return q1.length !== 0 ? this.renderQuestion() : null;
+    return q1.length !== 0 ? <div>{this.renderQuestion()}</div> : null;
   }
 }
 

@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
-import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  FormControlLabel,
+  Radio,
+  LinearProgress,
+} from "@material-ui/core";
 let timer;
 let newTime = 0;
 
@@ -144,10 +150,7 @@ class FluencyTestPart extends Component {
       }
     }
     const newSpeed = Number((speedSum / num).toFixed(3));
-    if (newSpeed !== 0) {
-      console.log(newSpeed);
-      await axios.put("/api/fluency/score", { newSpeed });
-    }
+    await axios.put("/api/fluency/score", { newSpeed });
     // update the assignment
     await axios.post("/api/fluency/student/test", {
       assignment,
@@ -166,19 +169,23 @@ class FluencyTestPart extends Component {
       choices,
       currPara,
     } = this.state;
+    const progress = Math.floor((currentParaNum / maxNumOfQues) * 100);
     return (
       <Container>
         {readDone ? (
           answerred ? (
             currentParaNum < maxNumOfQues ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.changeQuestion}
-                size="large"
-              >
-                Next Question
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.changeQuestion}
+                  size="large"
+                >
+                  Next Question
+                </Button>
+                <br />
+              </div>
             ) : (
               <div>
                 <P1>You have finish all the testing questions!</P1>
@@ -237,6 +244,8 @@ class FluencyTestPart extends Component {
             </Button>
           </div>
         )}
+        <br />
+        <LinearProgress variant="determinate" value={progress} />
       </Container>
     );
   }

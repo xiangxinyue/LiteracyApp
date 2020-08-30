@@ -18,9 +18,14 @@ const MeaningHeader = (props) => {
           <div>
             <P1>Welcome to Meaning {props.part}</P1>
             <hr />
-            {currentUser.meaning_curr_score == -1 ? null : (
+            {currentUser.meaning_score.length === 0 ? null : (
               <P3 className="text-success">
-                Your current meaning score is {currentUser.meaning_curr_score}
+                Your current meaning score is{" "}
+                {
+                  currentUser.meaning_score[
+                    currentUser.meaning_score.length - 1
+                  ]["value"]
+                }
               </P3>
             )}
           </div>

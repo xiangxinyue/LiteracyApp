@@ -18,9 +18,14 @@ const FluencyHeader = (props) => {
           <p>
             <P1>Welcome to Speed {props.part}</P1>
             <hr />
-            {currentUser.fluency_curr_score == -1 ? null : (
+            {currentUser.fluency_score.length === 0 ? null : (
               <P3 className="text-success">
-                Your current reading speed is {currentUser.fluency_curr_score}{" "}
+                Your current reading speed is{" "}
+                {
+                  currentUser.fluency_score[
+                    currentUser.fluency_score.length - 1
+                  ]["value"]
+                }
                 (ms / letter)
               </P3>
             )}

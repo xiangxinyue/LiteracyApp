@@ -27,7 +27,7 @@ const phonemeTestAssignsSchema = new Schema({
   studentEmail: String,
   phonemeAssign: Array,
   newScore: Number,
-  createAt: Date,
+  createAt: String,
   status: String,
 });
 mongoose.model("phoneme_test_assigns", phonemeTestAssignsSchema);
@@ -38,7 +38,7 @@ const phonemeAssignAssignsSchema = new Schema({
   studentEmail: String,
   phonemeAssign: Array,
   audioAssign: Array,
-  createAt: Date,
+  createAt: String,
   oldScore: Number,
   status: String,
 });

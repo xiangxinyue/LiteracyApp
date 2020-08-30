@@ -29,7 +29,7 @@ class PhonemeTrainPart extends React.Component {
   componentDidMount = async () => {
     const doc = await axios("/api/phoneme/phonemes");
     const { words, phonemes, levels, ids } = this.generateAssign(doc.data);
-    const number = 50;
+    const number = 30;
     await this.setState({
       words: words.slice(0, number),
       phonemes: phonemes.slice(0, number),
@@ -117,7 +117,7 @@ class PhonemeTrainPart extends React.Component {
       phonemes,
       phonemeAssign,
     } = this.state;
-    const progress = ((index + 1) / words.length) * 100;
+    const progress = Math.floor(((index + 1) / words.length) * 100);
     return (
       <div>
         {words.length !== 0 ? (
@@ -137,7 +137,6 @@ class PhonemeTrainPart extends React.Component {
                   update={this.update}
                 />
                 <LinearProgress variant="determinate" value={progress} />
-                {/* {index + 1} / {words.length} */}
               </div>
             ) : (
               <div>

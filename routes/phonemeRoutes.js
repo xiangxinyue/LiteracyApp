@@ -49,13 +49,6 @@ module.exports = (app) => {
     res.send({ questions, audios, levels, ids });
   });
 
-  app.put("/api/phoneme/currscore", requireLogin, async (req, res) => {
-    await Student.findByIdAndUpdate(req.user.id, {
-      phoneme_curr_score: req.body.newScore,
-    });
-    res.send({});
-  });
-
   app.post("/api/phoneme/test", async (req, res) => {
     await new PhonemeTestAssign({
       createAt: new Date().toLocaleString("en-US", {
@@ -85,6 +78,7 @@ module.exports = (app) => {
   });
 
   app.post("/api/phoneme/student/assign", requireLogin, async (req, res) => {
+    const { phoneme_score } = req.user;
     await new PhonemeAssignAssign({
       createAt: new Date().toLocaleString("en-US", {
         timeZone: "America/Denver",
@@ -94,7 +88,7 @@ module.exports = (app) => {
       studentId: req.user.id,
       studentEmail: req.user.email,
       studentName: req.user.displayName,
-      oldScore: req.user.phoneme_curr_score,
+      oldScore: phoneme_score[phoneme_score.length - 1]["value"],
       status: "pending",
     }).save();
     res.send({});
@@ -183,17 +177,30 @@ module.exports = (app) => {
     res.send(assignment);
   });
 
-  app.put("/api/phoneme/score", requireLogin, async (req, res) => {
+  app.post("/api/phoneme/score", requireLogin, async (req, res) => {
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_score: [
+        {
+          label: new Date().toLocaleString("en-US", {
+            timeZone: "America/Denver",
+          }),
+          value: req.body.newScore,
+        },
+      ],
+    });
+    res.send({});
+  });
+
+  app.put("/api/phoneme/score", requireTutor, async (req, res) => {
     const student = await Student.findById(req.body.studentId);
-    const newArray = student.phoneme_assign_score;
+    const newArray = student.phoneme_score;
     const assignDate = req.body.assignDate;
     newArray.push({
       label: assignDate,
       value: req.body.newScore,
     });
     const infor = await Student.findByIdAndUpdate(req.body.studentId, {
-      phoneme_curr_score: req.body.newScore,
-      phoneme_assign_score: newArray,
+      phoneme_score: newArray,
     }).catch((err) => console.log(err));
 
     await PhonemeAssignAssign.findByIdAndUpdate(req.body.assignId, {
@@ -205,7 +212,7 @@ module.exports = (app) => {
   app.get("/api/phoneme/historyscore/:id", async (req, res) => {
     const student = await Student.findById(req.params.id);
     res.send({
-      assignScore: student.phoneme_assign_score,
+      assignScore: student.phoneme_score,
     });
   });
 };

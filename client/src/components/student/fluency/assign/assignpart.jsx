@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { Button, Container, FormControlLabel, Radio } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  FormControlLabel,
+  Radio,
+  LinearProgress,
+} from "@material-ui/core";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
@@ -31,7 +37,7 @@ class FluencyAssignPart extends Component {
   }
 
   componentDidMount = async () => {
-    const { currentUser } = this.props;
+    const { fluency_score } = this.props.currentUser;
     const doc = await axios.get("/api/fluency/student/assign");
     const { paragraphs, questions, choices, answers } = this.generateAssign(
       doc.data
@@ -42,7 +48,7 @@ class FluencyAssignPart extends Component {
       questions: questions.slice(0, number),
       choices: choices.slice(0, number),
       answers: answers.slice(0, number),
-      speed: [currentUser.fluency_curr_score],
+      speed: [fluency_score[fluency_score.length - 1]["value"]],
     });
     await this.setState({
       currPara: this.state.paragraphs[this.state.index],
@@ -108,12 +114,14 @@ class FluencyAssignPart extends Component {
       paragraphs.push(paragraphs[index]);
       questions.push(questions[index]);
       choices.push(choices[index]);
+      answers.push(answers[index]);
       this.setState({
         answerred: true,
         speed: newSpeed,
         paragraphs,
         questions,
         choices,
+        answers,
       });
     }
     const newStudentAnsers = studentAnswers;
@@ -164,10 +172,8 @@ class FluencyAssignPart extends Component {
       assignment,
       newSpeed,
     });
-    // update fluency current score
-    await axios.put("/api/fluency/score", { newSpeed });
     // update fluency practice history score
-    await axios.post("/api/fluency/assign/historyscore", { newSpeed });
+    await axios.put("/api/fluency/score", { newSpeed });
     window.location = "/student/fluency";
   };
 
@@ -181,19 +187,24 @@ class FluencyAssignPart extends Component {
       choices,
       currParaArray,
     } = this.state;
+    const progress = ((index + 1) / questions.length) * 100;
+    console.log(this.state);
     return (
       <Container>
         {readDone ? (
           answerred ? (
             index < questions.length - 1 ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.changeQuestion}
-                size="large"
-              >
-                Next Question
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.changeQuestion}
+                  size="large"
+                >
+                  Next Question
+                </Button>
+                <br />
+              </div>
             ) : (
               <div>
                 <P1>You have finish all the training questions!</P1>
@@ -258,13 +269,14 @@ class FluencyAssignPart extends Component {
                     );
                   }
                 })}
-                {index + 1} / {questions.length}
               </div>
             ) : (
               <Process />
             )}
           </div>
         )}
+        <br />
+        <LinearProgress variant="determinate" value={progress} />
       </Container>
     );
   }
