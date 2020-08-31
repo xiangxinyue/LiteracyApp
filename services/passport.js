@@ -48,6 +48,10 @@ passport.use(
           phoneme_score: [],
           print_score: [],
           meaning_score: [],
+          fluency_progress: "",
+          phoneme_progress: "",
+          print_progress: "",
+          meaning_progress: "",
         }).save();
         return callback(null, student);
       }

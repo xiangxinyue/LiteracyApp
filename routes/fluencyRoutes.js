@@ -5,6 +5,7 @@ const Student = mongoose.model("students");
 const FluencyData = mongoose.model("fluency_datas");
 const FluencyTestAssign = mongoose.model("fluency_test_assigns");
 const FluencyAssignAssign = mongoose.model("fluency_assign_assigns");
+const FluencyProgressAssign = mongoose.model("fluency_progress_assigns");
 const FluencyMaterial = mongoose.model("fluency_materials");
 const AWS = require("aws-sdk");
 const keys = require("../config/keys");
@@ -78,6 +79,32 @@ module.exports = (app) => {
       assignment: req.body.assignment,
     }).save();
     res.send(assign);
+  });
+
+  app.put("/api/fluency/student/progress", async (req, res) => {
+    const data = await Student.findById(req.user.id);
+    await Student.findByIdAndUpdate(req.user.id, {
+      fluency_progress: req.body.newProgress,
+    });
+    res.send(data.fluency_progress);
+  });
+
+  app.get("/api/fluency/student/progress/:id", async (req, res) => {
+    const assign = await FluencyProgressAssign.findById(req.params.id);
+    res.send(assign);
+  });
+
+  app.delete("/api/fluency/student/progress/:id", async (req, res) => {
+    await FluencyProgressAssign.findByIdAndDelete(req.params.id);
+    res.send({});
+  });
+
+  app.post("/api/fluency/student/progress", async (req, res) => {
+    const progress = await new FluencyProgressAssign({
+      studentId: req.user.id,
+      ...req.body,
+    }).save();
+    res.send(progress);
   });
 
   app.put("/api/fluency/score", async (req, res) => {
