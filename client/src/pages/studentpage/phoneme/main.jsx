@@ -25,7 +25,7 @@ class PhonemeTrain extends Component {
         <PhonemeHeader part="Training Main Page" />
         <Container>
           {currentUser ? (
-            currentUser.phoneme_curr_score === -1 ? (
+            currentUser.phoneme_score.length === 0 ? (
               !understand ? (
                 <Phonemetestintro
                   handleClick={() => this.setState({ understand: true })}

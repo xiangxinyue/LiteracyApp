@@ -85,15 +85,8 @@ module.exports = (app) => {
 
   // update score
   app.put("/api/meaning/score", async (req, res) => {
-    await Student.findByIdAndUpdate(req.user.id, {
-      meaning_curr_score: req.body.newScore,
-    });
-    res.send({});
-  });
-
-  app.put("/api/meaning/historyscore", async (req, res) => {
     const user = await Student.findById(req.user.id);
-    const newArray = user.meaning_assign_score;
+    const newArray = user.meaning_score;
     newArray.push({
       label: new Date().toLocaleString("en-US", {
         timeZone: "America/Denver",
@@ -101,7 +94,7 @@ module.exports = (app) => {
       value: req.body.newScore,
     });
     await Student.findByIdAndUpdate(req.user.id, {
-      meaning_assign_score: newArray,
+      meaning_score: newArray,
     });
     res.send({});
   });
@@ -134,6 +127,7 @@ module.exports = (app) => {
   });
 
   app.post("/api/meaning/assign", requireLogin, async (req, res) => {
+    const { meaning_score } = req.user;
     await new MeaningAssignAssign({
       studentId: req.user.id,
       studentName: req.user.displayName,
@@ -144,7 +138,7 @@ module.exports = (app) => {
       q1Assign: req.body.q1Assign,
       q2Assign: req.body.q2Assign,
       q3Assign: req.body.q3Assign,
-      oldScore: req.user.meaning_curr_score,
+      oldScore: meaning_score[meaning_score.length - 1]["value"],
       newScore: req.body.newScore,
     }).save();
     res.send({});
@@ -164,7 +158,7 @@ module.exports = (app) => {
   app.get("/api/meaning/historyscore/:id", async (req, res) => {
     const student = await Student.findById(req.params.id);
     res.send({
-      assignScore: student.meaning_assign_score,
+      assignScore: student.meaning_score,
     });
   });
 

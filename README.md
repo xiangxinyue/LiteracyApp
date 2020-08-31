@@ -82,3 +82,12 @@ at the tutor-side, tutors just need to check and review students' assignments an
 
 1. Combined practise and weekly assignment into one part.
 2. Finished Meaning part.
+
+## 2020.08.24 updates /\_V 3.1
+
+1. Automatically generate 30-min assignment
+
+## 2020.08.28 updates \_V 3.2
+
+1. Add Jest testing files
+2. Add Travis CI yaml file and config CI

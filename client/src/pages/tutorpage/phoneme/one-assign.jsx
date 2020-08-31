@@ -51,23 +51,28 @@ class PhonemeTutorAllAssign extends React.Component {
               <hr />
               <AudioTable rows={assignment.audioAssign} />
               <hr />
-              <h3>Old score: {assignment.oldScore}</h3>
-              <div className="row">
-                <h3 style={{ marginLeft: 10 }}>Mark new score: </h3>
-                <TextField
-                  autoComplete="off"
-                  onChange={(e) =>
-                    this.setState({ newScore: parseInt(e.target.value) })
-                  }
-                />
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
-              </div>
+
+              {assignment.status === "pending" ? (
+                <div>
+                  <h3>Old score: {assignment.oldScore}</h3>
+                  <div className="row">
+                    <h3 style={{ marginLeft: 10 }}>Mark new score: </h3>
+                    <TextField
+                      autoComplete="off"
+                      onChange={(e) =>
+                        this.setState({ newScore: parseInt(e.target.value) })
+                      }
+                    />
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={this.handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           ) : null}
         </Container>

@@ -1,5 +1,11 @@
 import React from "react";
-import { Button, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import {
+  Button,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  LinearProgress,
+} from "@material-ui/core";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
@@ -30,6 +36,10 @@ export default class Table extends React.Component {
     questions[index].choices.map((choice, i) => {
       if (choice.answer === curr_answer[i]) addScore += 1;
     });
+    if (addScore === 0) {
+      questions.push(questions[index]);
+      this.setState({ questions });
+    }
     assign.push({
       level: questions[index].level,
       question: questions[index].question,
@@ -46,6 +56,7 @@ export default class Table extends React.Component {
 
   render() {
     const { questions, index, assign, score } = this.state;
+    const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
         {index !== questions.length ? (
@@ -80,14 +91,19 @@ export default class Table extends React.Component {
             </Button>
           </div>
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => this.props.handleNext(score, assign)}
-          >
-            Finish
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.handleNext(score, assign)}
+            >
+              Finish
+            </Button>
+            <br />
+          </div>
         )}
+        <br />
+        <LinearProgress variant="determinate" value={progress} />
       </div>
     );
   }

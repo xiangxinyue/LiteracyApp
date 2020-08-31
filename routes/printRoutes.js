@@ -84,16 +84,10 @@ module.exports = (app) => {
   });
 
   // update score
-  app.put("/api/print/score", async (req, res) => {
-    await Student.findByIdAndUpdate(req.user.id, {
-      print_curr_score: req.body.newScore,
-    });
-    res.send({});
-  });
 
-  app.put("/api/print/historyscore", async (req, res) => {
+  app.put("/api/print/score", async (req, res) => {
     const user = await Student.findById(req.user.id);
-    const newArray = user.print_assign_score;
+    const newArray = user.print_score;
     newArray.push({
       label: new Date().toLocaleString("en-US", {
         timeZone: "America/Denver",
@@ -101,7 +95,7 @@ module.exports = (app) => {
       value: req.body.newScore,
     });
     await Student.findByIdAndUpdate(req.user.id, {
-      print_assign_score: newArray,
+      print_score: newArray,
     });
     res.send({});
   });
@@ -134,6 +128,7 @@ module.exports = (app) => {
   });
 
   app.post("/api/print/assign", requireLogin, async (req, res) => {
+    const { print_score } = req.user;
     await new PrintAssignAssign({
       studentId: req.user.id,
       studentName: req.user.displayName,
@@ -144,7 +139,7 @@ module.exports = (app) => {
       q1Assign: req.body.q1Assign,
       q2Assign: req.body.q2Assign,
       q3Assign: req.body.q3Assign,
-      oldScore: req.user.print_curr_score,
+      oldScore: print_score[print_score.length - 1]["value"],
       newScore: req.body.newScore,
     }).save();
     res.send({});
@@ -164,7 +159,7 @@ module.exports = (app) => {
   app.get("/api/print/historyscore/:id", async (req, res) => {
     const student = await Student.findById(req.params.id);
     res.send({
-      assignScore: student.print_assign_score,
+      assignScore: student.print_score,
     });
   });
 

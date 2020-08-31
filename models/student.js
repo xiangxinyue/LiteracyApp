@@ -8,14 +8,14 @@ const studentSchema = new Schema({
   displayName: String,
   email: String,
   photo: String,
-  fluency_assign_score: Array,
-  phoneme_assign_score: Array,
-  print_assign_score: Array,
-  meaning_assign_score: Array,
-  fluency_curr_score: Number,
-  phoneme_curr_score: Number,
-  print_curr_score: Number,
-  meaning_curr_score: Number,
+  fluency_progress: String,
+  phoneme_progress: String,
+  print_progress: String,
+  meaning_progress: String,
+  fluency_score: Array,
+  phoneme_score: Array,
+  print_score: Array,
+  meaning_score: Array,
 });
 
 mongoose.model("students", studentSchema);

@@ -37,37 +37,35 @@ class FluencyAssignPart extends Component {
   }
 
   componentDidMount = async () => {
-    const { fluency_score } = this.props.currentUser;
-    const doc = await axios.get("/api/fluency/student/assign");
-    const { paragraphs, questions, choices, answers } = this.generateAssign(
-      doc.data
-    );
-    const number = 50;
-    await this.setState({
-      paragraphs: paragraphs.slice(0, number),
-      questions: questions.slice(0, number),
-      choices: choices.slice(0, number),
-      answers: answers.slice(0, number),
-      speed: [fluency_score[fluency_score.length - 1]["value"]],
+    const { progress_id } = this.props;
+    const doc = await axios.get("/api/fluency/student/progress/" + progress_id);
+    const {
+      speed,
+      score,
+      index,
+      length,
+      currPara,
+      currParaArray,
+      paragraphs,
+      questions,
+      choices,
+      answers,
+      studentAnswers,
+    } = doc.data;
+    this.setState({
+      speed,
+      score,
+      index,
+      length,
+      currPara,
+      currParaArray,
+      paragraphs,
+      questions,
+      choices,
+      answers,
+      studentAnswers,
     });
-    await this.setState({
-      currPara: this.state.paragraphs[this.state.index],
-    });
-    const sentenceArray = await this.state.currPara.split("");
-    await this.setState({ currParaArray: sentenceArray });
-    await this.setState({ length: this.state.currParaArray.length });
     this.startReading();
-  };
-
-  generateAssign = (data) => {
-    let { paragraphs, questions, choices, answers } = data;
-    while (paragraphs.length < 50) {
-      paragraphs = paragraphs.concat(paragraphs);
-      questions = questions.concat(questions);
-      choices = choices.concat(choices);
-      answers = answers.concat(answers);
-    }
-    return { paragraphs, questions, choices, answers };
   };
 
   startReading = async () => {
@@ -154,6 +152,7 @@ class FluencyAssignPart extends Component {
     if (doc1.data !== "") {
       await axios.delete("/api/fluency/student/progress/" + doc1.data);
     }
+
     // 2. save progress into database and save progress_id into student database
     const doc2 = await axios.post("/api/fluency/student/progress", this.state);
     await axios.put("/api/fluency/student/progress", {

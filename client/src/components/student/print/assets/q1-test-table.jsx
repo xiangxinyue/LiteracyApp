@@ -30,10 +30,6 @@ export default class Table extends React.Component {
     for (const key in curr_answer) {
       if (questions[index].answer.includes(curr_answer[key])) addScore += 1;
     }
-    if (addScore === 0) {
-      questions.push(questions[index]);
-      this.setState({ questions });
-    }
     assign.push({
       level: questions[index].level,
       question: questions[index].question,

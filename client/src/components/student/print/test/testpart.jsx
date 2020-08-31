@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Q1Table from "../assets/q1-table";
-import Q2Table from "../assets/q2-table";
-import Q3Table from "../assets/q3-table";
+import Q1Table from "../assets/q1-test-table";
+import Q2Table from "../assets/q2-test-table";
+import Q3Table from "../assets/q3-test-table";
 
 class PrintTestPart extends React.Component {
   constructor() {

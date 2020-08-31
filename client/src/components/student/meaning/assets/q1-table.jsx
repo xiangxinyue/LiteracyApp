@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, LinearProgress } from "@material-ui/core";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
@@ -33,6 +33,10 @@ export default class Table extends React.Component {
     for (const key in curr_answer) {
       if (questions[index].answer.includes(curr_answer[key])) addScore += 1;
     }
+    if (addScore === 0) {
+      questions.push(questions[index]);
+      this.setState({ questions });
+    }
     assign.push({
       level: questions[index].level,
       question: questions[index].question,
@@ -49,6 +53,7 @@ export default class Table extends React.Component {
 
   render() {
     const { questions, index, assign, score, curr_answer } = this.state;
+    const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
         {index !== questions.length ? (
@@ -75,14 +80,19 @@ export default class Table extends React.Component {
             </div>
           </div>
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => this.props.handleNext(score, assign)}
-          >
-            Go Section 2
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.handleNext(score, assign)}
+            >
+              Go Section 2
+            </Button>
+            <br />
+          </div>
         )}
+        <br />
+        <LinearProgress variant="determinate" value={progress} />
       </div>
     );
   }

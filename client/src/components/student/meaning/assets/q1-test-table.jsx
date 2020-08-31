@@ -17,11 +17,14 @@ export default class Table extends React.Component {
   }
 
   handleChange = (num, value) => {
-    this.setState((state) => {
-      const curr_answer = state.curr_answer;
-      curr_answer[num] = value;
-      return { ...state, curr_answer };
-    });
+    this.setState(
+      (state) => {
+        const curr_answer = state.curr_answer;
+        curr_answer[num] = value;
+        return { ...state, curr_answer };
+      },
+      () => console.log(this.state)
+    );
   };
 
   handleNext = () => {
@@ -29,10 +32,6 @@ export default class Table extends React.Component {
     let addScore = 0;
     for (const key in curr_answer) {
       if (questions[index].answer.includes(curr_answer[key])) addScore += 1;
-    }
-    if (addScore === 0) {
-      questions.push(questions[index]);
-      this.setState({ questions });
     }
     assign.push({
       level: questions[index].level,
@@ -44,7 +43,7 @@ export default class Table extends React.Component {
       score: score + addScore,
       index: index + 1,
       assign,
-      curr_answer: { 0: "", 1: "", 2: "", 3: "" },
+      curr_answer: {},
     });
   };
 
@@ -55,21 +54,21 @@ export default class Table extends React.Component {
       <div>
         {index !== questions.length ? (
           <div>
-            <P1 className="font-weight-light">{questions[index].question}</P1>
+            <P2 className="font-weight-light">{questions[index].question}</P2>
             <div className="row">
-              {[0, 1, 2, 3].map((num) => (
+              {questions[index].answer.map((_, index) => (
                 <TextField
-                  value={curr_answer[num]}
-                  label={"Answer " + Number(num + 1)}
                   autoComplete="off"
-                  style={{ marginLeft: 10 }}
-                  onChange={(e) => this.handleChange(num, e.target.value)}
+                  value={curr_answer[index] ? curr_answer[index] : ""}
+                  label={"Answer " + Number(index + 1)}
+                  style={{ marginLeft: 20 }}
+                  onChange={(e) => this.handleChange(index, e.target.value)}
                 />
               ))}
               <Button
                 variant="contained"
                 color="primary"
-                style={{ marginLeft: 10 }}
+                style={{ marginLeft: 20 }}
                 onClick={this.handleNext}
               >
                 Next

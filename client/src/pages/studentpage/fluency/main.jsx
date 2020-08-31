@@ -26,7 +26,7 @@ class FluencyTrain extends Component {
         <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>
-              {currentUser.fluency_curr_score == -1 ? (
+              {currentUser.fluency_score.length === 0 ? (
                 !understand ? (
                   <FluencyTestIntro
                     handleClick={() =>

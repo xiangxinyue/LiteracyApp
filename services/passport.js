@@ -44,14 +44,14 @@ passport.use(
           displayName: profile.displayName,
           email: profile.emails[0].value,
           photo: profile.photos[0].value,
-          fluency_assign_score: [],
-          phoneme_assign_score: [],
-          print_assign_score: [],
-          meaning_assign_score: [],
-          fluency_curr_score: -1,
-          phoneme_curr_score: -1,
-          print_curr_score: -1,
-          meaning_curr_score: -1,
+          fluency_score: [],
+          phoneme_score: [],
+          print_score: [],
+          meaning_score: [],
+          fluency_progress: "",
+          phoneme_progress: "",
+          print_progress: "",
+          meaning_progress: "",
         }).save();
         return callback(null, student);
       }

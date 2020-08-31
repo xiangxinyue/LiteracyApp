@@ -26,7 +26,7 @@ class PrintTrain extends Component {
         <Container style={{ paddingBottom: 50 }}>
           {currentUser ? (
             <div>
-              {currentUser.print_curr_score == -1 ? (
+              {currentUser.print_score.length === 0 ? (
                 !understand ? (
                   <PrintTestIntro
                     handleClick={() =>

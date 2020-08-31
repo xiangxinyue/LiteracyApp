@@ -22,10 +22,11 @@ class MeaningTrainPart extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/api/meaning/student/assign");
     const { q1, q2, q3 } = this.generateAssign(doc.data);
+    const number = 20;
     await this.setState({
-      q1: q1.slice(0, 50),
-      q2: q2.slice(0, 50),
-      q3: q3.slice(0, 50),
+      q1: q1.slice(0, number),
+      q2: q2.slice(0, number),
+      q3: q3.slice(0, number),
     });
     console.log(this.state);
   };
@@ -35,13 +36,13 @@ class MeaningTrainPart extends React.Component {
     let q2 = data.q2;
     let q3 = data.q3;
     console.log(q1, q2, q3);
-    while (q1.length < 50) {
+    while (q1.length < 20) {
       q1 = q1.concat(q1);
     }
-    while (q2.length < 50) {
+    while (q2.length < 20) {
       q2 = q2.concat(q2);
     }
-    while (q3.length < 50) {
+    while (q3.length < 20) {
       q3 = q3.concat(q3);
     }
     return { q1, q2, q3 };
@@ -58,7 +59,6 @@ class MeaningTrainPart extends React.Component {
       q3Assign,
     });
     await axios.put("/api/meaning/score", { newScore });
-    await axios.put("/api/meaning/historyscore", { newScore });
     window.location = "/student/meaning";
   };
 

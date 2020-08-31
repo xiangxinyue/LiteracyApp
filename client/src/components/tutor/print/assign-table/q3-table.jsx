@@ -54,7 +54,7 @@ export default function SimpleTable(props) {
               <TableCell align="left">
                 {row.choices.map((dataset, i) => (
                   <div>
-                    {row.studentAnswer[i]}
+                    {row.studentAnswer ? row.studentAnswer[i] : null}
                     <br />
                   </div>
                 ))}
