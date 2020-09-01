@@ -6,6 +6,7 @@ const Student = mongoose.model("students");
 const MeaningTestAssign = mongoose.model("meaning_test_assigns");
 const MeaningAssignAssign = mongoose.model("meaning_assign_assigns");
 const MeaningMaterial = mongoose.model("meaning_materials");
+const MeaningProgressAssign = mongoose.model("meaning_progress_assigns");
 const requireLogin = require("../middlewares/requireLogin");
 const requireTutor = require("../middlewares/requireTutor");
 const AWS = require("aws-sdk");
@@ -189,5 +190,58 @@ module.exports = (app) => {
       },
       (err, url) => res.send({ err, key, url })
     );
+  });
+
+  // progress assign
+  app.put("/api/meaning/student/progress", async (req, res) => {
+    const data = await Student.findById(req.user.id);
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_progress: req.body.newProgress,
+    });
+    res.send(data.phoneme_progress);
+  });
+
+  app.get("/api/meaning/student/progress/:id", async (req, res) => {
+    const assign = await MeaningProgressAssign.findById(req.params.id);
+    res.send(assign);
+  });
+
+  app.delete("/api/meaning/student/progress/:id", async (req, res) => {
+    await MeaningProgressAssign.findByIdAndDelete(req.params.id);
+    res.send({});
+  });
+
+  app.post("/api/meaning/student/progress", async (req, res) => {
+    const progress = await new MeaningProgressAssign({
+      ...req.body,
+    }).save();
+    res.send(progress);
+  });
+
+  // progress assign
+  app.put("/api/meaning/student/progress", async (req, res) => {
+    console.log("back end user progress update once");
+    const data = await Student.findById(req.user.id);
+    await Student.findByIdAndUpdate(req.user.id, {
+      meaning_progress: req.body.newProgress,
+    });
+    res.send(data.meaning_progress);
+  });
+
+  app.get("/api/meaning/student/progress/:id", async (req, res) => {
+    const assign = await MeaningProgressAssign.findById(req.params.id);
+    res.send(assign);
+  });
+
+  app.delete("/api/meaning/student/progress/:id", async (req, res) => {
+    await MeaningProgressAssign.findByIdAndDelete(req.params.id);
+    res.send({});
+  });
+
+  app.post("/api/meaning/student/progress", async (req, res) => {
+    const progress = await new MeaningProgressAssign({
+      ...req.body,
+    }).save();
+    res.send(progress);
   });
 };

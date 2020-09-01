@@ -1,26 +1,34 @@
 import React from "react";
 import MeaningIntro from "../../../components/student/meaning/assign/trainintro";
 import MeaningTrain from "../../../components/student/meaning/assign/trainpart";
+import MeaningProgress from "../../../components/student/meaning/assign/train-progress";
 import MeaningHeader from "../../../components/student/meaning/assets/header";
 import { Container } from "@material-ui/core";
 
 class MeaningPractise extends React.Component {
   state = {
     start: false,
+    id: "",
   };
 
   render() {
-    const { start } = this.state;
+    const { start, id } = this.state;
     return (
       <div>
-        <MeaningHeader part="Training Assignment" />
         <Container>
           {start ? (
-            <MeaningTrain />
+            id === "" ? (
+              <MeaningTrain />
+            ) : (
+              <MeaningProgress id={id} />
+            )
           ) : (
-            <MeaningIntro
-              handleClick={() => this.setState({ start: !start })}
-            />
+            <div>
+              <MeaningHeader part="Training Assignment" />
+              <MeaningIntro
+                handleClick={(id) => this.setState({ start: !start, id })}
+              />
+            </div>
           )}
         </Container>
       </div>

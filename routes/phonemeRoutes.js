@@ -6,6 +6,7 @@ const PhonemeAudio = mongoose.model("phoneme_audios");
 const PhonemeTestAssign = mongoose.model("phoneme_test_assigns");
 const PhonemeAssignAssign = mongoose.model("phoneme_assign_assigns");
 const PhonemeMaterial = mongoose.model("phoneme_materials");
+const PhonemeProgressAssign = mongoose.model("phoneme_progress_assigns");
 const Student = mongoose.model("students");
 const AWS = require("aws-sdk");
 const keys = require("../config/keys");
@@ -120,6 +121,32 @@ module.exports = (app) => {
       },
       (err, url) => res.send({ err, key, url })
     );
+  });
+
+  // progress assign
+  app.put("/api/phoneme/student/progress", async (req, res) => {
+    const data = await Student.findById(req.user.id);
+    await Student.findByIdAndUpdate(req.user.id, {
+      phoneme_progress: req.body.newProgress,
+    });
+    res.send(data.phoneme_progress);
+  });
+
+  app.get("/api/phoneme/student/progress/:id", async (req, res) => {
+    const assign = await PhonemeProgressAssign.findById(req.params.id);
+    res.send(assign);
+  });
+
+  app.delete("/api/phoneme/student/progress/:id", async (req, res) => {
+    await PhonemeProgressAssign.findByIdAndDelete(req.params.id);
+    res.send({});
+  });
+
+  app.post("/api/phoneme/student/progress", async (req, res) => {
+    const progress = await new PhonemeProgressAssign({
+      ...req.body,
+    }).save();
+    res.send(progress);
   });
 
   // ---------------------------------------------------------------------------

@@ -5,10 +5,6 @@ import { connect } from "react-redux";
 class FluencyAssignIntro extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      assignDone: true,
-      newAssign: null,
-    };
   }
 
   renderButtons = () => {
@@ -78,7 +74,6 @@ class FluencyAssignIntro extends React.Component {
   }
 }
 
-// How to get data from Redux State?
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
 });

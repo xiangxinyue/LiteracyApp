@@ -43,3 +43,20 @@ const phonemeAssignAssignsSchema = new Schema({
   status: String,
 });
 mongoose.model("phoneme_assign_assigns", phonemeAssignAssignsSchema);
+
+const phonemeProgressAssignSchema = new Schema({
+  phonemeAssign: [Object],
+  phonemeIndex: Number,
+  ids: [String],
+  wrongIds: [String],
+  words: [String],
+  phonemes: [String],
+  phonemeLevels: [Number],
+  answers: [String],
+  audioIndex: Number,
+  audioLevels: [Number],
+  originalAudios: [[String]],
+  questions: [String],
+  answerAudios: [String],
+});
+mongoose.model("phoneme_progress_assigns", phonemeProgressAssignSchema);

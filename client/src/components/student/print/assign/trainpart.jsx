@@ -6,7 +6,6 @@ import Q3Table from "../assets/q3-table";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
-import { LinearProgress } from "@material-ui/core";
 
 class PrintTrainPart extends React.Component {
   constructor() {
@@ -15,10 +14,15 @@ class PrintTrainPart extends React.Component {
       q1: [],
       q2: [],
       q3: [],
-      q1_score: 0,
-      q2_score: 0,
+      q1Index: 0,
+      q2Index: 0,
+      q3Index: 0,
+      q1Score: 0,
+      q2Score: 0,
+      q3Score: 0,
       q1Assign: [],
       q2Assign: [],
+      q3Assign: [],
       q_show: 0,
     };
   }
@@ -26,10 +30,11 @@ class PrintTrainPart extends React.Component {
   componentDidMount = async () => {
     const doc = await axios.get("/api/print/student/assign");
     const { q1, q2, q3 } = this.generateAssign(doc.data);
+    const number = 20;
     await this.setState({
-      q1: q1.slice(0, 5),
-      q2: q2.slice(0, 5),
-      q3: q3.slice(0, 5),
+      q1: q1.slice(0, number),
+      q2: q2.slice(0, number),
+      q3: q3.slice(0, number),
     });
     console.log(this.state);
   };
@@ -51,10 +56,54 @@ class PrintTrainPart extends React.Component {
     return { q1, q2, q3 };
   };
 
-  handleSubmit = async (q3_score, q3Assign) => {
-    const { q1_score, q2_score, q1Assign, q2Assign } = this.state;
-    const newScore = q1_score + q2_score + q3_score;
-    console.log(q1_score, q2_score, q3_score, q1Assign, q2Assign, q3Assign);
+  handleSaveAssignment = async () => {
+    const {
+      q1,
+      q2,
+      q3,
+      q1Score,
+      q2Score,
+      q3Score,
+      q1Assign,
+      q2Assign,
+      q3Assign,
+      q1Index,
+      q2Index,
+      q3Index,
+    } = this.state;
+    console.log(q1Assign, q1Score);
+    // 1. Clean the student last progress and delete the old progress
+    const doc1 = await axios.put("/api/print/student/progress", {
+      newProgress: "",
+    });
+    if (doc1.data !== "") {
+      await axios.delete("/api/print/student/progress/" + doc1.data);
+    }
+
+    // 2. save progress into database and save progress_id into student database
+    const doc2 = await axios.post("/api/print/student/progress", {
+      q1Score,
+      q2Score,
+      q3Score,
+      q1Assign,
+      q2Assign,
+      q3Assign,
+      q1Index,
+      q2Index,
+      q3Index,
+      q1Questions: q1,
+      q2Questions: q2,
+      q3Questions: q3,
+    });
+    await axios.put("/api/print/student/progress", {
+      newProgress: doc2.data._id,
+    });
+  };
+
+  handleSubmit = async (q3Score, q3Assign) => {
+    const { q1Score, q2Score, q1Assign, q2Assign } = this.state;
+    const newScore = q1Score + q2Score + q3Score;
+    console.log(q1Score, q2Score, q3Score, q1Assign, q2Assign, q3Assign);
     await axios.post("/api/print/assign", {
       newScore,
       q1Assign,
@@ -72,8 +121,20 @@ class PrintTrainPart extends React.Component {
         return (
           <Q1Table
             rows={q1}
-            handleNext={(q1_score, q1Assign) =>
-              this.setState({ q1_score, q1Assign, q_show: q_show + 1 })
+            handleSaveAssignment={(index, questions, assign, score) => {
+              console.log(assign, score);
+              this.setState(
+                {
+                  q1Index: index,
+                  q1: questions,
+                  q1Score: score,
+                  q1Assign: assign,
+                },
+                this.handleSaveAssignment
+              );
+            }}
+            handleNext={(q1Score, q1Assign) =>
+              this.setState({ q1Score, q1Assign, q_show: q_show + 1 })
             }
           />
         );
@@ -81,8 +142,19 @@ class PrintTrainPart extends React.Component {
         return (
           <Q2Table
             rows={q2}
-            handleNext={(q2_score, q2Assign) =>
-              this.setState({ q2_score, q2Assign, q_show: q_show + 1 })
+            handleSaveAssignment={(index, questions, assign, score) => {
+              this.setState(
+                {
+                  q2Index: index,
+                  q2: questions,
+                  q2Score: score,
+                  q2Assign: assign,
+                },
+                this.handleSaveAssignment
+              );
+            }}
+            handleNext={(q2Score, q2Assign) =>
+              this.setState({ q2Score, q2Assign, q_show: q_show + 1 })
             }
           />
         );
@@ -90,8 +162,17 @@ class PrintTrainPart extends React.Component {
         return (
           <Q3Table
             rows={q3}
-            handleNext={(q3_score, q3Assign) =>
-              this.handleSubmit(q3_score, q3Assign)
+            handleSaveAssignment={(index, questions, assign, score) => {
+              this.setState({
+                q3Index: index,
+                q3: questions,
+                q3Score: score,
+                q3Assign: assign,
+              });
+              this.handleSaveAssignment();
+            }}
+            handleNext={(q3Score, q3Assign) =>
+              this.handleSubmit(q3Score, q3Assign)
             }
           />
         );
@@ -102,7 +183,9 @@ class PrintTrainPart extends React.Component {
 
   render() {
     const { q1 } = this.state;
-    return q1.length !== 0 ? <div>{this.renderQuestion()}</div> : null;
+    return (
+      <div>{q1.length !== 0 ? <div>{this.renderQuestion()}</div> : null}</div>
+    );
   }
 }
 
