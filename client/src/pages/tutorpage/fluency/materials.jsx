@@ -11,6 +11,7 @@ class FluencyTutorMaterials extends React.Component {
       videos: [],
       currPara: "",
       id: "",
+      url: "",
     };
   }
 
@@ -62,6 +63,14 @@ class FluencyTutorMaterials extends React.Component {
     }
   };
 
+  handleVideoAddByUrl = async () => {
+    const { url, id, videos } = this.state;
+    videos.push(url);
+    await axios.put("/api/fluency/materials/" + id, { videos });
+    this.setState({ url: "" });
+    this.componentDidMount();
+  };
+
   handleVideoDelete = async (index) => {
     const { videos } = this.state;
     const newVideos = videos
@@ -106,7 +115,7 @@ class FluencyTutorMaterials extends React.Component {
                 <Button
                   variant="outlined"
                   color="secondary"
-                  style={{ marginLeft: 10 }}
+                  style={{ marginRight: 10 }}
                   onClick={() => this.handleParagraphDelete(index)}
                 >
                   Delete
@@ -115,17 +124,48 @@ class FluencyTutorMaterials extends React.Component {
             );
           })}
           <hr />
-          <input
-            type="file"
-            accept="video/*"
-            onChange={(e) => this.handleVideoAdd(e.target.files[0])}
-          />
+
+          <div>
+            <h4>You can either upload a video or input video URL:</h4>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(e) => this.handleVideoAdd(e.target.files[0])}
+            />
+            <h6>
+              (If you use the locally upload, the video will automatically
+              upload when you choose the file, you do not need to click "upload"
+              button again)
+            </h6>
+            <div className="row">
+              <TextField
+                value={this.state.url}
+                onChange={(e) => this.setState({ url: e.target.value })}
+                style={{ width: "50%", marginLeft: 10 }}
+                multiline={true}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: 10 }}
+                onClick={this.handleVideoAddByUrl}
+              >
+                Upload
+              </Button>
+            </div>
+          </div>
+
           <br />
           <br />
           {videos.map((video, index) => {
             return (
               <div className="row">
-                <h5>{keys.AWS + video}</h5>
+                {video.includes("http") ? (
+                  <h5>{video}</h5>
+                ) : (
+                  <h5>{keys.AWS + video}</h5>
+                )}
+
                 <Button
                   variant="outlined"
                   color="secondary"
