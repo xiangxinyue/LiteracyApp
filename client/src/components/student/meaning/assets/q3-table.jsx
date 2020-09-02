@@ -51,7 +51,7 @@ export default class Table extends React.Component {
   };
 
   render() {
-    const { questions, index, assign, score } = this.state;
+    const { questions, index, assign, score, curr_answer } = this.state;
     const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
@@ -82,25 +82,41 @@ export default class Table extends React.Component {
                 <div className="row">
                   <FormControlLabel
                     value={questions[index].choices[0]}
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        checked={curr_answer === questions[index].choices[0]}
+                      />
+                    }
                     label={questions[index].choices[0]}
                     style={{ marginLeft: 10 }}
                   />
                   <FormControlLabel
                     value={questions[index].choices[1]}
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        checked={curr_answer === questions[index].choices[1]}
+                      />
+                    }
                     label={questions[index].choices[1]}
                     style={{ marginLeft: 10 }}
                   />
                   <FormControlLabel
                     value={questions[index].choices[2]}
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        checked={curr_answer === questions[index].choices[2]}
+                      />
+                    }
                     label={questions[index].choices[2]}
                     style={{ marginLeft: 10 }}
                   />
                   <FormControlLabel
                     value={questions[index].choices[3]}
-                    control={<Radio />}
+                    control={
+                      <Radio
+                        checked={curr_answer === questions[index].choices[3]}
+                      />
+                    }
                     label={questions[index].choices[3]}
                     style={{ marginLeft: 10 }}
                   />

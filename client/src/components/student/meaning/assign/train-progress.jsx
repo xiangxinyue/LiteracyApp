@@ -79,6 +79,7 @@ class MeaningTrainPart extends React.Component {
   };
 
   handleSaveAssignment = async () => {
+    console.log("handle save is called once");
     const {
       q1,
       q2,

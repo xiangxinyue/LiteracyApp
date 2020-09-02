@@ -54,6 +54,7 @@ class MeaningTrainPart extends React.Component {
   };
 
   handleSaveAssignment = async () => {
+    console.log("handle save is called once");
     const {
       q1,
       q2,
@@ -91,7 +92,6 @@ class MeaningTrainPart extends React.Component {
       q2Questions: q2,
       q3Questions: q3,
     });
-    console.log("font end ready to save user progress");
     await axios.put("/api/meaning/student/progress", {
       newProgress: doc2.data._id,
     });
@@ -160,13 +160,15 @@ class MeaningTrainPart extends React.Component {
           <Q3Table
             rows={q3}
             handleSaveAssignment={(index, questions, assign, score) => {
-              this.setState({
-                q3Index: index,
-                q3: questions,
-                q3Score: score,
-                q3Assign: assign,
-              });
-              this.handleSaveAssignment();
+              this.setState(
+                {
+                  q3Index: index,
+                  q3: questions,
+                  q3Score: score,
+                  q3Assign: assign,
+                },
+                this.handleSaveAssignment
+              );
             }}
             handleNext={(q3Score, q3Assign) =>
               this.handleSubmit(q3Score, q3Assign)

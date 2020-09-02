@@ -194,33 +194,7 @@ module.exports = (app) => {
 
   // progress assign
   app.put("/api/meaning/student/progress", async (req, res) => {
-    const data = await Student.findById(req.user.id);
-    await Student.findByIdAndUpdate(req.user.id, {
-      phoneme_progress: req.body.newProgress,
-    });
-    res.send(data.phoneme_progress);
-  });
-
-  app.get("/api/meaning/student/progress/:id", async (req, res) => {
-    const assign = await MeaningProgressAssign.findById(req.params.id);
-    res.send(assign);
-  });
-
-  app.delete("/api/meaning/student/progress/:id", async (req, res) => {
-    await MeaningProgressAssign.findByIdAndDelete(req.params.id);
-    res.send({});
-  });
-
-  app.post("/api/meaning/student/progress", async (req, res) => {
-    const progress = await new MeaningProgressAssign({
-      ...req.body,
-    }).save();
-    res.send(progress);
-  });
-
-  // progress assign
-  app.put("/api/meaning/student/progress", async (req, res) => {
-    console.log("back end user progress update once");
+    console.log("back end id update");
     const data = await Student.findById(req.user.id);
     await Student.findByIdAndUpdate(req.user.id, {
       meaning_progress: req.body.newProgress,
@@ -229,16 +203,19 @@ module.exports = (app) => {
   });
 
   app.get("/api/meaning/student/progress/:id", async (req, res) => {
+    console.log("back end get progress");
     const assign = await MeaningProgressAssign.findById(req.params.id);
     res.send(assign);
   });
 
   app.delete("/api/meaning/student/progress/:id", async (req, res) => {
+    console.log("back end delete progress");
     await MeaningProgressAssign.findByIdAndDelete(req.params.id);
     res.send({});
   });
 
   app.post("/api/meaning/student/progress", async (req, res) => {
+    console.log("back end create progress");
     const progress = await new MeaningProgressAssign({
       ...req.body,
     }).save();

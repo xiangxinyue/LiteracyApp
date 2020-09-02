@@ -83,9 +83,9 @@ export default class Table extends React.Component {
             <div>
               <P1 className="font-weight-light">{questions[index].question}</P1>
               <div className="row">
-                {[0, 1, 2, 3].map((num) => (
+                {questions[index].answer.map((answer, num) => (
                   <TextField
-                    value={curr_answer[num]}
+                    value={curr_answer[num] ? curr_answer[num] : ""}
                     label={"Answer " + Number(num + 1)}
                     autoComplete="off"
                     style={{ marginLeft: 10 }}
@@ -95,7 +95,7 @@ export default class Table extends React.Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ marginLeft: 10 }}
+                  style={{ marginLeft: 10, marginTop: 5 }}
                   onClick={this.handleNext}
                 >
                   Next

@@ -56,7 +56,7 @@ export default class Table extends React.Component {
   };
 
   render() {
-    const { questions, index, assign, score } = this.state;
+    const { questions, index, assign, score, curr_answer } = this.state;
     const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
@@ -90,13 +90,17 @@ export default class Table extends React.Component {
                   <div className="row">
                     <FormControlLabel
                       value={choice.choice1}
-                      control={<Radio />}
+                      control={
+                        <Radio checked={curr_answer[i] === choice.choice1} />
+                      }
                       label={choice.choice1}
                       style={{ marginLeft: 10 }}
                     />
                     <FormControlLabel
                       value={choice.choice2}
-                      control={<Radio />}
+                      control={
+                        <Radio checked={curr_answer[i] === choice.choice2} />
+                      }
                       label={choice.choice2}
                       style={{ marginLeft: 10 }}
                     />

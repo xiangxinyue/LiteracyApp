@@ -17,7 +17,7 @@ export default class Table extends React.Component {
     this.state = {
       questions: this.props.rows,
       index: this.props.index ? this.props.index : 0,
-      curr_answer: {},
+      curr_answer: "",
       assign: this.props.assignment ? this.props.assignment : [],
       score: this.props.score ? this.props.score : 0,
     };
@@ -47,7 +47,7 @@ export default class Table extends React.Component {
   };
 
   render() {
-    const { questions, index, assign, score } = this.state;
+    const { questions, index, assign, score, curr_answer } = this.state;
     const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
@@ -81,7 +81,7 @@ export default class Table extends React.Component {
                   {questions[index].choices.map((choice) => (
                     <FormControlLabel
                       value={choice}
-                      control={<Radio />}
+                      control={<Radio checked={curr_answer === choice} />}
                       label={choice}
                       style={{ marginLeft: 10 }}
                     />
