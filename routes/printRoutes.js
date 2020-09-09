@@ -6,6 +6,7 @@ const Student = mongoose.model("students");
 const PrintTestAssign = mongoose.model("print_test_assigns");
 const PrintAssignAssign = mongoose.model("print_assign_assigns");
 const PrintMaterial = mongoose.model("print_materials");
+const PrintProgressAssign = mongoose.model("print_progress_assigns");
 const requireLogin = require("../middlewares/requireLogin");
 const requireTutor = require("../middlewares/requireTutor");
 const AWS = require("aws-sdk");
@@ -190,5 +191,31 @@ module.exports = (app) => {
       },
       (err, url) => res.send({ err, key, url })
     );
+  });
+
+  // progress assign
+  app.put("/api/print/student/progress", async (req, res) => {
+    const data = await Student.findById(req.user.id);
+    await Student.findByIdAndUpdate(req.user.id, {
+      print_progress: req.body.newProgress,
+    });
+    res.send(data.print_progress);
+  });
+
+  app.get("/api/print/student/progress/:id", async (req, res) => {
+    const assign = await PrintProgressAssign.findById(req.params.id);
+    res.send(assign);
+  });
+
+  app.delete("/api/print/student/progress/:id", async (req, res) => {
+    await PrintProgressAssign.findByIdAndDelete(req.params.id);
+    res.send({});
+  });
+
+  app.post("/api/print/student/progress", async (req, res) => {
+    const progress = await new PrintProgressAssign({
+      ...req.body,
+    }).save();
+    res.send(progress);
   });
 };

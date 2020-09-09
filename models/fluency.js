@@ -38,7 +38,6 @@ const fluencyAssignAssignSchema = new Schema({
 mongoose.model("fluency_assign_assigns", fluencyAssignAssignSchema);
 
 const fluencyProgressAssignSchema = new Schema({
-  studentId: String,
   speed: [Number],
   score: Number,
   index: Number,

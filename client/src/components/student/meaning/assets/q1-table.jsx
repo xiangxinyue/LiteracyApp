@@ -1,5 +1,10 @@
 import React from "react";
-import { TextField, Button, LinearProgress } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  LinearProgress,
+  Container,
+} from "@material-ui/core";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
@@ -9,22 +14,19 @@ export default class Table extends React.Component {
     super(props);
     this.state = {
       questions: this.props.rows,
-      index: 0,
+      index: this.props.index ? this.props.index : 0,
       curr_answer: {},
-      assign: [],
-      score: 0,
+      assign: this.props.assignment ? this.props.assignment : [],
+      score: this.props.score ? this.props.score : 0,
     };
   }
 
   handleChange = (num, value) => {
-    this.setState(
-      (state) => {
-        const curr_answer = state.curr_answer;
-        curr_answer[num] = value;
-        return { ...state, curr_answer };
-      },
-      () => console.log(this.state)
-    );
+    this.setState((state) => {
+      const curr_answer = state.curr_answer;
+      curr_answer[num] = value;
+      return { ...state, curr_answer };
+    });
   };
 
   handleNext = () => {
@@ -56,43 +58,64 @@ export default class Table extends React.Component {
     const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
-        {index !== questions.length ? (
-          <div>
-            <P2 className="font-weight-light">{questions[index].question}</P2>
-            <div className="row">
-              {questions[index].answer.map((_, index) => (
-                <TextField
-                  autoComplete="off"
-                  value={curr_answer[index] ? curr_answer[index] : ""}
-                  label={"Answer " + Number(index + 1)}
+        <Container style={{ marginTop: "5%" }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{ marginRight: 20 }}
+            onClick={() =>
+              this.props.handleSaveAssignment(index, questions, assign, score)
+            }
+          >
+            Save
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => (window.location = "/student/meaning")}
+          >
+            Quit
+          </Button>
+        </Container>
+        <Container style={{ marginTop: "10%" }}>
+          {index !== questions.length ? (
+            <div>
+              <P2 className="font-weight-light">{questions[index].question}</P2>
+              <div className="row">
+                {questions[index].answer.map((_, index) => (
+                  <TextField
+                    autoComplete="off"
+                    value={curr_answer[index] ? curr_answer[index] : ""}
+                    label={"Answer " + Number(index + 1)}
+                    style={{ marginLeft: 20 }}
+                    onChange={(e) => this.handleChange(index, e.target.value)}
+                  />
+                ))}
+                <Button
+                  variant="contained"
+                  color="primary"
                   style={{ marginLeft: 20 }}
-                  onChange={(e) => this.handleChange(index, e.target.value)}
-                />
-              ))}
+                  onClick={this.handleNext}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div>
               <Button
                 variant="contained"
                 color="primary"
-                style={{ marginLeft: 20 }}
-                onClick={this.handleNext}
+                onClick={() => this.props.handleNext(score, assign)}
               >
-                Next
+                Go Section 2
               </Button>
+              <br />
             </div>
-          </div>
-        ) : (
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => this.props.handleNext(score, assign)}
-            >
-              Go Section 2
-            </Button>
-            <br />
-          </div>
-        )}
-        <br />
-        <LinearProgress variant="determinate" value={progress} />
+          )}
+          <br />
+          <LinearProgress variant="determinate" value={progress} />
+        </Container>
       </div>
     );
   }

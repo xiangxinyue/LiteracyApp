@@ -26,27 +26,25 @@ class PhonemeTrainPart extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
-    const doc = await axios("/api/phoneme/phonemes");
-    const { words, phonemes, levels, ids } = this.generateAssign(doc.data);
-    const number = 2;
-    await this.setState({
-      words: words.slice(0, number),
-      phonemes: phonemes.slice(0, number),
-      levels: levels.slice(0, number),
-      ids: ids.slice(0, number),
+  componentDidMount = () => {
+    const {
+      ids,
+      wrongIds,
+      words,
+      phonemeLevels,
+      phonemes,
+      answers,
+      phonemeIndex,
+    } = this.props.progress;
+    this.setState({
+      ids,
+      wrongIds,
+      words,
+      levels: phonemeLevels,
+      phonemes,
+      answers,
+      index: phonemeIndex,
     });
-  };
-
-  generateAssign = (data) => {
-    let { words, phonemes, levels, ids } = data;
-    while (words.length < 50) {
-      words = words.concat(words);
-      phonemes = phonemes.concat(phonemes);
-      levels = levels.concat(levels);
-      ids = ids.concat(ids);
-    }
-    return { words, phonemes, levels, ids };
   };
 
   handleFlip = async () => {
@@ -120,6 +118,7 @@ class PhonemeTrainPart extends React.Component {
     const doc2 = await axios.post("/api/phoneme/student/progress", {
       ...this.state,
       phonemeIndex: this.state.index,
+      phonemeLevels: this.state.levels,
     });
     await axios.put("/api/phoneme/student/progress", {
       newProgress: doc2.data._id,

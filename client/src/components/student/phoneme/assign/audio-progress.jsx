@@ -20,13 +20,20 @@ class PhonemeAudioAssign extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
-    const doc = await axios.get("/api/phoneme/audios");
-    const { questions, audios } = this.generateAssign(doc.data);
-    const number = 20;
+  componentDidMount = () => {
+    const {
+      audioLevels,
+      audioIndex,
+      originalAudios,
+      questions,
+      answerAudios,
+    } = this.props.progress;
     this.setState({
-      originalAudios: audios.slice(0, number),
-      questions: questions.slice(0, number),
+      originalAudios,
+      questions,
+      answerAudios,
+      levels: audioLevels,
+      index: audioIndex,
     });
   };
 
@@ -140,6 +147,7 @@ class PhonemeAudioAssign extends React.Component {
                   {originalAudios[index].map((audio) => {
                     return <audio src={keys.AWS + audio} controls="controls" />;
                   })}
+
                   <hr />
                   <AudioRecord
                     handleUpload={(file) => this.handleUpload(file)}

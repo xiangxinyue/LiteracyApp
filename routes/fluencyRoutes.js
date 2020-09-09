@@ -101,7 +101,6 @@ module.exports = (app) => {
 
   app.post("/api/fluency/student/progress", async (req, res) => {
     const progress = await new FluencyProgressAssign({
-      studentId: req.user.id,
       ...req.body,
     }).save();
     res.send(progress);

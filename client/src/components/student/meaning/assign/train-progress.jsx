@@ -25,32 +25,57 @@ class MeaningTrainPart extends React.Component {
   }
 
   componentDidMount = async () => {
-    const doc = await axios.get("/api/meaning/student/assign");
-    const { q1, q2, q3 } = this.generateAssign(doc.data);
-    const number = 20;
-    await this.setState({
-      q1: q1.slice(0, number),
-      q2: q2.slice(0, number),
-      q3: q3.slice(0, number),
-    });
-    console.log(this.state);
-  };
-
-  generateAssign = (data) => {
-    let q1 = data.q1;
-    let q2 = data.q2;
-    let q3 = data.q3;
-    console.log(q1, q2, q3);
-    while (q1.length < 20) {
-      q1 = q1.concat(q1);
+    console.log("arrive at the progress part");
+    const doc = await axios.get(
+      "/api/meaning/student/progress/" + this.props.id
+    );
+    console.log(doc.data);
+    const {
+      q1Assign,
+      q1Questions,
+      q1Score,
+      q1Index,
+      q2Assign,
+      q2Questions,
+      q2Score,
+      q2Index,
+      q3Assign,
+      q3Questions,
+      q3Score,
+      q3Index,
+    } = doc.data;
+    if (q3Assign.length !== 0) {
+      this.setState({
+        q1Score: q1Score,
+        q2Score: q2Score,
+        q3Score: q3Score,
+        q1Assign,
+        q2Assign,
+        q3Assign,
+        q_show: 2,
+        q1Index,
+        q2Index,
+        q3Index,
+      });
+    } else if (q2Assign.length !== 0) {
+      this.setState({
+        q1Score: q1Score,
+        q2Score: q2Score,
+        q1Assign,
+        q2Assign,
+        q_show: 1,
+        q1Index,
+        q2Index,
+      });
+    } else {
+      this.setState({
+        q1Score: q1Score,
+        q1Assign,
+        q_show: 0,
+        q1Index,
+      });
     }
-    while (q2.length < 20) {
-      q2 = q2.concat(q2);
-    }
-    while (q3.length < 20) {
-      q3 = q3.concat(q3);
-    }
-    return { q1, q2, q3 };
+    this.setState({ q1: q1Questions, q2: q2Questions, q3: q3Questions });
   };
 
   handleSaveAssignment = async () => {
@@ -69,6 +94,7 @@ class MeaningTrainPart extends React.Component {
       q2Index,
       q3Index,
     } = this.state;
+    console.log(q1Assign, q1Score);
     // 1. Clean the student last progress and delete the old progress
     const doc1 = await axios.put("/api/meaning/student/progress", {
       newProgress: "",
@@ -112,14 +138,30 @@ class MeaningTrainPart extends React.Component {
   };
 
   renderQuestion = () => {
-    const { q_show, q1, q2, q3 } = this.state;
+    const {
+      q_show,
+      q1,
+      q2,
+      q3,
+      q1Assign,
+      q2Assign,
+      q3Assign,
+      q1Index,
+      q2Index,
+      q3Index,
+      q1Score,
+      q2Score,
+      q3Score,
+    } = this.state;
     switch (q_show) {
       case 0:
         return (
           <Q1Table
             rows={q1}
+            assignment={q1Assign}
+            index={q1Index}
+            score={q1Score}
             handleSaveAssignment={(index, questions, assign, score) => {
-              console.log(assign, score);
               this.setState(
                 {
                   q1Index: index,
@@ -139,6 +181,9 @@ class MeaningTrainPart extends React.Component {
         return (
           <Q2Table
             rows={q2}
+            assignment={q2Assign}
+            index={q2Index}
+            score={q2Score}
             handleSaveAssignment={(index, questions, assign, score) => {
               this.setState(
                 {
@@ -159,6 +204,9 @@ class MeaningTrainPart extends React.Component {
         return (
           <Q3Table
             rows={q3}
+            assignment={q3Assign}
+            index={q3Index}
+            score={q3Score}
             handleSaveAssignment={(index, questions, assign, score) => {
               this.setState(
                 {

@@ -55,3 +55,19 @@ const printAssignAssign = new Schema({
   newScore: Number,
 });
 mongoose.model("print_assign_assigns", printAssignAssign);
+
+const printProgressAssign = new Schema({
+  q1Assign: [Object],
+  q1Questions: [Object],
+  q1Score: Number,
+  q1Index: Number,
+  q2Assign: [Object],
+  q2Questions: [Object],
+  q2Score: Number,
+  q2Index: Number,
+  q3Assign: [Object],
+  q3Questions: [Object],
+  q3Score: Number,
+  q3Index: Number,
+});
+mongoose.model("print_progress_assigns", printProgressAssign);

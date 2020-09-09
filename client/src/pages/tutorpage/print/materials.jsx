@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Container, TextField } from "@material-ui/core";
 import keys from "../../../assets/keys";
 
-class PrintTutorMaterials extends React.Component {
+class printTutorMaterials extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,6 +11,7 @@ class PrintTutorMaterials extends React.Component {
       videos: [],
       currPara: "",
       id: "",
+      url: "",
     };
   }
 
@@ -47,7 +48,6 @@ class PrintTutorMaterials extends React.Component {
   handleVideoAdd = async (file) => {
     if (!!file) {
       const doc = await axios.get("/api/print/video");
-      console.log(doc);
       const uploadConfigs = doc.data;
       await axios
         .put(uploadConfigs.url, file, {
@@ -61,6 +61,14 @@ class PrintTutorMaterials extends React.Component {
       await axios.put("/api/print/materials/" + id, { videos });
       this.componentDidMount();
     }
+  };
+
+  handleVideoAddByUrl = async () => {
+    const { url, id, videos } = this.state;
+    videos.push(url);
+    await axios.put("/api/print/materials/" + id, { videos });
+    this.setState({ url: "" });
+    this.componentDidMount();
   };
 
   handleVideoDelete = async (index) => {
@@ -107,7 +115,7 @@ class PrintTutorMaterials extends React.Component {
                 <Button
                   variant="outlined"
                   color="secondary"
-                  style={{ marginLeft: 10 }}
+                  style={{ marginRight: 10 }}
                   onClick={() => this.handleParagraphDelete(index)}
                 >
                   Delete
@@ -116,17 +124,48 @@ class PrintTutorMaterials extends React.Component {
             );
           })}
           <hr />
-          <input
-            type="file"
-            accept="video/*"
-            onChange={(e) => this.handleVideoAdd(e.target.files[0])}
-          />
+
+          <div>
+            <h4>You can either upload a video or input video URL:</h4>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(e) => this.handleVideoAdd(e.target.files[0])}
+            />
+            <h6>
+              (If you use the locally upload, the video will automatically
+              upload when you choose the file, you do not need to click "upload"
+              button again)
+            </h6>
+            <div className="row">
+              <TextField
+                value={this.state.url}
+                onChange={(e) => this.setState({ url: e.target.value })}
+                style={{ width: "50%", marginLeft: 10 }}
+                multiline={true}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: 10 }}
+                onClick={this.handleVideoAddByUrl}
+              >
+                Upload
+              </Button>
+            </div>
+          </div>
+
           <br />
           <br />
           {videos.map((video, index) => {
             return (
               <div className="row">
-                <h5>{keys.AWS + video}</h5>
+                {video.includes("http") ? (
+                  <h5>{video}</h5>
+                ) : (
+                  <h5>{keys.AWS + video}</h5>
+                )}
+
                 <Button
                   variant="outlined"
                   color="secondary"
@@ -144,4 +183,4 @@ class PrintTutorMaterials extends React.Component {
   }
 }
 
-export default PrintTutorMaterials;
+export default printTutorMaterials;
