@@ -1,11 +1,22 @@
 import React from "react";
 import axios from "axios";
-import { Button, Container, Paper, LinearProgress } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Paper,
+  LinearProgress,
+  Snackbar,
+} from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import AudioRecord from "./audiorecord";
 import keys from "../../../../assets/keys";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class PhonemeAudioAssign extends React.Component {
   constructor() {
@@ -17,6 +28,7 @@ class PhonemeAudioAssign extends React.Component {
       answerAudios: [],
       index: 0,
       audioDone: false,
+      alert: false,
     };
   }
 
@@ -96,8 +108,14 @@ class PhonemeAudioAssign extends React.Component {
     await axios.put("/api/phoneme/student/progress", {
       newProgress: doc2.data._id,
     });
+    // show alert bar
+    this.setState({ alert: true });
   };
 
+  handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({ alert: false });
+  };
   render() {
     const { audioDone, originalAudios, index, questions } = this.state;
     const progress = Math.floor(((index + 1) / questions.length) * 100);
@@ -161,6 +179,15 @@ class PhonemeAudioAssign extends React.Component {
             )}
           </Paper>
         </Container>
+        <Snackbar
+          open={this.state.alert}
+          autoHideDuration={2000}
+          onClose={this.handleCloseAlert}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            Saved Successfully!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }
