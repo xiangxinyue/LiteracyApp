@@ -18,6 +18,7 @@ export default class Table extends React.Component {
       curr_answer: {},
       assign: this.props.assignment ? this.props.assignment : [],
       score: this.props.score ? this.props.score : 0,
+      appearTimes: {},
     };
   }
 
@@ -30,13 +31,25 @@ export default class Table extends React.Component {
   };
 
   handleNext = () => {
-    const { curr_answer, index, questions, assign, score } = this.state;
-    console.log(assign, score);
+    const {
+      curr_answer,
+      index,
+      questions,
+      assign,
+      score,
+      appearTimes,
+    } = this.state;
+    if (!appearTimes[questions[index].question]) {
+      appearTimes[questions[index].question] = 1;
+    } else {
+      appearTimes[questions[index].question] += 1;
+    }
+    this.setState({ appearTimes });
     let addScore = 0;
     for (const key in curr_answer) {
       if (questions[index].answer.includes(curr_answer[key])) addScore += 1;
     }
-    if (addScore === 0) {
+    if (addScore < 4 && appearTimes[questions[index].question] < 3) {
       questions.push(questions[index]);
       this.setState({ questions });
     }
@@ -55,7 +68,14 @@ export default class Table extends React.Component {
   };
 
   render() {
-    const { questions, index, assign, score, curr_answer } = this.state;
+    const {
+      questions,
+      index,
+      assign,
+      score,
+      curr_answer,
+      appearTimes,
+    } = this.state;
     const progress = Math.floor((index / questions.length) * 100);
     return (
       <div>
@@ -101,6 +121,13 @@ export default class Table extends React.Component {
                   Next
                 </Button>
               </div>
+              <br />
+              {appearTimes[questions[index].question] === 2 ? (
+                <div>
+                  (Hint: {questions[index].answer.map((answer) => answer + "/")}
+                  )
+                </div>
+              ) : null}
             </div>
           ) : (
             <div>

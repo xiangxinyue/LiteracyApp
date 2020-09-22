@@ -1,13 +1,16 @@
 import React from "react";
 import WordCard from "../assets/phonemecard";
 import Process from "../../../../assets/process";
-import { LinearProgress, Button, Container } from "@material-ui/core";
+import { LinearProgress, Button, Container, Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import { connect } from "react-redux";
 import axios from "axios";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 class PhonemeTrainPart extends React.Component {
   constructor() {
     super();
@@ -23,6 +26,8 @@ class PhonemeTrainPart extends React.Component {
       answer: false,
       input: "",
       phonemeAssign: [],
+      alert: false,
+      appearTimes: {},
     };
   }
 
@@ -57,30 +62,34 @@ class PhonemeTrainPart extends React.Component {
       answers,
       ids,
       wrongIds,
+      appearTimes,
     } = this.state;
+    if (!appearTimes[words[index]]) {
+      appearTimes[words[index]] = 1;
+    } else {
+      appearTimes[words[index]] += 1;
+    }
+    this.setState({ appearTimes });
     let newAnswers = answers;
     newAnswers.push(input);
     if (phonemes[index] === input) {
       this.setState({
         correct: true,
-        answer: true,
-        answers: newAnswers,
       });
-    } else {
+    } else if (appearTimes[words[index]] < 3) {
       wrongIds.push(ids[index]);
       phonemes.push(phonemes[index]);
       words.push(words[index]);
       levels.push(levels[index]);
       this.setState({
         correct: false,
-        answer: true,
-        answers: newAnswers,
         wrongIds,
         phonemes,
         words,
         levels,
       });
     }
+    this.setState({ answer: true, answers: newAnswers });
   };
 
   changeQuestion = async () => {
@@ -123,6 +132,12 @@ class PhonemeTrainPart extends React.Component {
     await axios.put("/api/phoneme/student/progress", {
       newProgress: doc2.data._id,
     });
+    // show alert bar
+    this.setState({ alert: true });
+  };
+  handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({ alert: false });
   };
 
   render() {
@@ -134,8 +149,10 @@ class PhonemeTrainPart extends React.Component {
       input,
       phonemes,
       phonemeAssign,
+      appearTimes,
     } = this.state;
     const progress = Math.floor(((index + 1) / words.length) * 100);
+    console.log(index, words.length);
     return (
       <div>
         <Container style={{ marginTop: "5%" }}>
@@ -173,6 +190,10 @@ class PhonemeTrainPart extends React.Component {
                     update={this.update}
                   />
                   <LinearProgress variant="determinate" value={progress} />
+                  <br />
+                  {appearTimes[words[index]] === 2 ? (
+                    <div>(Hint: {phonemes[index]})</div>
+                  ) : null}
                 </div>
               ) : (
                 <div>
@@ -194,6 +215,15 @@ class PhonemeTrainPart extends React.Component {
             <Process />
           )}
         </Container>
+        <Snackbar
+          open={this.state.alert}
+          autoHideDuration={2000}
+          onClose={this.handleCloseAlert}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            Saved Successfully!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

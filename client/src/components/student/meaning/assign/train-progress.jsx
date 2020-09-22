@@ -3,6 +3,12 @@ import axios from "axios";
 import Q1Table from "../assets/q1-table";
 import Q2Table from "../assets/q2-table";
 import Q3Table from "../assets/q3-table";
+import MuiAlert from "@material-ui/lab/Alert";
+import { Snackbar } from "@material-ui/core";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class MeaningTrainPart extends React.Component {
   constructor() {
@@ -21,6 +27,7 @@ class MeaningTrainPart extends React.Component {
       q2Assign: [],
       q3Assign: [],
       q_show: 0,
+      alert: false,
     };
   }
 
@@ -121,6 +128,13 @@ class MeaningTrainPart extends React.Component {
     await axios.put("/api/meaning/student/progress", {
       newProgress: doc2.data._id,
     });
+    // show alert bar
+    this.setState({ alert: true });
+  };
+
+  handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({ alert: false });
   };
 
   handleSubmit = async (q3_score, q3Assign) => {
@@ -230,7 +244,20 @@ class MeaningTrainPart extends React.Component {
 
   render() {
     const { q1 } = this.state;
-    return <div>{q1.length !== 0 ? this.renderQuestion() : null}</div>;
+    return (
+      <div>
+        {q1.length !== 0 ? this.renderQuestion() : null}
+        <Snackbar
+          open={this.state.alert}
+          autoHideDuration={2000}
+          onClose={this.handleCloseAlert}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            Saved Successfully!
+          </Alert>
+        </Snackbar>
+      </div>
+    );
   }
 }
 

@@ -7,13 +7,19 @@ import {
   FormControlLabel,
   Radio,
   LinearProgress,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import P1 from "../../../../assets/fonts/p1";
 import P2 from "../../../../assets/fonts/p2";
 import P3 from "../../../../assets/fonts/p3";
 import Process from "../../../../assets/process";
 import $ from "jquery";
 let time;
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class FluencyAssignPart extends Component {
   constructor(props) {
@@ -33,6 +39,7 @@ class FluencyAssignPart extends Component {
       yourAnswer: "",
       readDone: false,
       answerred: false,
+      alert: false,
     };
   }
 
@@ -159,6 +166,8 @@ class FluencyAssignPart extends Component {
     await axios.put("/api/fluency/student/progress", {
       newProgress: doc2.data._id,
     });
+    // show alert bar
+    this.setState({ alert: true });
   };
 
   finishTrain = async () => {
@@ -190,6 +199,11 @@ class FluencyAssignPart extends Component {
     // update fluency practice history score
     await axios.put("/api/fluency/score", { newSpeed });
     window.location = "/student/fluency";
+  };
+
+  handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({ alert: false });
   };
 
   render() {
@@ -311,6 +325,15 @@ class FluencyAssignPart extends Component {
           <br />
           <LinearProgress variant="determinate" value={progress} />
         </Container>
+        <Snackbar
+          open={this.state.alert}
+          autoHideDuration={2000}
+          onClose={this.handleCloseAlert}
+        >
+          <Alert onClose={this.handleClose} severity="success">
+            Saved Successfully!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }
