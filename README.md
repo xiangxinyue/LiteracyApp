@@ -1,5 +1,7 @@
 # Literacy Training Application -- Version 2.0
 
+Now is on the AWS server: ec2-3-96-206-72.ca-central-1.compute.amazonaws.com
+
 ## Language, Framework, and Libraries
 
 1. Language: JavaScript, HTML/CSS
